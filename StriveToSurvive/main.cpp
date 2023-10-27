@@ -7,8 +7,7 @@ int main()
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
-        ClearBackground(WHITE);
-
+            ClearBackground(RAYWHITE);
         EndDrawing();
     }
 

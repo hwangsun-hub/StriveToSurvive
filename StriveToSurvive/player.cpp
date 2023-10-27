@@ -28,9 +28,10 @@ void Player::Move() {
     position.x += moveX * speed;
     position.y += moveY * speed;
 }
-void Player::Shoot(bool) {}
-void Player::Dodge(bool) {}
-void Player::Skill(bool) {}
-void Player::Draw() {
 
+
+void Player::Update() {}
+Vector2 Player::GetPosition() {
+    return position;
 }
+

@@ -16,28 +16,28 @@ constexpr int window_start_height = 720;
 constexpr int window_frames_per_second = 60;
 constexpr char window_name[]{ "Strive To Survive" };
 
+
+
 //player.cpp
 class Player{
 public:
 	//
-	void Move() {};
-	void Shoot(bool) {};
-	void Dodge(bool) {};
-	void Skill(bool) {};
-	void Draw() {};
-	void Update() {};
+	void Move();
+	void Shoot(bool);
+	void Dodge(bool);
+	void Skill(bool);
+	void Animation();
+	void Draw();
+	void Update();
 
-	Vector2 GetPosition() {};
+	Vector2 GetPosition();
 
 private:
+	Image test_sprite = LoadImage("resourse/Player_test.png");
+
 	enum BodyState{
 		PLAYER_STANDING,
 		PLAYER_WALKING
-	};
-
-	enum ArmState {
-		PLAYER_STANDING,
-		PLAYER_SHOOTING
 	};
 
 	enum State {
@@ -58,6 +58,7 @@ private:
 	//By default looking right
 	bool islookingleft = false;
 	bool islookingright = true;
+
 
 };
 
