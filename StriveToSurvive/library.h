@@ -2,12 +2,12 @@
 
 #define LIBRARY_H
 
-//standard header
+//Standard Header
 #include <iostream>
 #include <raylib.h>
 #include <vector>
 #include <string>
-#include <math.h>
+#include <cmath>
 #include <raymath.h>
 
 //Global Constants
@@ -20,10 +20,12 @@ constexpr char window_name[]{ "Strive To Survive" };
 class Player{
 public:
 	//
-	void Move(bool, bool, bool, bool) {};
+	void Move() {};
 	void Shoot(bool) {};
 	void Dodge(bool) {};
 	void Skill(bool) {};
+	void Draw() {};
+	void Update() {};
 
 	Vector2 GetPosition() {};
 
@@ -43,7 +45,7 @@ private:
 		PLAYER_DYING
 	};
 
-	Vector2 position{};
+	Vector2 position{ window_start_width / 2,  window_start_height / 2 };
 
 	int hp = 100;
 	float damage = 10;
