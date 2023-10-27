@@ -2,12 +2,14 @@
 
 int main()
 {
-    InitWindow(window_start_width, window_start_height, window_name);
-    SetTargetFPS(window_frames_per_second);
+    InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
+    SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
+    Player player;
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
             ClearBackground(RAYWHITE);
+            player.Update();
         EndDrawing();
     }
 

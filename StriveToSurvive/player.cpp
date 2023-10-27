@@ -1,36 +1,57 @@
 #include "library.h"
 void Player::Move() {
-    int moveX = 0;
-    int moveY = 0;
+    float moveX = 0;
+    float moveY = 0;
 
     // Check for cross movement
     if (IsKeyDown(KEY_W)) {
-        moveY += 1;
+        moveY -= 1;
     }
     if (IsKeyDown(KEY_S)) {
-        moveY -= 1;
+        moveY += 1;
     }
     if (IsKeyDown(KEY_A)) {
         moveX -= 1;
+        islookingright = false;
     }
     if (IsKeyDown(KEY_D)) {
         moveX += 1;
+        islookingright = true;
     }
 
     // Check for diagonal movement
     if (moveX != 0 && moveY != 0) {
         // Diagonal movement: adjust moveX and moveY
-        moveX *= speed / sqrt(2);
-        moveY *= speed / sqrt(2);
+        moveX *= 1 / sqrt(2);
+        moveY *= 1 / sqrt(2);
     }
+    
+    // Check for movement
+    if (moveX == 0 && moveY == 0) {
+        isstanding = true;
+    }
+    else {
+        isstanding = false;
+        // Update the player's position
+        position.x += moveX * speed;
+        position.y += moveY * speed;
+    }
+}
+void Player::Shoot() {
 
-    // Update the player's position
-    position.x += moveX * speed;
-    position.y += moveY * speed;
+}
+void Player::Dodge() {}
+void Player::Skill() {}
+void Player::Draw(){
+    DrawTexture(standing_sprite, position.x, position.y, WHITE);
 }
 
 
-void Player::Update() {}
+void Player::Update() {
+    Move();
+    Draw();
+
+}
 Vector2 Player::GetPosition() {
     return position;
 }
