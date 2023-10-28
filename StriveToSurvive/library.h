@@ -23,16 +23,6 @@ constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
 //player.cpp
 class Player{
-public:
-	void Move();
-	void Shoot();
-	void Dodge();
-	void Skill();
-	void Draw();
-	void Update();
-
-	Vector2 GetPosition();
-
 private:
 
 	Vector2 position{ WINDOW_START_WIDTH / 2,  WINDOW_START_HEIGHT / 2 };
@@ -52,7 +42,32 @@ private:
 
 	Texture standing_sprite{ LoadTexture("resourse/Player_test.png") };
 
+public:
+	void Move();
+	void Shoot();
+	void Dodge();
+	void Skill();
+	void Draw();
+	void Update();
 
+	Vector2 GetPosition();
+
+
+
+
+};
+
+//weapon.cpp
+class Weapon {
+protected:
+	enum Type {
+		MELEE,
+		RENGED
+	};
+	Type type;
+public:
+	void SetType(Type);
+	Type GetType();
 };
 
 #endif
