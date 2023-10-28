@@ -43,7 +43,7 @@ void Player::Shoot() {
 void Player::Dodge() {}
 void Player::Skill() {}
 void Player::Draw(){
-    DrawTexture(standing_sprite, position.x, position.y, WHITE);
+    DrawTextureV(standing_sprite,position, WHITE);
 }
 
 
