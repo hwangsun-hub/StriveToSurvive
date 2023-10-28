@@ -22,8 +22,8 @@ void Player::Move() {
     // Check for diagonal movement
     if (moveX != 0 && moveY != 0) {
         // Diagonal movement: adjust moveX and moveY
-        moveX *= 1 / sqrt(2);
-        moveY *= 1 / sqrt(2);
+        moveX /= sqrt(2);
+        moveY /= sqrt(2);
     }
     
     // Check for movement
