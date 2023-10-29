@@ -37,8 +37,13 @@ void Player::Move() {
         position.y += moveY * speed;
     }
 }
-void Player::Shoot() {
+void Player::Attack() {
+    if (isWeaponTypeMelee) {
+        //case:WeaponMeleeType 
+    }
+    else {
 
+    }
 }
 void Player::Dodge() {}
 void Player::Skill() {}
