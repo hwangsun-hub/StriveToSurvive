@@ -2,3 +2,5 @@
 bool Item::GetisWeaponTypeMelee() {
 	return isWeaponTypeMelee;
 }
+
+
