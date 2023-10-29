@@ -66,7 +66,8 @@ public:
 class Item {
 private:
 	bool isWeaponTypeMelee = true;
-	std::vector<Texture> Id;
+	std::vector<Texture> MeleeWeaponSprite;
+	std::vector<Texture> RangedWeaponSprite;
 
 public:
 	bool GetisWeaponTypeMelee();

@@ -38,11 +38,11 @@ void Player::Move() {
     }
 }
 void Player::Attack() {
-    if (isWeaponTypeMelee) {
+    if (GetisWeaponTypeMelee()) {
         //case:WeaponMeleeType 
     }
     else {
-
+        //case:WeaponRangedType 
     }
 }
 void Player::Dodge() {}
