@@ -50,6 +50,21 @@ public:
 	void Draw();
 	void Update();
 
+	Vector2 GetPosition();
+
+};
+//weapon.cpp
+class Weapon {
+private:
+	enum Type {
+		MELEE,
+		RENGED
+	};
+	Type type;
+
+public:
+	void SetType(Type);
+	Type GetType();
 };
 
 #endif
