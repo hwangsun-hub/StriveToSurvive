@@ -74,4 +74,15 @@ public:
 
 };
 
+//enemy.cpp
+class Enemy {
+
+};
+
+class FollowCamera : public Player {
+private:
+	Camera2D camera { Vector2{WINDOW_START_WIDTH / 2, WINDOW_START_HEIGHT / 2}, GetPosition(), 0};
+
+};
+
 #endif
