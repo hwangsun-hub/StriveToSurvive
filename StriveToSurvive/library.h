@@ -80,17 +80,16 @@ class Enemy {
 };
 
 //followcamera.cpp
-class FollowCamera : public Player{
+class FollowCamera {
 private:
-
-	Camera2D camera { Vector2{WINDOW_START_WIDTH / 2, WINDOW_START_HEIGHT / 2}, GetPosition(), 0, 1};
+	Camera2D camera { Vector2{WINDOW_START_WIDTH / 2, WINDOW_START_HEIGHT / 2}, player.GetPosition(), 0, 1};
+	Player player;
 public:
+	FollowCamera(Player player) {
+		this->player = player;
+	}
 	Camera2D GetCamera();
 	void Update();
-
-
-	//code for development
-	bool WORLD_VIEW_DEV = false;
 
 
 };

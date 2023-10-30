@@ -5,14 +5,14 @@ int main()
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
     Player player;
-    FollowCamera camera;
+    FollowCamera camera(player);
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
+        BeginMode2D(camera.GetCamera());
         ClearBackground(RAYWHITE);
-        BeginMode2D(camera.GetCamera());   
-            player.Update();
-            camera.Update();
+        player.Update();
+        camera.Update();
         EndMode2D();
         EndDrawing();
     }
