@@ -25,7 +25,17 @@ enum WeaponRangedType {
 
 };
 
+//Item.cpp
+class Item {
+private:
+	bool isWeaponTypeMelee = true;
+	std::vector<Texture> MeleeWeaponSprite;
+	std::vector<Texture> RangedWeaponSprite;
 
+public:
+	bool GetisWeaponTypeMelee();
+
+};
 
 
 //player.cpp
@@ -62,17 +72,7 @@ public:
 
 };
 
-//Item.cpp
-class Item {
-private:
-	bool isWeaponTypeMelee = true;
-	std::vector<Texture> MeleeWeaponSprite;
-	std::vector<Texture> RangedWeaponSprite;
 
-public:
-	bool GetisWeaponTypeMelee();
-
-};
 
 //enemy.cpp
 class Enemy {
