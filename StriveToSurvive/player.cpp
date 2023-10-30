@@ -48,16 +48,16 @@ void Player::Attack() {
 void Player::Dodge() {}
 void Player::Skill() {}
 void Player::Draw(){
-    DrawTextureV(standing_sprite,position, WHITE);
+    DrawTextureV(
+        standing_sprite, 
+        { position.x - float(standing_sprite.width / 2), position.y - float(standing_sprite.height / 2) },
+        WHITE
+    );
 }
 
 
-void Player::Update() {
-    Move();
-    Draw();
-
-}
 Vector2 Player::GetPosition() {
     return position;
 }
+
 

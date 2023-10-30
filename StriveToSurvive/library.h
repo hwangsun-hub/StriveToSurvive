@@ -41,9 +41,6 @@ public:
 //player.cpp
 class Player : public Item{
 private:
-
-	Vector2 position{ WINDOW_START_WIDTH / 2,  WINDOW_START_HEIGHT / 2 };
-
 	int hp = 100;
 	float damage = 10;
 	float speed = 10;
@@ -60,13 +57,14 @@ private:
 	//Player Sprite
 	Texture standing_sprite{ LoadTexture("resourse/Player_test.png") };
 
+	Vector2 position{ 0, 0 };
+
 public:
 	void Move();
 	void Attack();
 	void Dodge();
 	void Skill();
 	void Draw();
-	void Update();
 
 	Vector2 GetPosition();
 
@@ -79,16 +77,5 @@ class Enemy {
 
 };
 
-//followcamera.cpp
-class FollowCamera {
-private:
-	Camera2D camera { Vector2{WINDOW_START_WIDTH / 2, WINDOW_START_HEIGHT / 2}, player.GetPosition(), 0, 1};
-	Player* player;
-public:
-	Camera2D GetCamera();
-	void Update();
-
-
-};
 
 #endif

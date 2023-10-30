@@ -4,15 +4,22 @@ int main()
 {
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
+    Texture Map = LoadTexture("resourse/Map.png");
     Player player;
-    FollowCamera camera(&player);
+    Camera2D camera = { 0, };
+    camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
+    camera.zoom = 1;
+
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
-        BeginMode2D(camera.GetCamera());
         ClearBackground(RAYWHITE);
-        player.Update();
-        camera.Update();
+        player.Move();
+        camera.target = player.GetPosition();
+
+        BeginMode2D(camera);
+        DrawTexture(Map, -float(Map.width/2), -float(Map.height/2), WHITE);
+        player.Draw();
         EndMode2D();
         EndDrawing();
     }
