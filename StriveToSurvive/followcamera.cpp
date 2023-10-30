@@ -6,5 +6,6 @@ Camera2D FollowCamera::GetCamera() {
 }
 
 void FollowCamera::Update() {
-	camera.target = player.GetPosition();
+
+	camera.target = player->GetPosition();
 }

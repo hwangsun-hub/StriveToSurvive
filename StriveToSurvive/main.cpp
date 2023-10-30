@@ -5,7 +5,7 @@ int main()
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
     Player player;
-    FollowCamera camera(player);
+    FollowCamera camera(&player);
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
