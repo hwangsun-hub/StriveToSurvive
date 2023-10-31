@@ -44,7 +44,7 @@ public:
 
 
 //player.cpp
-class Player : public Item{
+class Player {
 private:
 	int hp = 100;
 	float damage = 10;
