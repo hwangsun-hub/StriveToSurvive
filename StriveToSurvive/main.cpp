@@ -29,6 +29,9 @@ int main()
             else if (IsKeyDown(KEY_PAGE_DOWN)) {
                 camera.zoom -= 0.01;
             }
+            else if(IsKeyDown(KEY_HOME)) {
+                camera.zoom = 1;
+            }
             //draw spawnpoint
             enemy.drawSpawnPoint();
             //draw test map
