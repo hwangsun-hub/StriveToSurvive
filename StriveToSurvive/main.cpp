@@ -21,13 +21,16 @@ int main()
         enemy.UpdateSpawnPoint();
         BeginMode2D(camera);
         if (DEBUGING_MODE) {
+            //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
             if (IsKeyDown(KEY_PAGE_UP)) {
                 camera.zoom += 0.01;
             }
             else if (IsKeyDown(KEY_PAGE_DOWN)) {
                 camera.zoom -= 0.01;
             }
+            //draw spawnpoint
             enemy.drawSpawnPoint();
+            //draw test map
             DrawTexture(Map, -float(Map.width / 2), -float(Map.height / 2), WHITE);
         }
         player.Draw();
