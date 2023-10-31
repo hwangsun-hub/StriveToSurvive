@@ -100,7 +100,7 @@ public:
 	Enemy(Player* player);
 	void UpdateSpawnPoint();
 	void drawSpawnPoint();
-
+	void ChasePlayer();
 };
 
 
