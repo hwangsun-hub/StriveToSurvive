@@ -74,9 +74,15 @@ public:
 
 //enemy.cpp
 class Enemy {
+private:
+	Player player;
+	Vector2 position;
+	Vector2 spawnpoint[6];
+protected:
+	bool isPlayerFollowType = true;
 public: 
 	Enemy(Player player);
-
+	
 };
 
 
