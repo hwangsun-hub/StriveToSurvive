@@ -74,6 +74,8 @@ public:
 
 //enemy.cpp
 class Enemy {
+public: 
+	Enemy(Player player);
 
 };
 

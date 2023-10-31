@@ -24,7 +24,7 @@
     <ClCompile Include="item.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="followcamera.cpp">
+    <ClCompile Include="Enemy.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
