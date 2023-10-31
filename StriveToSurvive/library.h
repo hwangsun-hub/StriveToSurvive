@@ -23,10 +23,11 @@ constexpr bool DEBUGING_MODE = true;
 
 
 enum WeaponMeleeType {
-
+	TEST_MELEE_WEAPON
 };
 
 enum WeaponRangedType {
+	TEST_RANGED_WEAPON
 
 };
 
@@ -36,7 +37,6 @@ private:
 	bool isWeaponTypeMelee = true;
 	std::vector<Texture> MeleeWeaponSprite;
 	std::vector<Texture> RangedWeaponSprite;
-
 public:
 	bool GetisWeaponTypeMelee();
 
@@ -49,6 +49,7 @@ private:
 	int hp = 100;
 	float damage = 10;
 	float speed = 10;
+	int weapon;
 
 	//By default in seconds
 	float shooting_cooltime = 1;
