@@ -7,7 +7,7 @@ Enemy::Enemy(Player* player) : player(player) {
 
 void Enemy::UpdateSpawnPoint() {
 	for (Vector2 &position : spawnpoint) {
-		//position = {position.x
+		position = Vector2Add(position, player->GetDeltaPosition());
 	}
 }
 

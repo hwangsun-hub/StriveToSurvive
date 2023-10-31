@@ -32,6 +32,10 @@ void Player::Move() {
     }
     else {
         isstanding = false;
+
+        // Update the player's delta position
+        delta_position = { moveX * speed , moveY * speed };
+
         // Update the player's position
         position.x += moveX * speed;
         position.y += moveY * speed;
