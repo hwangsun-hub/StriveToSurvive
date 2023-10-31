@@ -19,6 +19,7 @@ int main()
         player.Move();
         camera.target = player.GetPosition();
         enemy.UpdateSpawnPoint();
+        enemy.ChasePlayer();
         BeginMode2D(camera);
         if (DEBUGING_MODE) {
             //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
@@ -33,6 +34,7 @@ int main()
             //draw test map
             DrawTexture(Map, -float(Map.width / 2), -float(Map.height / 2), WHITE);
         }
+        enemy.Draw();
         player.Draw();
         EndMode2D();
         EndDrawing();

@@ -94,6 +94,9 @@ private:
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
+
+	float speed = 5;
+
 protected:
 	bool isPlayerFollowType = true;
 public: 
@@ -101,6 +104,7 @@ public:
 	void UpdateSpawnPoint();
 	void drawSpawnPoint();
 	void ChasePlayer();
+	void Draw();
 };
 
 
