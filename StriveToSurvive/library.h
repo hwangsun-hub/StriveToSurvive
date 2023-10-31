@@ -18,6 +18,10 @@ constexpr int WINDOW_FRAMES_PER_SECOND = 60;
 constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
+//debug
+constexpr bool DEBUGING_MODE = true;
+
+
 enum WeaponMeleeType {
 
 };
@@ -59,6 +63,7 @@ private:
 	Texture standing_sprite{ LoadTexture("resourse/Player_test.png") };
 
 	Vector2 position{ 0, 0 };
+	Vector2 delta_position{ 0,0 };
 
 public:
 	void Move();
@@ -68,6 +73,7 @@ public:
 	void Draw();
 
 	Vector2 GetPosition();
+	Vector2 GetDeltaPosition();
 
 };
 
@@ -80,13 +86,13 @@ private:
 	Vector2 position;
 	Vector2 spawnpoint[8] = {
 		{0, SPAWNPOINT_CIRCLE_RADIUS},
-		{SPAWNPOINT_CIRCLE_RADIUS / sqrt(2), SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)},
+		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
 		{SPAWNPOINT_CIRCLE_RADIUS, 0},
-		{SPAWNPOINT_CIRCLE_RADIUS / sqrt(2), -SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)},
-		{0, SPAWNPOINT_CIRCLE_RADIUS},
-		{-SPAWNPOINT_CIRCLE_RADIUS / sqrt(2), -SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)},
+		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
+		{0, -SPAWNPOINT_CIRCLE_RADIUS},
+		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
-		{-SPAWNPOINT_CIRCLE_RADIUS / sqrt(2), SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)}
+		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
 protected:
 	bool isPlayerFollowType = true;

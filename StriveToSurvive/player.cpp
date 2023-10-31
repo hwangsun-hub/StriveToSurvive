@@ -60,4 +60,8 @@ Vector2 Player::GetPosition() {
     return position;
 }
 
+Vector2 Player::GetDeltaPosition() {
+    return delta_position;
+}
+
 
