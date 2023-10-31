@@ -22,11 +22,11 @@ constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 constexpr bool DEBUGING_MODE = true;
 
 
-enum WeaponMeleeType {
+enum MeleeWeaponId {
 	TEST_MELEE_WEAPON
 };
 
-enum WeaponRangedType {
+enum RangedWeapondId {
 	TEST_RANGED_WEAPON
 
 };
