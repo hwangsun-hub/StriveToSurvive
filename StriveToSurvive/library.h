@@ -139,7 +139,7 @@ public:
 
 	//update
 	void SpawnEnemies() {
-		for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 100; i++) {
 			enemies.push_back(new TEnemyParentClass(player));
 		}
 	}
@@ -156,11 +156,6 @@ public:
 		}
 	}
 
-	void Debug() {
-		for (TEnemyParentClass* enemy : enemies) {
-			std::cout << enemy->GetPosition().x << " " << enemy->GetPosition().y << std::endl;
-		}
-	}
 };
 
 

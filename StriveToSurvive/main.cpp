@@ -40,7 +40,6 @@ int main()
         }
         zombie.DrawEnemies();
         player.Draw();
-        zombie.Debug();
         EndMode2D();
         EndDrawing();
     }
