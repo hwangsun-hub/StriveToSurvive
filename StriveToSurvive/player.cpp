@@ -22,8 +22,8 @@ void Player::Move() {
     // Check for diagonal movement
     if (moveX != 0 && moveY != 0) {
         // Diagonal movement: adjust moveX and moveY
-        moveX /= sqrt(2);
-        moveY /= sqrt(2);
+        moveX /= sqrtf(2);
+        moveY /= sqrtf(2);
     }
     
     // Update the player's delta position
@@ -61,6 +61,18 @@ Vector2 Player::GetPosition() {
 
 Vector2 Player::GetDeltaPosition() {
     return delta_position;
+}
+
+void Player::UpdateSpawnpoint() {
+    for (Vector2& position : spawnpoint) {
+        position = Vector2Add(position, GetDeltaPosition());
+    }
+}
+
+void Player::DrawSpawnPoint() {
+    for (Vector2 position : spawnpoint) {
+        DrawCircleV(position, 10, BLUE);
+    }
 }
 
 

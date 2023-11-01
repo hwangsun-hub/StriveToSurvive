@@ -1,21 +1,7 @@
 #include "library.h"
 
-Enemy::Enemy(Player* player) : player(player) {
-	srand(time(NULL));
-	position = spawnpoint[rand()%8];
-}
-
-
-void Enemy::UpdateSpawnPoint() {
-	for (Vector2 &position : spawnpoint) {
-		position = Vector2Add(position, player->GetDeltaPosition());
-	}
-}
-
-void Enemy::drawSpawnPoint() {
-	for (Vector2 position : spawnpoint) {
-		DrawCircleV(position, 10, BLUE);
-	}
+Enemy::Enemy(Player* _player) : player(_player) {
+	position = player->spawnpoint[rand() % 8];
 }
 
 void Enemy::ChasePlayer() {
@@ -31,4 +17,9 @@ void Enemy::Draw() {
 
 void Enemy::SetEnemyType(EnemyType enemytype) {
 	id = enemytype;
+}
+
+
+Vector2 Enemy::GetPosition() {
+	return position;
 }

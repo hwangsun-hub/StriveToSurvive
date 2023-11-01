@@ -2,6 +2,7 @@
 
 int main()
 {
+    srand(unsigned int(time(NULL)));
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
 
@@ -10,16 +11,16 @@ int main()
     Camera2D camera = { 0, };
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
-    Enemy enemy(&player);
-
+    EnemyManager<TestEnemy> zombie(EnemyType::ZOMBIE, &player);
+    zombie.SpawnEnemies();
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         player.Move();
         camera.target = player.GetPosition();
-        enemy.UpdateSpawnPoint();
-        enemy.ChasePlayer();
+        player.UpdateSpawnpoint();
+        zombie.MoveEnemies();
         BeginMode2D(camera);
         if (DEBUGING_MODE) {
             //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
@@ -33,12 +34,13 @@ int main()
                 camera.zoom = 1;
             }
             //draw spawnpoint
-            enemy.drawSpawnPoint();
+            player.DrawSpawnPoint();
             //draw test map
             DrawTexture(Map, -float(Map.width / 2), -float(Map.height / 2), WHITE);
         }
-        enemy.Draw();
+        zombie.DrawEnemies();
         player.Draw();
+        zombie.Debug();
         EndMode2D();
         EndDrawing();
     }

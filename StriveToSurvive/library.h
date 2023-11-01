@@ -9,6 +9,8 @@
 #include <string>
 #include <cmath>
 #include <raymath.h>
+#include <ctime>
+#include <random>
 
 
 //Global Constants
@@ -17,6 +19,7 @@ constexpr int WINDOW_START_HEIGHT = 720;
 constexpr int WINDOW_FRAMES_PER_SECOND = 60;
 constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
+
 
 enum WeaponId {
 	TEST_MELEE_WEAPON
@@ -68,15 +71,29 @@ private:
 	Vector2 position{ 0, 0 };
 	Vector2 delta_position{ 0,0 };
 
+
 public:
+	Vector2 spawnpoint[8] = {
+		{0, SPAWNPOINT_CIRCLE_RADIUS},
+		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
+		{SPAWNPOINT_CIRCLE_RADIUS, 0},
+		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
+		{0, -SPAWNPOINT_CIRCLE_RADIUS},
+		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
+		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
+		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
+	};
 	//update
 	void Move();
 	void Attack();
 	void Dodge();
 	void Skill();
+	void UpdateSpawnpoint();
+
 
 	//draw
 	void Draw();
+	void DrawSpawnPoint();
 
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();
@@ -90,17 +107,6 @@ class Enemy {
 private:
 	Player *player;
 	Vector2 position;
-	Vector2 spawnpoint[8] = {
-		{0, SPAWNPOINT_CIRCLE_RADIUS},
-		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
-		{SPAWNPOINT_CIRCLE_RADIUS, 0},
-		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
-		{0, -SPAWNPOINT_CIRCLE_RADIUS},
-		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
-		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
-		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
-	};
-
 	float speed = 5;
 	EnemyType id = ZOMBIE;
 
@@ -109,25 +115,54 @@ protected:
 public: 
 	Enemy(Player* player);
 	void SetEnemyType(EnemyType);
+	Vector2 GetPosition();
+
 
 	//update
-	void UpdateSpawnPoint();
 	void ChasePlayer();
 
 	//draw
-	void drawSpawnPoint();
 	void Draw();
 };
 
 //EnemyManager.cpp
+template <typename TEnemyParentClass>
 class EnemyManager {
 private:
-	Enemy enemy;
+	Player* player;
+	EnemyType enemytype;
+	
 public:
-	EnemyManager(EnemyType, Enemy);
-	std::vector<Enemy> enemies;
+	EnemyManager(EnemyType _enemytype, Player* _player): enemytype(_enemytype), player(_player){
+	}
+	std::vector<TEnemyParentClass* > enemies;
 
+	//update
+	void SpawnEnemies() {
+		for (int i = 0; i < 10; i++) {
+			enemies.push_back(new TEnemyParentClass(player));
+		}
+	}
+	//draw
+	void DrawEnemies() {
+		for (TEnemyParentClass* enemy : enemies) {
+			enemy->Draw();
+		}
+	}
+
+	void MoveEnemies() {
+		for (TEnemyParentClass* enemy : enemies) {
+			enemy->ChasePlayer();
+		}
+	}
+
+	void Debug() {
+		for (TEnemyParentClass* enemy : enemies) {
+			std::cout << enemy->GetPosition().x << " " << enemy->GetPosition().y << std::endl;
+		}
+	}
 };
+
 
 //for debug
 class TestEnemy : public Enemy {
