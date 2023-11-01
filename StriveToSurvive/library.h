@@ -30,12 +30,13 @@ enum WeaponId {
 //Item.cpp
 class Item {
 private:
-	WeaponId weaponid;
+	WeaponId weaponid = TEST_MELEE_WEAPON;
 	bool isWeaponTypeMelee = true;
 	std::vector<Texture> MeleeWeaponSprite;
 	std::vector<Texture> RangedWeaponSprite;
 public:
 	bool GetisWeaponTypeMelee();
+	void SetWeapon(WeaponId);
 
 };
 
