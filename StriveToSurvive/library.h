@@ -22,18 +22,15 @@ constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 constexpr bool DEBUGING_MODE = true;
 
 
-enum MeleeWeaponId {
+enum WeaponId {
 	TEST_MELEE_WEAPON
 };
 
-enum RangedWeapondId {
-	TEST_RANGED_WEAPON
-
-};
 
 //Item.cpp
 class Item {
 private:
+	WeaponId weaponid;
 	bool isWeaponTypeMelee = true;
 	std::vector<Texture> MeleeWeaponSprite;
 	std::vector<Texture> RangedWeaponSprite;
@@ -49,7 +46,7 @@ private:
 	int hp = 100;
 	float damage = 10;
 	float speed = 10;
-	int weapon;
+	Item weapon;
 
 	//By default in seconds
 	float shooting_cooltime = 1;
