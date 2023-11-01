@@ -19,8 +19,10 @@ void Enemy::drawSpawnPoint() {
 }
 
 void Enemy::ChasePlayer() {
-	position.x += speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)));
-	position.y += speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)));
+	if (isPlayerFollowType) {
+		position.x += speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)));
+		position.y += speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)));
+	}
 }
 
 void Enemy::Draw() {

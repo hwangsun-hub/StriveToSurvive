@@ -26,7 +26,6 @@ enum WeaponId {
 	TEST_MELEE_WEAPON
 };
 
-
 //Item.cpp
 class Item {
 private:
@@ -104,6 +103,12 @@ public:
 	void drawSpawnPoint();
 	void ChasePlayer();
 	void Draw();
+};
+
+class TestEnemy : public Enemy {
+public:
+	TestEnemy(Player* player) : Enemy(player) {
+	}
 };
 
 
