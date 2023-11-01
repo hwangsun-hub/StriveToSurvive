@@ -10,7 +10,7 @@ int main()
     Camera2D camera = { 0, };
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
-    TestEnemy enemy(&player);
+    Enemy enemy(&player);
 
 
     while (WindowShouldClose() == false) {

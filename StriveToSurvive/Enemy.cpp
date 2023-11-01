@@ -28,3 +28,7 @@ void Enemy::ChasePlayer() {
 void Enemy::Draw() {
 	DrawRectangleV(Vector2AddValue(position, -50), { 100,100 }, GREEN);
 }
+
+void Enemy::SetEnemyType(EnemyType enemytype) {
+	id = enemytype;
+}

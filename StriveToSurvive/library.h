@@ -18,13 +18,18 @@ constexpr int WINDOW_FRAMES_PER_SECOND = 60;
 constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
+enum WeaponId {
+	TEST_MELEE_WEAPON
+};
+
+enum EnemyType {
+	ZOMBIE
+};
 //debug
 constexpr bool DEBUGING_MODE = true;
 
 
-enum WeaponId {
-	TEST_MELEE_WEAPON
-};
+
 
 //Item.cpp
 class Item {
@@ -64,10 +69,13 @@ private:
 	Vector2 delta_position{ 0,0 };
 
 public:
+	//update
 	void Move();
 	void Attack();
 	void Dodge();
 	void Skill();
+
+	//draw
 	void Draw();
 
 	Vector2 GetPosition();
@@ -94,17 +102,34 @@ private:
 	};
 
 	float speed = 5;
+	EnemyType id = ZOMBIE;
 
 protected:
 	bool isPlayerFollowType = true;
 public: 
 	Enemy(Player* player);
+	void SetEnemyType(EnemyType);
+
+	//update
 	void UpdateSpawnPoint();
-	void drawSpawnPoint();
 	void ChasePlayer();
+
+	//draw
+	void drawSpawnPoint();
 	void Draw();
 };
 
+//EnemyManager.cpp
+class EnemyManager {
+private:
+	Enemy enemy;
+public:
+	EnemyManager(EnemyType, Enemy);
+	std::vector<Enemy> enemies;
+
+};
+
+//for debug
 class TestEnemy : public Enemy {
 public:
 	TestEnemy(Player* player) : Enemy(player) {
