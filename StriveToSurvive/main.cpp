@@ -17,10 +17,13 @@ int main()
     while (WindowShouldClose() == false) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
+        //update
         player.Move();
         camera.target = player.GetPosition();
         player.UpdateSpawnpoint();
         zombie.MoveEnemies();
+
+        //draw
         BeginMode2D(camera);
         if (DEBUGING_MODE) {
             //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
