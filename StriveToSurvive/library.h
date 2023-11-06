@@ -109,7 +109,7 @@ class Enemy {
 private:
 	Player *player;
 	Vector2 position;
-	float speed = 5;
+	float speed = 3;
 	EnemyType id = ZOMBIE;
 
 protected:
