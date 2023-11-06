@@ -40,9 +40,9 @@ class Item {
 private:
 	WeaponId weaponid = TEST_MELEE_WEAPON;
 	bool isWeaponTypeMelee = true;
+public:
 	std::vector<Texture> MeleeWeaponSprite;
 	std::vector<Texture> RangedWeaponSprite;
-public:
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
 	WeaponId GetWeapon();
@@ -57,6 +57,7 @@ private:
 	int hp = 100;
 	float damage = 10;
 	float speed = 10;
+	
 
 	//By default in seconds
 	float attack_cooltime = 1;
