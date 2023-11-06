@@ -22,7 +22,8 @@ constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
 
 enum WeaponId {
-	TEST_MELEE_WEAPON
+	TEST_MELEE_WEAPON,
+	TEST_RANGED_WEAPON
 };
 
 enum EnemyType {
@@ -49,12 +50,11 @@ public:
 
 
 //player.cpp
-class Player {
+class Player : public Item{
 private:
 	int hp = 100;
 	float damage = 10;
 	float speed = 10;
-	Item weapon;
 
 	//By default in seconds
 	float shooting_cooltime = 1;

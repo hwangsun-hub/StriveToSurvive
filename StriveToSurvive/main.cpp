@@ -36,6 +36,13 @@ int main()
             else if(IsKeyDown(KEY_HOME)) {
                 camera.zoom = 1;
             }
+            //player weapon change
+            if (IsKeyDown(KEY_UP)) {
+                player.SetWeapon(TEST_MELEE_WEAPON);
+            }
+            else if (IsKeyDown(KEY_DOWN)) {
+                player.SetWeapon(TEST_RANGED_WEAPON);
+            }
             //draw spawnpoint
             player.DrawSpawnPoint();
             //draw test map
