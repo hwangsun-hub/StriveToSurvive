@@ -8,4 +8,8 @@ void Item::SetWeapon(WeaponId weaponid) {
 	this->weaponid = weaponid;
 }
 
+WeaponId Item::GetWeapon() {
+	return weaponid;
+}
+
 

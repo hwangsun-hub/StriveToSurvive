@@ -45,6 +45,8 @@ private:
 public:
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
+	WeaponId GetWeapon();
+
 
 };
 
