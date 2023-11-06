@@ -59,7 +59,7 @@ private:
 	float speed = 10;
 
 	//By default in seconds
-	float shooting_cooltime = 1;
+	float attack_cooltime = 1;
 	float dodge_cooltime = 1;
 	float skill_cooltime = 10;
 	
