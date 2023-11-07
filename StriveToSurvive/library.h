@@ -25,6 +25,7 @@ constexpr int PLAYER_STANDING_SPRITE_MAXNUM = 6;
 constexpr int PLAYER_WALKING_SPRITE_MAXNUM = 5;
 constexpr int MONSTER1_SPRITE_MAXNUM = 4;
 constexpr int MONSTER2_SPRITE_MAXNUM = 8;
+constexpr int MELEE_ATTACK_SPRITE_MAXNUM = 4;
 
 constexpr int SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
@@ -46,8 +47,8 @@ extern bool DEBUGING_MODE;
 class Timer {
 private:
 	float lifetime = -1;
-	bool istimerseting = false;
 public:
+	bool istimerseting = false;
 	void SetTimer(float);
 	void UpdateTimer();
 	bool TimerDone();
@@ -63,6 +64,7 @@ private:
 	bool isWeaponTypeMelee = true;
 public:
 	Texture weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
+	Texture melee_weapon_attack_sprite = LoadTexture("resourse/melee_attack_sprite.png");
 	Rectangle weapon_sprite_source;
 	Rectangle weapon_sprite_dest;
 	Vector2 weapon_sprite_orgin;
@@ -105,12 +107,15 @@ private:
 	//Player Hitbox
 	Rectangle hitbox{ float(- SPRITE_SIZE), float(- SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3)};
 	Rectangle melee_attack_hitbox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
+
 	//sprite timer
 	Timer standing_sprite_timer;
 	Timer walking_sprite_timer;
+	Timer melee_weapon_attack_sprite_timer;
 
 	unsigned int standing_sprite_index = 0;
 	unsigned int walking_sprite_index = 0;
+	unsigned int melee_weapon_attack_sprite_index = MELEE_ATTACK_SPRITE_MAXNUM;
 
 
 public:

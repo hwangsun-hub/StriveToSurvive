@@ -48,6 +48,7 @@ void Player::Move() {
 }
 void Player::Attack() {
     if (GetWeapon() == TEST_MELEE_WEAPON) {
+        
 
     }
 }
@@ -98,6 +99,26 @@ void Player::Draw(){
         );
     }
     DrawWeapon();
+    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+        melee_weapon_attack_sprite_index = 0;
+    }
+    if (melee_weapon_attack_sprite_index != MELEE_ATTACK_SPRITE_MAXNUM) {
+        melee_weapon_attack_sprite_timer.SetTimer(0.1f);
+        melee_weapon_attack_sprite_timer.UpdateTimer();
+        if (melee_weapon_attack_sprite_timer.TimerDone()) {
+            melee_weapon_attack_sprite_index++;
+        }
+
+
+        DrawTexturePro(
+            melee_weapon_attack_sprite,
+            { SPRITE_SIZE * float(standing_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE},
+            { melee_attack_hitbox.x + melee_attack_hitbox.width / 2, melee_attack_hitbox.y + melee_attack_hitbox.height / 2, melee_attack_hitbox.width, melee_attack_hitbox.height },
+            { melee_attack_hitbox.width/2, melee_attack_hitbox.height / 2 },
+            atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) * RAD2DEG,
+            WHITE
+        );
+    }
     if (DEBUGING_MODE) {
         DrawSpawnPoint();
         DrawHitbox();
@@ -129,6 +150,7 @@ void Player::UpdateHitbox() {
 }
 
 void Player::Update() {
+    Attack();
     Move();
     UpdateSpawnpoint();
     UpdateHitbox();
@@ -144,13 +166,7 @@ void Player::DrawSpawnPoint() {
 void Player::DrawHitbox() {
     float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
     DrawRectangleLinesEx(hitbox, 2, RED);
-
-    rlPushMatrix();
-    rlTranslatef(melee_attack_hitbox.x + melee_attack_hitbox.width /2, melee_attack_hitbox.y + melee_attack_hitbox.height / 2, 0.0f);
-    rlRotatef(degree * 180 / PI, 0, 0, 1.0f);
-    rlTranslatef(-(melee_attack_hitbox.x + melee_attack_hitbox.width / 2), -(melee_attack_hitbox.y + melee_attack_hitbox.height / 2), 0.0f);
-    DrawRectangleLinesEx(melee_attack_hitbox, 2, PURPLE);
-    rlPopMatrix();
+    DrawCircleLines(melee_attack_hitbox.x+ hitbox.width/2, melee_attack_hitbox.y+ hitbox.height / 2, 70, RED);
 }
 
 void Player::DrawWeapon() {
