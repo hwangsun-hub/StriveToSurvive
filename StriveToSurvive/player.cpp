@@ -159,7 +159,7 @@ void Player::DrawWeapon() {
         {
             weapon_sprite_source.x,
             weapon_sprite_source.y,
-            weapon_sprite_source.width * float(GetMouseX() > WINDOW_START_WIDTH / 2 ? 1 : -1),
+            weapon_sprite_source.width * float(islookingright ? 1 : -1),
             weapon_sprite_source.height
         },
         weapon_sprite_dest,

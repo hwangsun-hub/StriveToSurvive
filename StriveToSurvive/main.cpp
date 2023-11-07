@@ -16,7 +16,7 @@ int main()
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
-        ClearBackground(RAYWHITE);
+        ClearBackground(BLACK);
         //update
         player.Update();
         camera.target = player.GetPosition();
