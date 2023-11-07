@@ -40,7 +40,7 @@ enum EnemyType {
 	ZOMBIE
 };
 //debug
-constexpr bool DEBUGING_MODE = true;
+bool DEBUGING_MODE{ true };
 
 //timer.cpp
 class Timer {

@@ -129,7 +129,7 @@ void Player::DrawSpawnPoint() {
 }
 
 void Player::DrawHitbox() {
-    DrawRectangleLinesEx(hitbox, 1, RED);
+    DrawRectangleLinesEx(hitbox, 2, RED);
 }
 
 

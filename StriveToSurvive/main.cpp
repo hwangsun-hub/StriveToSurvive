@@ -20,9 +20,12 @@ int main()
         player.Update();
         camera.target = player.GetPosition();
         zombie.MoveEnemies();
-
-        //debug
         BeginMode2D(camera);
+        //debug mode toggle (KEY_F5)
+        if (IsKeyReleased(KEY_F5)) {
+            DEBUGING_MODE = !DEBUGING_MODE;
+        }
+        //debug mode
         if (DEBUGING_MODE) {
             //Fullscreen (KEY_ENTER)
             if (IsKeyReleased(KEY_ENTER)) {
