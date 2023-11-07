@@ -25,8 +25,8 @@ constexpr int PLAYER_WALKING_SPRITE_MAXNUM = 5;
 constexpr int MONSTER1_SPRITE_MAXNUM = 4;
 constexpr int MONSTER2_SPRITE_MAXNUM = 8;
 
-constexpr Rectangle SPRITE_SIZE{ 0,0,32,32 };
-constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,32,32 };
+constexpr int SPRITE_SIZE = 32;
+constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,128,128 };
 
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };

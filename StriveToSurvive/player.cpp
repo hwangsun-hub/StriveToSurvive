@@ -50,13 +50,23 @@ void Player::Draw(){
     if (isstanding) {
         DrawTexturePro(
             standing_sprite,
-            SPRITE_SIZE,
-            SPRITE_SIZE,
-            { position.x - IN_GAME_SPRITE_SIZE.width / 2, position.y - IN_GAME_SPRITE_SIZE.height / 2 },
+            { 0, 0, SPRITE_SIZE, SPRITE_SIZE },
+            IN_GAME_SPRITE_SIZE,
+            { IN_GAME_SPRITE_SIZE.width / 2 - position.x , IN_GAME_SPRITE_SIZE.height / 2 - position.y },
             0,
             WHITE
         );
-   }
+    }
+    else {
+        DrawTexturePro(
+            walking_sprite,
+            { 0, 0, SPRITE_SIZE, SPRITE_SIZE },
+            IN_GAME_SPRITE_SIZE,
+            { IN_GAME_SPRITE_SIZE.width / 2 - position.x , IN_GAME_SPRITE_SIZE.height / 2 - position.y },
+            0,
+            WHITE
+        );
+    }
 }
 
 
