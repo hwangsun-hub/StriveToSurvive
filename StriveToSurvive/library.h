@@ -151,10 +151,12 @@ class Enemy {
 private:
 	Player *player;
 	Vector2 position;
-	float speed = 3;
+
 
 protected:
+	float speed = 3;
 	bool isPlayerFollowType = true;
+
 public: 
 	Enemy(Player* player);
 
