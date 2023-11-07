@@ -48,9 +48,19 @@ void Player::Dodge() {}
 void Player::Skill() {}
 void Player::Draw(){
     if (isstanding) {
+        //sprite timer
+        standing_sprite_timer.SetTimer(0.1);
+        standing_sprite_timer.UpdateTimer();
+        if (standing_sprite_timer.TimerDone()) {
+            standing_sprite_index++;
+            if (standing_sprite_index == PLAYER_STANDING_SPRITE_MAXNUM) {
+                standing_sprite_index = 0;
+            }
+        }
+        //draw
         DrawTexturePro(
             standing_sprite,
-            { 0, 0, SPRITE_SIZE, SPRITE_SIZE },
+            { SPRITE_SIZE * float(standing_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
             IN_GAME_SPRITE_SIZE,
             { IN_GAME_SPRITE_SIZE.width / 2 - position.x , IN_GAME_SPRITE_SIZE.height / 2 - position.y },
             0,
@@ -58,9 +68,19 @@ void Player::Draw(){
         );
     }
     else {
+        //sprite timer
+        walking_sprite_timer.SetTimer(0.1);
+        walking_sprite_timer.UpdateTimer();
+        if (walking_sprite_timer.TimerDone()) {
+            walking_sprite_index++;
+            if (walking_sprite_index == PLAYER_WALKING_SPRITE_MAXNUM) {
+                walking_sprite_index = 0;
+            }
+        }
+        //draw
         DrawTexturePro(
             walking_sprite,
-            { 0, 0, SPRITE_SIZE, SPRITE_SIZE },
+            { SPRITE_SIZE * float(walking_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
             IN_GAME_SPRITE_SIZE,
             { IN_GAME_SPRITE_SIZE.width / 2 - position.x , IN_GAME_SPRITE_SIZE.height / 2 - position.y },
             0,

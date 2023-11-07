@@ -42,6 +42,17 @@ enum EnemyType {
 //debug
 constexpr bool DEBUGING_MODE = true;
 
+//timer.cpp
+class Timer {
+private:
+	float lifetime = -1;
+	bool istimerseting = false;
+public:
+	void SetTimer(float);
+	void UpdateTimer();
+	bool TimerDone();
+};
+
 
 
 
@@ -82,11 +93,16 @@ private:
 	Texture standing_sprite{ LoadTexture("resourse/player_standing.png") };
 	Texture walking_sprite{ LoadTexture("resourse/player_walking.png") };
 
+	//Player Position
 	Vector2 position{ 0, 0 };
 	Vector2 delta_position{ 0,0 };
 
+	//sprite timer
 	Timer standing_sprite_timer;
 	Timer walking_sprite_timer;
+
+	unsigned int standing_sprite_index = 0;
+	unsigned int walking_sprite_index = 0;
 
 
 public:
@@ -173,17 +189,6 @@ public:
 		}
 	}
 
-};
-
-//timer.cpp
-class Timer {
-private:
-	float lifetime = -1;
-	bool istimerseting = false;
-public:
-	void SetTimer(float);
-	void UpdateTimer();
-	bool TimerDone();
 };
 
 
