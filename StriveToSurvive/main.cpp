@@ -12,7 +12,7 @@ int main()
     Camera2D camera = { 0, };
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
-    EnemyManager<TestEnemy> zombie(EnemyType::MONSTER1, &player);
+    EnemyManager<TestEnemy> zombie(&player);
     zombie.SpawnEnemies();
 
     while (WindowShouldClose() == false) {

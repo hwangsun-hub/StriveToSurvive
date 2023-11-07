@@ -36,11 +36,7 @@ enum WeaponId {
 	TEST_RANGED_WEAPON
 };
 
-enum EnemyType {
-	UNDETERMINED,
-	MONSTER1,
-	MONSTER2
-};
+
 //debug
 extern bool DEBUGING_MODE;
 
@@ -175,10 +171,10 @@ template <typename TEnemyParentClass>
 class EnemyManager {
 private:
 	Player* player;
-	EnemyType enemytype;
+
 	
 public:
-	EnemyManager(EnemyType _enemytype, Player* _player): enemytype(_enemytype), player(_player){
+	EnemyManager(Player* _player): player(_player){
 	}
 	std::vector<TEnemyParentClass* > enemies;
 
