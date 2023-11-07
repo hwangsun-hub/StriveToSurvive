@@ -37,7 +37,9 @@ enum WeaponId {
 };
 
 enum EnemyType {
-	ZOMBIE
+	UNDETERMINED,
+	MONSTER1,
+	MONSTER2
 };
 //debug
 extern bool DEBUGING_MODE;
@@ -150,13 +152,12 @@ private:
 	Player *player;
 	Vector2 position;
 	float speed = 3;
-	EnemyType id = ZOMBIE;
 
 protected:
 	bool isPlayerFollowType = true;
 public: 
 	Enemy(Player* player);
-	void SetEnemyType(EnemyType);
+
 	Vector2 GetPosition();
 
 
@@ -181,20 +182,21 @@ public:
 
 	//update
 	void SpawnEnemies() {
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < 10; i++) {
 			enemies.push_back(new TEnemyParentClass(player));
-		}
-	}
-	//draw
-	void DrawEnemies() {
-		for (TEnemyParentClass* enemy : enemies) {
-			enemy->Draw();
 		}
 	}
 
 	void MoveEnemies() {
 		for (TEnemyParentClass* enemy : enemies) {
 			enemy->ChasePlayer();
+		}
+	}
+
+	//draw
+	void DrawEnemies() {
+		for (TEnemyParentClass* enemy : enemies) {
+			enemy->Draw();
 		}
 	}
 
@@ -206,6 +208,7 @@ class TestEnemy : public Enemy {
 public:
 	TestEnemy(Player* player) : Enemy(player) {
 	}
+
 };
 
 
