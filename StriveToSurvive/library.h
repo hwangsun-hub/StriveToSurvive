@@ -145,6 +145,7 @@ public:
 //enemy.cpp
 class Enemy {
 protected:
+	Timer sprite_timer;
 	Player *player;
 	Vector2 position;
 	Texture sprite{ LoadTexture("resource/knight.png") };

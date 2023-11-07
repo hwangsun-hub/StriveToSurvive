@@ -51,7 +51,7 @@ void Player::Draw(){
     //player sprite
     if (isstanding) {
         //sprite timer
-        standing_sprite_timer.SetTimer(0.1);
+        standing_sprite_timer.SetTimer(0.1f);
         standing_sprite_timer.UpdateTimer();
         if (standing_sprite_timer.TimerDone()) {
             standing_sprite_index++;
@@ -71,7 +71,7 @@ void Player::Draw(){
     }
     else {
         //sprite timer
-        walking_sprite_timer.SetTimer(0.1);
+        walking_sprite_timer.SetTimer(0.1f);
         walking_sprite_timer.UpdateTimer();
         if (walking_sprite_timer.TimerDone()) {
             walking_sprite_index++;

@@ -51,7 +51,7 @@ int main()
                 player.SetWeapon(TEST_RANGED_WEAPON);
             }
             //draw test map
-            DrawTexture(Map, -int(Map.width / 2), -int(Map.height / 2), WHITE);
+            DrawTextureEx(Map, { -float(Map.width / 2), -float(Map.height / 2) }, 0, 1, WHITE);
         }
 
         //draw
