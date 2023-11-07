@@ -1,5 +1,9 @@
 #include "library.h"
 
+Player::Player(Camera2D _camera) : camera(_camera){
+    SetWeapon(TEST_MELEE_WEAPON);
+}
+
 void Player::Move() {
     float moveX = 0;
     float moveY = 0;
@@ -115,8 +119,13 @@ void Player::UpdateSpawnpoint() {
     }
 }
 void Player::UpdateHitbox() {
+    float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
     hitbox.x += GetDeltaPosition().x;
     hitbox.y += GetDeltaPosition().y;
+    melee_attack_hitbox.x = hitbox.x + 100 * cosf(degree);
+    melee_attack_hitbox.y = hitbox.y + 100 * sinf(degree);
+    
+
 }
 
 void Player::Update() {
@@ -133,15 +142,28 @@ void Player::DrawSpawnPoint() {
 }
 
 void Player::DrawHitbox() {
+    float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
     DrawRectangleLinesEx(hitbox, 2, RED);
+
+    rlPushMatrix();
+    rlTranslatef(melee_attack_hitbox.x + melee_attack_hitbox.width /2, melee_attack_hitbox.y + melee_attack_hitbox.height / 2, 0.0f);
+    rlRotatef(degree * 180 / PI, 0, 0, 1.0f);
+    rlTranslatef(-(melee_attack_hitbox.x + melee_attack_hitbox.width / 2), -(melee_attack_hitbox.y + melee_attack_hitbox.height / 2), 0.0f);
+    DrawRectangleLinesEx(melee_attack_hitbox, 2, PURPLE);
+    rlPopMatrix();
 }
 
 void Player::DrawWeapon() {
     DrawTexturePro(
         weapon_sprite,
-        { SPRITE_SIZE * float(walking_sprite_index), 0, SPRITE_SIZE * float(islookingright ? 1 : -1), SPRITE_SIZE },
-        { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE },
-        { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
+        {
+            weapon_sprite_source.x,
+            weapon_sprite_source.y,
+            weapon_sprite_source.width * float(GetMouseX() > WINDOW_START_WIDTH / 2 ? 1 : -1),
+            weapon_sprite_source.height
+        },
+        weapon_sprite_dest,
+        { weapon_sprite_orgin.x - position.x, weapon_sprite_orgin.y - position.y },
         0,
         WHITE
     );

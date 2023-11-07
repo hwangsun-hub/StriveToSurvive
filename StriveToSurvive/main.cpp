@@ -8,8 +8,8 @@ int main()
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
     Texture Map = LoadTexture("resourse/Map.png");
-    Player player;
     Camera2D camera = { 0, };
+    Player player(camera);
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
     EnemyManager<TestEnemy> testenemy(&player);

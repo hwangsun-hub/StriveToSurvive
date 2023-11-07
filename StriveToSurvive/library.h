@@ -11,6 +11,7 @@
 #include <raymath.h>
 #include <ctime>
 #include <random>
+#include <rlgl.h>
 
 
 //Global Constants
@@ -29,6 +30,7 @@ constexpr int SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
+
 
 
 enum WeaponId {
@@ -61,6 +63,9 @@ private:
 	bool isWeaponTypeMelee = true;
 public:
 	Texture weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
+	Rectangle weapon_sprite_source;
+	Rectangle weapon_sprite_dest;
+	Vector2 weapon_sprite_orgin;
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
 	WeaponId GetWeapon();
@@ -72,6 +77,9 @@ public:
 //player.cpp
 class Player : public Item{
 private:
+	//camera
+	Camera2D camera;
+
 	//player state
 	int hp = 100;
 	float damage = 10;
@@ -96,7 +104,7 @@ private:
 	
 	//Player Hitbox
 	Rectangle hitbox{ float(- SPRITE_SIZE), float(- SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3)};
-
+	Rectangle melee_attack_hitbox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
 	//sprite timer
 	Timer standing_sprite_timer;
 	Timer walking_sprite_timer;
@@ -106,6 +114,8 @@ private:
 
 
 public:
+	Player(Camera2D);
+
 	Vector2 spawnpoint[8] = {
 		{0, SPAWNPOINT_CIRCLE_RADIUS},
 		{float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))},
@@ -116,7 +126,6 @@ public:
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
-
 	//update
 	void Move();
 	void Attack();
