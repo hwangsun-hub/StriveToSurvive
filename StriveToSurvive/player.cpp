@@ -47,11 +47,16 @@ void Player::Attack() {
 void Player::Dodge() {}
 void Player::Skill() {}
 void Player::Draw(){
-    DrawTextureV(
-        standing_sprite, 
-        { position.x - float(standing_sprite.width / 2), position.y - float(standing_sprite.height / 2) },
-        WHITE
-    );
+    if (isstanding) {
+        DrawTexturePro(
+            standing_sprite,
+            SPRITE_SIZE,
+            SPRITE_SIZE,
+            { position.x - IN_GAME_SPRITE_SIZE.width / 2, position.y - IN_GAME_SPRITE_SIZE.height / 2 },
+            0,
+            WHITE
+        );
+   }
 }
 
 

@@ -17,7 +17,18 @@
 constexpr int WINDOW_START_WIDTH = 1280;
 constexpr int WINDOW_START_HEIGHT = 720;
 constexpr int WINDOW_FRAMES_PER_SECOND = 60;
+
 constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
+
+constexpr int PLAYER_STANDING_SPRITE_MAXNUM = 6;
+constexpr int PLAYER_WALKING_SPRITE_MAXNUM = 5;
+constexpr int MONSTER1_SPRITE_MAXNUM = 4;
+constexpr int MONSTER2_SPRITE_MAXNUM = 8;
+
+constexpr Rectangle SPRITE_SIZE{ 0,0,32,32 };
+constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,32,32 };
+
+
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
 
@@ -69,7 +80,8 @@ private:
 	bool isstanding = true;
 
 	//Player Sprite
-	Texture standing_sprite{ LoadTexture("resourse/Player_test.png") };
+	Texture standing_sprite{ LoadTexture("resourse/player_standing.png") };
+	Texture walking_sprite{ LoadTexture("resourse/player_walking.png") };
 
 	Vector2 position{ 0, 0 };
 	Vector2 delta_position{ 0,0 };
