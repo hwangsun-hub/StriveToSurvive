@@ -28,7 +28,6 @@ constexpr int MONSTER2_SPRITE_MAXNUM = 8;
 constexpr int SPRITE_SIZE = 32;
 constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,128,128 };
 
-
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
 

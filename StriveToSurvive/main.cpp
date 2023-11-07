@@ -5,7 +5,6 @@ int main()
     srand(unsigned int(time(NULL)));
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
-
     Texture Map = LoadTexture("resourse/Map.png");
     Player player;
     Camera2D camera = { 0, };
@@ -24,8 +23,13 @@ int main()
         zombie.MoveEnemies();
 
         //draw
+        //debug
         BeginMode2D(camera);
         if (DEBUGING_MODE) {
+            //Fullscreen (KEY_ENTER)
+            if (IsKeyReleased(KEY_ENTER)) {
+                ToggleFullscreen();
+            }
             //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
             if (IsKeyDown(KEY_PAGE_UP)) {
                 camera.zoom += 0.01;
@@ -36,7 +40,7 @@ int main()
             else if(IsKeyDown(KEY_HOME)) {
                 camera.zoom = 1;
             }
-            //player weapon change
+            //player weapon change(KEY_UP, KEY_DOWN)
             if (IsKeyDown(KEY_UP)) {
                 player.SetWeapon(TEST_MELEE_WEAPON);
             }
