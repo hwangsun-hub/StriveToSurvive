@@ -48,7 +48,21 @@ void Player::Move() {
 }
 void Player::Attack() {
     if (GetWeapon() == TEST_MELEE_WEAPON) {
-        
+        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            melee_weapon_attack_sprite_index = 0;
+            isAttackReady = false;
+            isAttacking = true;
+        }
+        if (isAttacking) {
+            melee_weapon_attack_sprite_timer.SetTimer(0.05f);
+            melee_weapon_attack_sprite_timer.UpdateTimer();
+            if (melee_weapon_attack_sprite_timer.TimerDone()) {
+                melee_weapon_attack_sprite_index++;
+                if (melee_weapon_attack_sprite_index == MELEE_ATTACK_SPRITE_MAXNUM) {
+                    isAttacking = false;
+                }
+            }
+        }
 
     }
 }
@@ -99,26 +113,8 @@ void Player::Draw(){
         );
     }
     DrawWeapon();
-    if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-        melee_weapon_attack_sprite_index = 0;
-    }
-    if (melee_weapon_attack_sprite_index != MELEE_ATTACK_SPRITE_MAXNUM) {
-        melee_weapon_attack_sprite_timer.SetTimer(0.1f);
-        melee_weapon_attack_sprite_timer.UpdateTimer();
-        if (melee_weapon_attack_sprite_timer.TimerDone()) {
-            melee_weapon_attack_sprite_index++;
-        }
+    DrawWeaponAttack();
 
-
-        DrawTexturePro(
-            melee_weapon_attack_sprite,
-            { SPRITE_SIZE * float(standing_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE},
-            { melee_attack_hitbox.x + melee_attack_hitbox.width / 2, melee_attack_hitbox.y + melee_attack_hitbox.height / 2, melee_attack_hitbox.width, melee_attack_hitbox.height },
-            { melee_attack_hitbox.width/2, melee_attack_hitbox.height / 2 },
-            atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) * RAD2DEG,
-            WHITE
-        );
-    }
     if (DEBUGING_MODE) {
         DrawSpawnPoint();
         DrawHitbox();
@@ -150,6 +146,13 @@ void Player::UpdateHitbox() {
 }
 
 void Player::Update() {
+    if (!isAttackReady) {
+        attack_cooltimer.SetTimer(attack_cooltime);
+        attack_cooltimer.UpdateTimer();
+    }
+    if (attack_cooltimer.TimerDone()) {
+        isAttackReady = true;
+    }
     Attack();
     Move();
     UpdateSpawnpoint();
@@ -183,6 +186,18 @@ void Player::DrawWeapon() {
         0,
         WHITE
     );
+}
+void Player::DrawWeaponAttack() {
+    if (isAttacking) {
+        DrawTexturePro(
+            melee_weapon_attack_sprite,
+            { SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
+            { melee_attack_hitbox.x + melee_attack_hitbox.width / 2, melee_attack_hitbox.y + melee_attack_hitbox.height / 2, melee_attack_hitbox.width, melee_attack_hitbox.height },
+            { melee_attack_hitbox.width / 2, melee_attack_hitbox.height / 2 },
+            atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) * RAD2DEG,
+            WHITE
+        );
+    }
 }
 
 

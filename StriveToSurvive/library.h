@@ -91,6 +91,9 @@ private:
 	float attack_cooltime = 1;
 	float dodge_cooltime = 1;
 	float skill_cooltime = 10;
+
+	bool isAttackReady = true;
+	bool isAttacking = false;
 	
 	//By default looking right
 	bool islookingright = true;
@@ -112,6 +115,7 @@ private:
 	Timer standing_sprite_timer;
 	Timer walking_sprite_timer;
 	Timer melee_weapon_attack_sprite_timer;
+	Timer attack_cooltimer;
 
 	unsigned int standing_sprite_index = 0;
 	unsigned int walking_sprite_index = 0;
@@ -144,6 +148,7 @@ public:
 
 	//draw
 	void DrawWeapon();
+	void DrawWeaponAttack();
 	void Draw();
 
 	//for debug
