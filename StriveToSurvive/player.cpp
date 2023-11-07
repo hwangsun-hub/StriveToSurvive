@@ -60,11 +60,12 @@ void Player::Draw(){
             }
         }
         //draw
+        //flip : float(islookingright ? 1 : -1)
         DrawTexturePro(
             standing_sprite,
-            { SPRITE_SIZE * float(standing_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
-            IN_GAME_SPRITE_SIZE,
-            { IN_GAME_SPRITE_SIZE.width / 2 - position.x , IN_GAME_SPRITE_SIZE.height / 2 - position.y },
+            { SPRITE_SIZE * float(standing_sprite_index), 0, SPRITE_SIZE * float(islookingright ? 1 : -1), SPRITE_SIZE},
+            { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE},
+            { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
             0,
             WHITE
         );
@@ -80,11 +81,12 @@ void Player::Draw(){
             }
         }
         //draw
+        //flip : float(islookingright ? 1 : -1)
         DrawTexturePro(
             walking_sprite,
-            { SPRITE_SIZE * float(walking_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
-            IN_GAME_SPRITE_SIZE,
-            { IN_GAME_SPRITE_SIZE.width / 2 - position.x , IN_GAME_SPRITE_SIZE.height / 2 - position.y },
+            { SPRITE_SIZE * float(walking_sprite_index), 0, SPRITE_SIZE * float(islookingright ? 1 : -1), SPRITE_SIZE },
+            { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE },
+            { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
             0,
             WHITE
         );

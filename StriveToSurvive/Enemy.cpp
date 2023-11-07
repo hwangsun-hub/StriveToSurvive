@@ -12,7 +12,24 @@ void Enemy::ChasePlayer() {
 }
 
 void Enemy::Draw() {
-	DrawRectangleV(Vector2AddValue(position, -50), { 100,100 }, GREEN);
+	//sprite timer
+	sprite_timer.SetTimer(0.1f);
+	sprite_timer.UpdateTimer();
+	if (sprite_timer.TimerDone()) {
+		sprite_index++;
+		if (sprite_index == sprite_index_maxnum) {
+			sprite_index = 0;
+		}
+	}
+	//draw
+	DrawTexturePro(
+		sprite,
+		{ SPRITE_SIZE * float(sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
+		{0, 0, IN_GAME_SPRITE_SIZE, IN_GAME_SPRITE_SIZE },
+		{ IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
+		0,
+		WHITE
+	);
 }
 
 

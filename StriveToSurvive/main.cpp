@@ -1,6 +1,6 @@
 ﻿#include "library.h"
 
-bool DEBUGING_MODE;
+bool DEBUGING_MODE = true;
 
 int main()
 {
@@ -12,8 +12,8 @@ int main()
     Camera2D camera = { 0, };
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
-    EnemyManager<TestEnemy> zombie(&player);
-    zombie.SpawnEnemies();
+    EnemyManager<TestEnemy> testenemy(&player);
+    testenemy.SpawnEnemies();
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
@@ -21,7 +21,7 @@ int main()
         //update
         player.Update();
         camera.target = player.GetPosition();
-        zombie.MoveEnemies();
+        testenemy.MoveEnemies();
         BeginMode2D(camera);
         //debug mode toggle (KEY_F5)
         if (IsKeyReleased(KEY_F5)) {
@@ -55,7 +55,7 @@ int main()
         }
 
         //draw
-        zombie.DrawEnemies();
+        testenemy.DrawEnemies();
         player.Draw();
         EndMode2D();
         EndDrawing();

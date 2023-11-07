@@ -26,7 +26,7 @@ constexpr int MONSTER1_SPRITE_MAXNUM = 4;
 constexpr int MONSTER2_SPRITE_MAXNUM = 8;
 
 constexpr int SPRITE_SIZE = 32;
-constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,SPRITE_SIZE * 4, SPRITE_SIZE * 4 };
+constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
@@ -146,9 +146,11 @@ public:
 class Enemy {
 protected:
 	Timer sprite_timer;
+	unsigned int sprite_index = 0;
+	int sprite_index_maxnum = 4;
 	Player *player;
 	Vector2 position;
-	Texture sprite{ LoadTexture("resource/knight.png") };
+	Texture sprite{ LoadTexture("resourse/knight.png") };
 
 	float speed = 0;
 	int hp = 10;
@@ -206,10 +208,12 @@ public:
 class TestEnemy : public Enemy {
 public:
 	TestEnemy(Player* player) : Enemy(player) {
-		sprite = LoadTexture("resource/monster1.png");
-		speed = 3;
+		sprite = LoadTexture("resourse/monster1.png");
+		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
+		speed = 2;
 		hp = 10;
 	}
+
 
 };
 
