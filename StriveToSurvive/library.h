@@ -96,7 +96,7 @@ private:
 	Vector2 delta_position{ 0,0 };
 	
 	//Player Hitbox
-	Rectangle hitbox{ -SPRITE_SIZE, -SPRITE_SIZE * 1.3, SPRITE_SIZE * 1.8, SPRITE_SIZE * 3 };
+	Rectangle hitbox{ float(- SPRITE_SIZE), float(- SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3)};
 
 	//sprite timer
 	Timer standing_sprite_timer;
@@ -144,13 +144,13 @@ public:
 
 //enemy.cpp
 class Enemy {
-private:
+protected:
 	Player *player;
 	Vector2 position;
+	Texture sprite{ LoadTexture("resource/knight.png") };
 
-
-protected:
-	float speed = 3;
+	float speed = 0;
+	int hp = 10;
 	bool isPlayerFollowType = true;
 
 public: 
@@ -205,6 +205,9 @@ public:
 class TestEnemy : public Enemy {
 public:
 	TestEnemy(Player* player) : Enemy(player) {
+		sprite = LoadTexture("resource/monster1.png");
+		speed = 3;
+		hp = 10;
 	}
 
 };

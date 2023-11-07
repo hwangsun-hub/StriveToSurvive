@@ -35,13 +35,13 @@ int main()
             }
             //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
             if (IsKeyDown(KEY_PAGE_UP)) {
-                camera.zoom += 0.01;
+                camera.zoom += 0.01f;
             }
             else if (IsKeyDown(KEY_PAGE_DOWN)) {
-                camera.zoom -= 0.01;
+                camera.zoom -= 0.01f;
             }
             else if(IsKeyDown(KEY_HOME)) {
-                camera.zoom = 1;
+                camera.zoom = 1.0f;
             }
             //player weapon change(KEY_UP, KEY_DOWN)
             if (IsKeyDown(KEY_UP)) {
@@ -51,7 +51,7 @@ int main()
                 player.SetWeapon(TEST_RANGED_WEAPON);
             }
             //draw test map
-            DrawTexture(Map, -float(Map.width / 2), -float(Map.height / 2), WHITE);
+            DrawTexture(Map, -int(Map.width / 2), -int(Map.height / 2), WHITE);
         }
 
         //draw
