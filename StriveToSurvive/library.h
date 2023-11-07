@@ -60,8 +60,7 @@ private:
 	WeaponId weaponid = TEST_MELEE_WEAPON;
 	bool isWeaponTypeMelee = true;
 public:
-	std::vector<Texture> MeleeWeaponSprite;
-	std::vector<Texture> RangedWeaponSprite;
+	Texture weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
 	WeaponId GetWeapon();
@@ -125,15 +124,18 @@ public:
 	void Skill();
 	void UpdateSpawnpoint();
 	void UpdateHitbox();
+	void UpdateWeapon();
 	void Update();
 
 
 	//draw
+	void DrawWeapon();
 	void Draw();
 
 	//for debug
 	void DrawSpawnPoint();
 	void DrawHitbox();
+	
 
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();

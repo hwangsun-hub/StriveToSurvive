@@ -50,7 +50,7 @@ int main()
                 player.SetWeapon(TEST_RANGED_WEAPON);
             }
             //Spawn a Enemy (KEY_F1)
-            if (IsKeyDown(KEY_F1)) {
+            if (IsKeyReleased(KEY_F1)) {
                 testenemy.SpawnEnemies(1);
             }
             //draw test map

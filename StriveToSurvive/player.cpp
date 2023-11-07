@@ -43,7 +43,9 @@ void Player::Move() {
     }
 }
 void Player::Attack() {
-  
+    if (GetWeapon() == TEST_MELEE_WEAPON) {
+
+    }
 }
 void Player::Dodge() {}
 void Player::Skill() {}
@@ -91,7 +93,7 @@ void Player::Draw(){
             WHITE
         );
     }
-
+    DrawWeapon();
     if (DEBUGING_MODE) {
         DrawSpawnPoint();
         DrawHitbox();
@@ -132,6 +134,17 @@ void Player::DrawSpawnPoint() {
 
 void Player::DrawHitbox() {
     DrawRectangleLinesEx(hitbox, 2, RED);
+}
+
+void Player::DrawWeapon() {
+    DrawTexturePro(
+        weapon_sprite,
+        { SPRITE_SIZE * float(walking_sprite_index), 0, SPRITE_SIZE * float(islookingright ? 1 : -1), SPRITE_SIZE },
+        { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE },
+        { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
+        0,
+        WHITE
+    );
 }
 
 
