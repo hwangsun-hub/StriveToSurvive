@@ -172,6 +172,15 @@ public:
 
 };
 
+//timer.cpp
+class Timer {
+private:
+	double lifetime = 0;
+public:
+	void settimer(double);
+
+};
+
 
 //for debug
 class TestEnemy : public Enemy {
