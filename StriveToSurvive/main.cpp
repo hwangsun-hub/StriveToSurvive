@@ -1,5 +1,7 @@
 ﻿#include "library.h"
 
+bool DEBUGING_MODE;
+
 int main()
 {
     srand(unsigned int(time(NULL)));
