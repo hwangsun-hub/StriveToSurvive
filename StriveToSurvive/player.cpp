@@ -117,10 +117,9 @@ void Player::UpdateHitbox() {
 
 void Player::Update() {
     Move();
-    if (DEBUGING_MODE) {
-        UpdateSpawnpoint();
-        UpdateHitbox();
-    }
+    UpdateSpawnpoint();
+    UpdateHitbox();
+
 }
 
 void Player::DrawSpawnPoint() {
