@@ -1,21 +1,23 @@
 #include "library.h"
 
 void Timer::SetTimer(float time) {
-	lifetime = time;
+	if (!istimerseting) {
+		istimerseting = true;
+		lifetime = time;
+	}
 }
 
-bool Timer::UpdateTimer() {
-	if (lifetime == -1) {
-		return false;
-	}
-
+void Timer::UpdateTimer() {
 	lifetime -= GetFrameTime();
+}
 
-	if (lifetime <= 0) {
-		lifetime = -1;
+bool Timer::TimerDone() {
+	if (istimerseting && lifetime <= 0) {
+		istimerseting = false;
 		return true;
 	}
 	else {
 		return false;
 	}
 }
+

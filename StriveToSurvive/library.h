@@ -64,10 +64,10 @@ public:
 //player.cpp
 class Player : public Item{
 private:
+	//player state
 	int hp = 100;
 	float damage = 10;
 	float speed = 10;
-	
 
 	//By default in seconds
 	float attack_cooltime = 1;
@@ -85,7 +85,8 @@ private:
 	Vector2 position{ 0, 0 };
 	Vector2 delta_position{ 0,0 };
 
-	Timer timer;
+	Timer standing_sprite_timer;
+	Timer walking_sprite_timer;
 
 
 public:
@@ -178,9 +179,11 @@ public:
 class Timer {
 private:
 	float lifetime = -1;
+	bool istimerseting = false;
 public:
 	void SetTimer(float);
-	bool UpdateTimer();
+	void UpdateTimer();
+	bool TimerDone();
 };
 
 
