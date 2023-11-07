@@ -177,8 +177,8 @@ class Timer {
 private:
 	double lifetime = 0;
 public:
-	void settimer(double);
-
+	void SetTimer(double);
+	void updatetimer()
 };
 
 

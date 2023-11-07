@@ -1,5 +1,5 @@
 #include "library.h"
 
-void Timer::settimer(double time) {
+void Timer::SetTimer(double time) {
 	lifetime = time;
 }
