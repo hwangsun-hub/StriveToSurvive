@@ -26,7 +26,7 @@ constexpr int MONSTER1_SPRITE_MAXNUM = 4;
 constexpr int MONSTER2_SPRITE_MAXNUM = 8;
 
 constexpr int SPRITE_SIZE = 32;
-constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,128,128 };
+constexpr Rectangle IN_GAME_SPRITE_SIZE{ 0,0,SPRITE_SIZE * 4, SPRITE_SIZE * 4 };
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 
@@ -96,6 +96,9 @@ private:
 	//Player Position
 	Vector2 position{ 0, 0 };
 	Vector2 delta_position{ 0,0 };
+	
+	//Player Hitbox
+	Rectangle hitbox{ -SPRITE_SIZE, -SPRITE_SIZE * 1.3, SPRITE_SIZE * 1.8, SPRITE_SIZE * 3 };
 
 	//sprite timer
 	Timer standing_sprite_timer;
@@ -116,17 +119,23 @@ public:
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
+
 	//update
 	void Move();
 	void Attack();
 	void Dodge();
 	void Skill();
 	void UpdateSpawnpoint();
+	void UpdateHitbox();
+	void Update();
 
 
 	//draw
 	void Draw();
+
+	//for debug
 	void DrawSpawnPoint();
+	void DrawHitbox();
 
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();

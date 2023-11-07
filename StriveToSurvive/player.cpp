@@ -47,6 +47,7 @@ void Player::Attack() {
 void Player::Dodge() {}
 void Player::Skill() {}
 void Player::Draw(){
+    //player sprite
     if (isstanding) {
         //sprite timer
         standing_sprite_timer.SetTimer(0.1);
@@ -87,6 +88,11 @@ void Player::Draw(){
             WHITE
         );
     }
+
+    if (DEBUGING_MODE) {
+        DrawSpawnPoint();
+        DrawHitbox();
+    }
 }
 
 
@@ -103,11 +109,27 @@ void Player::UpdateSpawnpoint() {
         position = Vector2Add(position, GetDeltaPosition());
     }
 }
+void Player::UpdateHitbox() {
+    hitbox.x += GetDeltaPosition().x;
+    hitbox.y += GetDeltaPosition().y;
+}
+
+void Player::Update() {
+    Move();
+    if (DEBUGING_MODE) {
+        UpdateSpawnpoint();
+        UpdateHitbox();
+    }
+}
 
 void Player::DrawSpawnPoint() {
     for (Vector2 position : spawnpoint) {
         DrawCircleV(position, 10, BLUE);
     }
+}
+
+void Player::DrawHitbox() {
+    DrawRectangleLinesEx(hitbox, 1, RED);
 }
 
 

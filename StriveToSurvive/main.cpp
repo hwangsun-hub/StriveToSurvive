@@ -17,12 +17,10 @@ int main()
         BeginDrawing();
         ClearBackground(RAYWHITE);
         //update
-        player.Move();
+        player.Update();
         camera.target = player.GetPosition();
-        player.UpdateSpawnpoint();
         zombie.MoveEnemies();
 
-        //draw
         //debug
         BeginMode2D(camera);
         if (DEBUGING_MODE) {
@@ -47,11 +45,11 @@ int main()
             else if (IsKeyDown(KEY_DOWN)) {
                 player.SetWeapon(TEST_RANGED_WEAPON);
             }
-            //draw spawnpoint
-            player.DrawSpawnPoint();
             //draw test map
             DrawTexture(Map, -float(Map.width / 2), -float(Map.height / 2), WHITE);
         }
+
+        //draw
         zombie.DrawEnemies();
         player.Draw();
         EndMode2D();
