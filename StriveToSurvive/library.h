@@ -85,6 +85,8 @@ private:
 	Vector2 position{ 0, 0 };
 	Vector2 delta_position{ 0,0 };
 
+	Timer timer;
+
 
 public:
 	Vector2 spawnpoint[8] = {
@@ -175,10 +177,10 @@ public:
 //timer.cpp
 class Timer {
 private:
-	double lifetime = 0;
+	float lifetime = -1;
 public:
-	void SetTimer(double);
-	void updatetimer()
+	void SetTimer(float);
+	bool UpdateTimer();
 };
 
 
