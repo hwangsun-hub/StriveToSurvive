@@ -6,10 +6,29 @@ Enemy::Enemy(Player* _player) : player(_player) {
 
 void Enemy::ChasePlayer() {
 	if (isPlayerFollowType) {
-		position.x += speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)));
-		position.y += speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)));
+		delta_position = {
+			speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x))),
+			speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)))
+		};
+		position.x += delta_position.x;
+		position.y += delta_position.y;
 	}
 }
+
+void Enemy::UpdateHitbox() {
+	hitbox.x += GetDeltaPosition().x;
+	hitbox.y += GetDeltaPosition().y;
+}
+
+void Enemy::Update() {
+	ChasePlayer();
+	UpdateHitbox();
+}
+
+void Enemy::DrawHitbox() {
+	DrawRectangleLinesEx(hitbox, 2, RED);
+}
+
 
 void Enemy::Draw() {
 	//sprite timer
@@ -30,9 +49,16 @@ void Enemy::Draw() {
 		0,
 		WHITE
 	);
+	if (DEBUGING_MODE) {
+		DrawHitbox();
+	}
 }
 
 
 Vector2 Enemy::GetPosition() {
 	return position;
+}
+
+Vector2 Enemy::GetDeltaPosition() {
+	return delta_position;
 }

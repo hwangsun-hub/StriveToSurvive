@@ -38,8 +38,8 @@ void Player::Move() {
         isstanding = false;
 
         // Update the player's position
-        position.x += moveX * speed;
-        position.y += moveY * speed;
+        position.x += delta_position.x;
+        position.y += delta_position.y;
     }
 }
 void Player::Attack() {

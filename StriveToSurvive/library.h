@@ -146,11 +146,15 @@ public:
 class Enemy {
 protected:
 	Timer sprite_timer;
+
 	unsigned int sprite_index = 0;
 	int sprite_index_maxnum = 4;
+
 	Player *player;
 	Vector2 position;
+	Vector2 delta_position{ 0,0 };
 	Texture sprite{ LoadTexture("resourse/knight.png") };
+	Rectangle hitbox{ 0, };
 
 	float speed = 0;
 	int hp = 10;
@@ -160,12 +164,16 @@ public:
 	Enemy(Player* player);
 
 	Vector2 GetPosition();
+	Vector2 GetDeltaPosition();
 
 
 	//update
 	void ChasePlayer();
+	void UpdateHitbox();
+	void Update();
 
 	//draw
+	void DrawHitbox();
 	void Draw();
 };
 
@@ -182,15 +190,15 @@ public:
 	std::vector<TEnemyParentClass* > enemies;
 
 	//update
-	void SpawnEnemies() {
-		for (int i = 0; i < 10; i++) {
+	void SpawnEnemies(unsigned int spawn_num) {
+		for (int i = 0; i < spawn_num; i++) {
 			enemies.push_back(new TEnemyParentClass(player));
 		}
 	}
 
-	void MoveEnemies() {
+	void UpdateEnemies() {
 		for (TEnemyParentClass* enemy : enemies) {
-			enemy->ChasePlayer();
+			enemy->Update();
 		}
 	}
 
@@ -210,6 +218,7 @@ public:
 	TestEnemy(Player* player) : Enemy(player) {
 		sprite = LoadTexture("resourse/monster1.png");
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
+		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
 		speed = 2;
 		hp = 10;
 	}

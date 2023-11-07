@@ -13,7 +13,6 @@ int main()
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
     EnemyManager<TestEnemy> testenemy(&player);
-    testenemy.SpawnEnemies();
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
@@ -21,7 +20,7 @@ int main()
         //update
         player.Update();
         camera.target = player.GetPosition();
-        testenemy.MoveEnemies();
+        testenemy.UpdateEnemies();
         BeginMode2D(camera);
         //debug mode toggle (KEY_F5)
         if (IsKeyReleased(KEY_F5)) {
@@ -49,6 +48,10 @@ int main()
             }
             else if (IsKeyDown(KEY_DOWN)) {
                 player.SetWeapon(TEST_RANGED_WEAPON);
+            }
+            //Spawn a Enemy (KEY_F1)
+            if (IsKeyDown(KEY_F1)) {
+                testenemy.SpawnEnemies(1);
             }
             //draw test map
             DrawTextureEx(Map, { -float(Map.width / 2), -float(Map.height / 2) }, 0, 1, WHITE);
