@@ -17,16 +17,18 @@ int main()
     camera.zoom = 1;
     EnemyManager<TestEnemy> testenemy(&player);
     bool isMusicPause = false;
+    bool isGamePause = false;
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
         ClearBackground(BLACK);
         //update
-        UpdateMusicStream(music);
-        
-        player.Update();
-        camera.target = player.GetPosition();
-        testenemy.UpdateEnemies();
+        if (!isGamePause) {
+            UpdateMusicStream(music);
+            player.Update();
+            camera.target = player.GetPosition();
+            testenemy.UpdateEnemies();
+        }
         BeginMode2D(camera);
         //debug mode toggle (KEY_F5)
         if (IsKeyReleased(KEY_F5)) {
@@ -34,6 +36,9 @@ int main()
         }
         //debug mode
         if (DEBUGING_MODE) {
+            if (IsKeyReleased(KEY_SPACE)) {
+                isGamePause = !isGamePause;
+            }
             //Fullscreen (KEY_ENTER)
             if (IsKeyReleased(KEY_ENTER)) {
                 ToggleFullscreen();
