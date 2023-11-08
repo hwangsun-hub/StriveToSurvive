@@ -9,8 +9,8 @@ Enemy::~Enemy() {
 void Enemy::ChasePlayer() {
 	if (isPlayerFollowType) {
 		delta_position = {
-			speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x))),
-			speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)))
+			speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x))) * GetFrameTime(),
+			speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)))* GetFrameTime()
 		};
 		position.x += delta_position.x;
 		position.y += delta_position.y;
@@ -41,6 +41,8 @@ void Enemy::UpdateState() {
 
 
 void Enemy::Update() {
+	sprite_timer.SetTimer(0.1f);
+	sprite_timer.UpdateTimer();
 	ChasePlayer();
 	UpdateHitbox();
 	UpdateState();
@@ -58,8 +60,7 @@ void Enemy::DrawhpBar() {
 
 void Enemy::Draw() {
 	//sprite timer
-	sprite_timer.SetTimer(0.1f);
-	sprite_timer.UpdateTimer();
+	
 	if (sprite_timer.TimerDone()) {
 		sprite_index++;
 		if (sprite_index == sprite_index_maxnum) {

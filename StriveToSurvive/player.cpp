@@ -32,14 +32,16 @@ void Player::Move() {
     }
     
     // Update the player's delta position
-    delta_position = { moveX * speed , moveY * speed };
+    delta_position = { moveX * speed * GetFrameTime() , moveY * speed * GetFrameTime() };
 
     // Check for movement
     if (moveX == 0 && moveY == 0) {
         isstanding = true;
+        walking_sprite_timer.SetTimer(0);
     }
     else {
         isstanding = false;
+        standing_sprite_timer.SetTimer(0);
 
         // Update the player's position
         position.x += delta_position.x;

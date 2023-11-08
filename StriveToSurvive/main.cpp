@@ -62,7 +62,7 @@ int main()
             }
             //Spawn a Enemy (KEY_F1)
             if (IsKeyReleased(KEY_F1)) {
-                testenemy.SpawnEnemies(1);
+                testenemy.SpawnEnemies(10);
             }
             // Restart music playing (stop and play) (KEY_F10)
             if (IsKeyPressed(KEY_F10)) {

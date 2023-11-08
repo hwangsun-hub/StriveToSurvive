@@ -86,8 +86,8 @@ private:
 
 	//player state
 	int hp = 100;
-	float damage = 10;
-	float speed = 10 * GetFrameTime();
+	float damage = 100;
+	float speed = 200;
 
 	//By default in seconds
 	float attack_cooltime = 0.25f;
@@ -259,7 +259,7 @@ public:
 		sprite = LoadTexture("resourse/monster1.png");
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
-		speed = 2 * GetFrameTime();
+		speed = 100;
 		hp = 100;
 	}
 	~TestEnemy() {
