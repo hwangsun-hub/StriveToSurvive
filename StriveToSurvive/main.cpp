@@ -32,7 +32,7 @@ int main()
             if (IsKeyReleased(KEY_ENTER)) {
                 ToggleFullscreen();
             }
-            //zoom in & out (KEY_PAGE_UP, KEY_PAGE_DOWN)
+            //zoom in & out & reset (KEY_PAGE_UP, KEY_PAGE_DOWN, KEY_HOME)
             if (IsKeyDown(KEY_PAGE_UP)) {
                 camera.zoom += 0.01f;
             }

@@ -67,9 +67,9 @@ private:
 public:
 	Texture weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
 	Texture melee_weapon_attack_sprite = LoadTexture("resourse/melee_attack_sprite.png");
-	Rectangle weapon_sprite_source;
-	Rectangle weapon_sprite_dest;
-	Vector2 weapon_sprite_orgin;
+	Rectangle weapon_sprite_source{ 0, };
+	Rectangle weapon_sprite_dest{ 0, };
+	Vector2 weapon_sprite_orgin{ 0, };
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
 	WeaponId GetWeapon();
