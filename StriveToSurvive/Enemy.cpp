@@ -20,13 +20,37 @@ void Enemy::UpdateHitbox() {
 	hitbox.y += GetDeltaPosition().y;
 }
 
+void Enemy::Damaged() {
+	hp -= player->GetDamage();
+	//knockback
+	position.x -= ENEMY_KNONKBACK * delta_position.x;
+	position.y -= ENEMY_KNONKBACK * delta_position.y;
+	hitbox.x -= ENEMY_KNONKBACK * delta_position.x;
+	hitbox.y -= ENEMY_KNONKBACK * delta_position.y;
+}
+void Enemy::UpdateState() {
+	if (
+		player->GetisAttacking() &&
+		IsMouseButtonPressed(MOUSE_BUTTON_LEFT) &&
+		CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2}, MELEE_ATTACK_HITBOX_SIZE, hitbox)) {
+		Damaged();
+	}
+}
+
+
 void Enemy::Update() {
 	ChasePlayer();
 	UpdateHitbox();
+	UpdateState();
 }
 
 void Enemy::DrawHitbox() {
 	DrawRectangleLinesEx(hitbox, 2, RED);
+}
+
+void Enemy::DrawhpBar() {
+	DrawRectangleV({ position.x - 50, position.y + 30 }, { 100,10 }, WHITE);
+	DrawRectangleV({ position.x-50, position.y+30 }, { float(hp),10 }, GREEN);
 }
 
 
@@ -52,6 +76,7 @@ void Enemy::Draw() {
 	if (DEBUGING_MODE) {
 		DrawHitbox();
 	}
+	DrawhpBar();
 }
 
 
@@ -62,3 +87,8 @@ Vector2 Enemy::GetPosition() {
 Vector2 Enemy::GetDeltaPosition() {
 	return delta_position;
 }
+
+int Enemy::Gethp() {
+	return hp;
+}
+

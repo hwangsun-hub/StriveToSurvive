@@ -139,8 +139,10 @@ void Player::UpdateHitbox() {
     float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
     hitbox.x += GetDeltaPosition().x;
     hitbox.y += GetDeltaPosition().y;
-    melee_attack_hitbox.x = hitbox.x + 100 * cosf(degree);
-    melee_attack_hitbox.y = hitbox.y + 100 * sinf(degree);
+    melee_attack_hitbox.x = hitbox.x + 80 * cosf(degree);
+    melee_attack_hitbox.y = hitbox.y + 80 * sinf(degree);
+    melee_attack_spritebox.x = hitbox.x + 100 * cosf(degree);
+    melee_attack_spritebox.y = hitbox.y + 100 * sinf(degree);
     
 
 }
@@ -169,7 +171,7 @@ void Player::DrawSpawnPoint() {
 void Player::DrawHitbox() {
     float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
     DrawRectangleLinesEx(hitbox, 2, RED);
-    DrawCircleLines(melee_attack_hitbox.x+ hitbox.width/2, melee_attack_hitbox.y+ hitbox.height / 2, 70, RED);
+    DrawCircleLines(melee_attack_hitbox.x+ hitbox.width/2, melee_attack_hitbox.y+ hitbox.height / 2, MELEE_ATTACK_HITBOX_SIZE, RED);
 }
 
 void Player::DrawWeapon() {
@@ -192,12 +194,21 @@ void Player::DrawWeaponAttack() {
         DrawTexturePro(
             melee_weapon_attack_sprite,
             { SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
-            { melee_attack_hitbox.x + melee_attack_hitbox.width / 2, melee_attack_hitbox.y + melee_attack_hitbox.height / 2, melee_attack_hitbox.width, melee_attack_hitbox.height },
-            { melee_attack_hitbox.width / 2, melee_attack_hitbox.height / 2 },
+            { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width, melee_attack_spritebox.height },
+            { melee_attack_spritebox.width / 2, melee_attack_spritebox.height / 2 },
             atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) * RAD2DEG,
             WHITE
         );
     }
 }
+
+float Player::GetDamage() {
+    return damage;
+}
+
+bool Player::GetisAttacking() {
+    return isAttacking;
+}
+
 
 

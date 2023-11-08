@@ -20,6 +20,8 @@ constexpr int WINDOW_START_HEIGHT = 720;
 constexpr int WINDOW_FRAMES_PER_SECOND = 60;
 
 constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
+constexpr float MELEE_ATTACK_HITBOX_SIZE = 50;
+constexpr float ENEMY_KNONKBACK = 25;
 
 constexpr int PLAYER_STANDING_SPRITE_MAXNUM = 6;
 constexpr int PLAYER_WALKING_SPRITE_MAXNUM = 5;
@@ -88,7 +90,7 @@ private:
 	float speed = 10;
 
 	//By default in seconds
-	float attack_cooltime = 1;
+	float attack_cooltime = 0.25f;
 	float dodge_cooltime = 1;
 	float skill_cooltime = 10;
 
@@ -109,7 +111,8 @@ private:
 	
 	//Player Hitbox
 	Rectangle hitbox{ float(- SPRITE_SIZE), float(- SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3)};
-	Rectangle melee_attack_hitbox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
+	
+	Rectangle melee_attack_spritebox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
 
 	//sprite timer
 	Timer standing_sprite_timer;
@@ -135,6 +138,8 @@ public:
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
+	Rectangle melee_attack_hitbox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
+	
 	//update
 	void Move();
 	void Attack();
@@ -158,6 +163,8 @@ public:
 
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();
+	float GetDamage();
+	bool GetisAttacking();
 
 };
 
@@ -191,11 +198,15 @@ public:
 	//update
 	void ChasePlayer();
 	void UpdateHitbox();
+	void Damaged();
+	void UpdateState();
 	void Update();
 
 	//draw
 	void DrawHitbox();
+	void DrawhpBar();
 	void Draw();
+	int Gethp();
 };
 
 //EnemyManager.cpp
@@ -218,8 +229,11 @@ public:
 	}
 
 	void UpdateEnemies() {
-		for (TEnemyParentClass* enemy : enemies) {
-			enemy->Update();
+		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->Update();
+			if (enemies[i]->Gethp() <= 0) {
+				enemies.erase(enemies.begin() + i);
+			}
 		}
 	}
 
@@ -241,7 +255,7 @@ public:
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
 		speed = 2;
-		hp = 10;
+		hp = 100;
 	}
 
 
