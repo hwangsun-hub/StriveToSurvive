@@ -171,6 +171,7 @@ public:
 
 
 //enemy.cpp
+//basic enemy
 class Enemy {
 protected:
 	Timer sprite_timer;
@@ -211,6 +212,7 @@ public:
 };
 
 //EnemyManager.cpp
+//manage EnemyParentClass (spawn, update, etc..)
 template <typename TEnemyParentClass>
 class EnemyManager {
 private:
