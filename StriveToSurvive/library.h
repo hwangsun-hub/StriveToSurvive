@@ -190,6 +190,7 @@ protected:
 
 public: 
 	Enemy(Player* player);
+	~Enemy();
 
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();
@@ -232,6 +233,7 @@ public:
 		for (int i = 0; i < enemies.size(); i++) {
 			enemies[i]->Update();
 			if (enemies[i]->Gethp() <= 0) {
+				delete enemies[i];
 				enemies.erase(enemies.begin() + i);
 			}
 		}
@@ -251,13 +253,16 @@ public:
 class TestEnemy : public Enemy {
 public:
 	TestEnemy(Player* player) : Enemy(player) {
+		UnloadTexture(sprite);
 		sprite = LoadTexture("resourse/monster1.png");
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
 		speed = 2;
 		hp = 100;
 	}
-
+	~TestEnemy() {
+		UnloadTexture(sprite);
+	}
 
 };
 

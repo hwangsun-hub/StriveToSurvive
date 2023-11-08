@@ -6,6 +6,9 @@ int main()
 {
     srand(unsigned int(time(NULL)));
     InitWindow(WINDOW_START_WIDTH, WINDOW_START_HEIGHT, WINDOW_NAME);
+    InitAudioDevice();
+    Music music = LoadMusicStream("resourse/ypurmo.mp3");
+    SetMusicVolume(music, 0.01f);
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
     Texture Map = LoadTexture("resourse/Map.png");
     Camera2D camera = { 0, };
@@ -13,11 +16,14 @@ int main()
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
     EnemyManager<TestEnemy> testenemy(&player);
+    bool isMusicPause = false;
 
     while (WindowShouldClose() == false) {
         BeginDrawing();
         ClearBackground(BLACK);
         //update
+        UpdateMusicStream(music);
+        
         player.Update();
         camera.target = player.GetPosition();
         testenemy.UpdateEnemies();
@@ -53,6 +59,21 @@ int main()
             if (IsKeyReleased(KEY_F1)) {
                 testenemy.SpawnEnemies(1);
             }
+            // Restart music playing (stop and play) (KEY_F10)
+            if (IsKeyPressed(KEY_F10)) {
+                StopMusicStream(music);
+                PlayMusicStream(music);
+            }
+            else if (IsKeyPressed(KEY_F11)) {
+                isMusicPause = !isMusicPause;
+                if (isMusicPause) {
+                    PauseMusicStream(music);
+                }
+                else {
+                    ResumeMusicStream(music);
+                }
+            }
+            
             //draw test map
             DrawTextureEx(Map, { -float(Map.width / 2), -float(Map.height / 2) }, 0, 1, WHITE);
         }

@@ -3,6 +3,8 @@
 Enemy::Enemy(Player* _player) : player(_player) {
 	position = player->spawnpoint[rand() % 8];
 }
+Enemy::~Enemy() {
+}
 
 void Enemy::ChasePlayer() {
 	if (isPlayerFollowType) {
