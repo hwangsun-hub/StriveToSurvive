@@ -99,8 +99,7 @@ int main()
             EndMode2D();
             EndDrawing();
             break;
-        case GAMESTATE_STOP:
-            break;
+        
         }
        
     }

@@ -36,7 +36,8 @@ constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 enum GameState {
 	GAMESTATE_TITLE,
 	GAMESTATE_INGAME,
-	GAMESTATE_STOP
+	GAMESTATE_SETTING,
+	GAMESTATE_SHOPPING
 };
 
 
@@ -274,9 +275,26 @@ public:
 
 class GameTitle {
 private:
+	//basic sprite
 	Texture DigiPen_logo_sprite = LoadTexture("resourse/DigiPen_logo.png");
 	Texture Game_Title_sprite = LoadTexture("resourse/DigiPen_logo.png");
+	//for update camera
 	Camera camera;
+	//for making interaction (if you click the button, gametitle state is change)
+	Rectangle game_start_button;
+	Rectangle game_setting_button;
+	Rectangle game_exit_button;
+	//gametitle state
+	enum State {
+		INTRO,
+		TITLE,
+		GAME_START,
+		SETTING,
+		EXIT
+	};
+public:
+	void ButtonUpdate();
+
 
 
 
