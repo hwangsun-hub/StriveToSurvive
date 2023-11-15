@@ -74,8 +74,6 @@ void Player::Draw(){
     //player sprite
     if (isstanding) {
         //sprite timer
-        standing_sprite_timer.SetTimer(0.1f);
-        standing_sprite_timer.UpdateTimer();
         if (standing_sprite_timer.TimerDone()) {
             standing_sprite_index++;
             if (standing_sprite_index == PLAYER_STANDING_SPRITE_MAXNUM) {
@@ -95,8 +93,6 @@ void Player::Draw(){
     }
     else {
         //sprite timer
-        walking_sprite_timer.SetTimer(0.1f);
-        walking_sprite_timer.UpdateTimer();
         if (walking_sprite_timer.TimerDone()) {
             walking_sprite_index++;
             if (walking_sprite_index == PLAYER_WALKING_SPRITE_MAXNUM) {
@@ -150,6 +146,16 @@ void Player::UpdateHitbox() {
 }
 
 void Player::Update() {
+    if (isstanding) {
+        //sprite timer
+        standing_sprite_timer.SetTimer(0.1f);
+        standing_sprite_timer.UpdateTimer();
+    }
+    else {
+        //sprite timer
+        walking_sprite_timer.SetTimer(0.1f);
+        walking_sprite_timer.UpdateTimer();
+    }
     if (!isAttackReady) {
         attack_cooltimer.SetTimer(attack_cooltime);
         attack_cooltimer.UpdateTimer();

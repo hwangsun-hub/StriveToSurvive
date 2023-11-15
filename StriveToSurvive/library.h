@@ -33,7 +33,11 @@ constexpr int SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
-
+enum GameState {
+	GAMESTATE_TITLE,
+	GAMESTATE_INGAME,
+	GAMESTATE_STOP
+};
 
 
 enum WeaponId {
@@ -41,7 +45,7 @@ enum WeaponId {
 	TEST_RANGED_WEAPON
 };
 
-
+extern GameState gamestate;
 //debug
 extern bool DEBUGING_MODE;
 
@@ -265,6 +269,16 @@ public:
 	~TestEnemy() {
 		UnloadTexture(sprite);
 	}
+
+};
+
+class GameTitle {
+private:
+	Texture DigiPen_logo_sprite = LoadTexture("resourse/DigiPen_logo.png");
+	Texture Game_Title_sprite = LoadTexture("resourse/DigiPen_logo.png");
+	Camera camera;
+
+
 
 };
 
