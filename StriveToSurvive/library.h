@@ -275,6 +275,7 @@ public:
 
 class GameTitle {
 private:
+
 	//basic sprite
 	Texture DigiPen_logo_sprite = LoadTexture("resourse/DigiPen_logo.png");
 	Texture Game_Title_sprite = LoadTexture("resourse/DigiPen_logo.png");
@@ -292,6 +293,11 @@ private:
 		SETTING,
 		EXIT
 	};
+
+	State currentState;
+
+
+
 public:
 	void ButtonUpdate();
 
