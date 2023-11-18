@@ -218,5 +218,9 @@ bool Player::GetisAttacking() {
     return isAttacking;
 }
 
+Rectangle Player::GetHitbox() {
+    return hitbox;
+}
+
 
 

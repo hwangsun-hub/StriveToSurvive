@@ -170,6 +170,7 @@ public:
 	Vector2 GetDeltaPosition();
 	float GetDamage();
 	bool GetisAttacking();
+	Rectangle GetHitbox();
 
 };
 
