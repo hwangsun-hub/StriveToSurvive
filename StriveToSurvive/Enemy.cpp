@@ -12,18 +12,14 @@ void Enemy::ChasePlayer() {
 			speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x))) * GetFrameTime(),
 			speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)))* GetFrameTime()
 		};
-		//if collision with player, then pushed by player
-		if (CheckCollisionRecs(hitbox, player->GetHitbox())) {
-			delta_position = player->GetDeltaPosition();
-		}
-		position.x += delta_position.x;
-		position.y += delta_position.y;
+		
+
 	}
 }
 
 void Enemy::UpdateHitbox() {
-	hitbox.x += GetDeltaPosition().x;
-	hitbox.y += GetDeltaPosition().y;
+	hitbox.x = GetPosition().x - hitbox.width / 2;
+	hitbox.y = GetPosition().y - hitbox.height / 2;
 }
 
 void Enemy::Damaged() {
@@ -47,8 +43,6 @@ void Enemy::UpdateState() {
 void Enemy::Update() {
 	sprite_timer.SetTimer(0.1f);
 	sprite_timer.UpdateTimer();
-	
-	ChasePlayer();
 	UpdateHitbox();
 	UpdateState();
 	
@@ -101,3 +95,14 @@ int Enemy::Gethp() {
 	return hp;
 }
 
+Rectangle Enemy::GetHitbox() {
+	return hitbox;
+}
+
+void Enemy::SetPosition(Vector2 _position) {
+	position = _position;
+}
+
+void Enemy::SetDeltaPosition(Vector2 _deltaposition) {
+	delta_position = _deltaposition;
+}

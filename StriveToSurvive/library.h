@@ -91,7 +91,7 @@ private:
 
 	//player state
 	int hp = 100;
-	float damage = 100;
+	float damage = 10;
 	float speed = 200;
 
 	//By default in seconds
@@ -199,9 +199,6 @@ public:
 	Enemy(Player* player);
 	~Enemy();
 
-	Vector2 GetPosition();
-	Vector2 GetDeltaPosition();
-
 
 	//update
 	void ChasePlayer();
@@ -214,7 +211,16 @@ public:
 	void DrawHitbox();
 	void DrawhpBar();
 	void Draw();
+
+	//Get
+	Vector2 GetPosition();
+	Vector2 GetDeltaPosition();
 	int Gethp();
+	Rectangle GetHitbox();
+
+	//Set
+	void SetPosition(Vector2);
+	void SetDeltaPosition(Vector2);
 };
 
 //EnemyManager.cpp
@@ -237,12 +243,45 @@ public:
 		}
 	}
 
+
 	void UpdateEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
+			enemies[i]->ChasePlayer();
+		}
+		for (int i = 0; i < enemies.size(); i++) {
+			Rectangle MovXHitbox = { enemies[i]->GetHitbox().x + enemies[i]->GetDeltaPosition().x, enemies[i]->GetHitbox().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
+			Rectangle MovYHitbox = { enemies[i]->GetHitbox().x, enemies[i]->GetHitbox().y + enemies[i]->GetDeltaPosition().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
+			if (CheckCollisionRecs(MovXHitbox, player->GetHitbox())) {
+				enemies[i]->SetDeltaPosition({ player->GetDeltaPosition().x,  enemies[i]->GetDeltaPosition().y });
+			}
+			if (CheckCollisionRecs(MovYHitbox, player->GetHitbox())) {
+				enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, player->GetDeltaPosition().y });
+			}
+			for (int j = i + 1; j < enemies.size(); j++) {
+				//if collision with player, then pushed by player
+
+				if (CheckCollisionRecs(MovXHitbox, enemies[j]->GetHitbox())) {
+					enemies[i]->SetDeltaPosition({ 0, enemies[i]->GetDeltaPosition().y });
+				}
+				
+				if (CheckCollisionRecs(MovYHitbox, enemies[j]->GetHitbox())) {
+					enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, 0 });
+				}
+				
+			}
+			if (CheckCollisionRecs(MovXHitbox, player->GetHitbox())) {
+				enemies[i]->SetDeltaPosition({ player->GetDeltaPosition().x,  enemies[i]->GetDeltaPosition().y });
+			}
+			if (CheckCollisionRecs(MovYHitbox, player->GetHitbox())) {
+				enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, player->GetDeltaPosition().y });
+			}
+			enemies[i]->SetPosition({ enemies[i]->GetPosition().x + enemies[i]->GetDeltaPosition().x, enemies[i]->GetPosition().y + enemies[i]->GetDeltaPosition().y });
+
 			enemies[i]->Update();
 			if (enemies[i]->Gethp() <= 0) {
 				delete enemies[i];
 				enemies.erase(enemies.begin() + i);
+
 			}
 		}
 	}
@@ -264,8 +303,8 @@ public:
 		UnloadTexture(sprite);
 		sprite = LoadTexture("resourse/monster1.png");
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
-		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
-		speed = 100;
+		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 2) };
+		speed = 100 + rand() % 100;
 		hp = 100;
 	}
 	~TestEnemy() {

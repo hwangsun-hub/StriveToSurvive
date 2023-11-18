@@ -72,7 +72,7 @@ int main()
                 }
                 //Spawn a Enemy (KEY_F1)
                 if (IsKeyReleased(KEY_F1)) {
-                    testenemy.SpawnEnemies(10);
+                    testenemy.SpawnEnemies(2);
                 }
                 // Restart music playing (stop and play) (KEY_F10)
                 if (IsKeyPressed(KEY_F10)) {
@@ -94,8 +94,8 @@ int main()
             }
 
             //draw
-            testenemy.DrawEnemies();
             player.Draw();
+            testenemy.DrawEnemies();
             EndMode2D();
             EndDrawing();
             break;
