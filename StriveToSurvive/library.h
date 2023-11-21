@@ -61,6 +61,10 @@ public:
 	bool TimerDone();
 };
 
+//Item.cpp
+class Item {
+
+};
 
 
 
@@ -78,8 +82,6 @@ public:
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
 	WeaponId GetWeapon();
-
-
 };
 
 

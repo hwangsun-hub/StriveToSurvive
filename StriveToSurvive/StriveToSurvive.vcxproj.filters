@@ -21,7 +21,7 @@
     <ClCompile Include="player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="item.cpp">
+    <ClCompile Include="weapon.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="enemy.cpp">
