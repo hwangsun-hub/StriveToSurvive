@@ -10,7 +10,7 @@ void Enemy::ChasePlayer() {
 	if (isPlayerFollowType) {
 		delta_position = {
 			speed * cos(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x))) * GetFrameTime(),
-			speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x)))* GetFrameTime()
+			speed * sin(atan2f((player->GetPosition().y - position.y), (player->GetPosition().x - position.x))) * GetFrameTime()
 		};
 		
 

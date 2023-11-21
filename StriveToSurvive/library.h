@@ -64,8 +64,13 @@ public:
 //Item.cpp
 class Item {
 private:
-	std::map<std::string, Texture> wapon_icon;
-	std::map<std::string, Texture> wapon_sprite;
+	std::map<std::string, Texture> weapon_icon;
+	std::map<std::string, Texture> weapon_sprite;
+public:
+	Texture GetWeaponIcon(std::string);
+	void SetWeaponIcon();
+	Texture GetWeaponSprite(std::string);
+	void SetWeaponSprite();
 };
 
 
@@ -257,13 +262,12 @@ public:
 			Rectangle MovXHitbox = { enemies[i]->GetHitbox().x + enemies[i]->GetDeltaPosition().x, enemies[i]->GetHitbox().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
 			Rectangle MovYHitbox = { enemies[i]->GetHitbox().x, enemies[i]->GetHitbox().y + enemies[i]->GetDeltaPosition().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
 			if (CheckCollisionRecs(MovXHitbox, player->GetHitbox())) {
-				enemies[i]->SetDeltaPosition({ player->GetDeltaPosition().x,  enemies[i]->GetDeltaPosition().y });
+				enemies[i]->SetDeltaPosition({ player->GetDeltaPosition().x, enemies[i]->GetDeltaPosition().y });
 			}
 			if (CheckCollisionRecs(MovYHitbox, player->GetHitbox())) {
 				enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, player->GetDeltaPosition().y });
 			}
 			for (int j = i + 1; j < enemies.size(); j++) {
-				//if collision with player, then pushed by player
 
 				if (CheckCollisionRecs(MovXHitbox, enemies[j]->GetHitbox())) {
 					enemies[i]->SetDeltaPosition({ 0, enemies[i]->GetDeltaPosition().y });
@@ -348,6 +352,7 @@ private:
 	std::vector<Weapon> Items;
 public:
 	Shop(Player);
+
 	void Update();
 	void Draw();
 };

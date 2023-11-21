@@ -27,5 +27,3 @@ void Weapon::SetWeapon(WeaponId _weaponid) {
 WeaponId Weapon::GetWeapon() {
 	return weaponid;
 }
-
-

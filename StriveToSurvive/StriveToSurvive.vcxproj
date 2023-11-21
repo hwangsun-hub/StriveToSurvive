@@ -129,6 +129,8 @@
   <ItemGroup>
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="gametitle.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="shop.cpp" />
     <ClCompile Include="weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
