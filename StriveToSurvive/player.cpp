@@ -67,6 +67,9 @@ void Player::Attack() {
         }
 
     }
+    else if (GetWeapon() == TEST_RANGED_WEAPON) {
+
+    }
 }
 void Player::Dodge() {}
 void Player::Skill() {}
@@ -130,7 +133,7 @@ Vector2 Player::GetDeltaPosition() {
 
 void Player::UpdateSpawnpoint() {
     for (Vector2& position : spawnpoint) {
-        position = Vector2Add(position, GetDeltaPosition());
+        position = { position.x + GetDeltaPosition().x, position.y + GetDeltaPosition().y };
     }
 }
 void Player::UpdateHitbox() {
