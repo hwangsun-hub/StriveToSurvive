@@ -8,7 +8,6 @@
 #include <vector>
 #include <string>
 #include <cmath>
-#include <raymath.h>
 #include <ctime>
 #include <random>
 #include <rlgl.h>
