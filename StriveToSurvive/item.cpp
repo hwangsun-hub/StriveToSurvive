@@ -1,10 +1,10 @@
 #include "library.h"
 
-bool Item::GetisWeaponTypeMelee() {
+bool Weapon::GetisWeaponTypeMelee() {
 	return isWeaponTypeMelee;
 }
 
-void Item::SetWeapon(WeaponId _weaponid) {
+void Weapon::SetWeapon(WeaponId _weaponid) {
 	weaponid = _weaponid;
 	switch (weaponid)
 	{
@@ -24,7 +24,7 @@ void Item::SetWeapon(WeaponId _weaponid) {
 	}
 }
 
-WeaponId Item::GetWeapon() {
+WeaponId Weapon::GetWeapon() {
 	return weaponid;
 }
 

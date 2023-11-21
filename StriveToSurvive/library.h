@@ -64,8 +64,8 @@ public:
 
 
 
-//Item.cpp
-class Item {
+//Weapon.cpp
+class Weapon {
 private:
 	WeaponId weaponid = TEST_MELEE_WEAPON;
 	bool isWeaponTypeMelee = true;
@@ -84,7 +84,7 @@ public:
 
 
 //player.cpp
-class Player : public Item{
+class Player : public Weapon{
 private:
 	//camera
 	Camera2D camera;
@@ -93,6 +93,7 @@ private:
 	int hp = 100;
 	float damage = 10;
 	float speed = 200;
+	int money = 0;
 
 	//By default in seconds
 	float attack_cooltime = 0.25f;
@@ -316,7 +317,6 @@ public:
 //gametiltle.cpp 
 class GameTitle {
 private:
-
 	//basic sprite
 	Texture DigiPen_logo_sprite = LoadTexture("resourse/DigiPen_logo.png");
 	Texture Game_Title_sprite = LoadTexture("resourse/DigiPen_logo.png");
@@ -334,17 +334,18 @@ private:
 		SETTING,
 		EXIT
 	};
-
-	State currentState;
-
-
-
 public:
 	void ButtonUpdate();
+};
 
-
-
-
+class Shop {
+private:
+	Player player;
+	std::vector<Weapon> Items;
+public:
+	Shop(Player);
+	void Update();
+	void Draw();
 };
 
 
