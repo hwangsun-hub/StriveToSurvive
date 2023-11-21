@@ -12,6 +12,7 @@
 #include <ctime>
 #include <random>
 #include <rlgl.h>
+#include <map>
 
 
 //Global Constants
@@ -63,7 +64,9 @@ public:
 
 //Item.cpp
 class Item {
-
+private:
+	std::map<std::string, Texture> wapon_icon;
+	std::map<std::string, Texture> wapon_sprite;
 };
 
 
