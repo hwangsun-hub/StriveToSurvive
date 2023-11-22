@@ -67,6 +67,7 @@ private:
 	std::map<std::string, Texture> weapon_icon;
 	std::map<std::string, Texture> weapon_sprite;
 public:
+	Item();
 	Texture GetWeaponIcon(std::string);
 	void SetWeaponIcon();
 	Texture GetWeaponSprite(std::string);
