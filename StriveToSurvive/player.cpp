@@ -225,5 +225,13 @@ Rectangle Player::GetHitbox() {
     return hitbox;
 }
 
+int Player::GetMoney() {
+    return money;
+}
+
+void Player::SetMoney(int _money) {
+    money = _money;
+}
+
 
 

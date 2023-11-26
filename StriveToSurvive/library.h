@@ -12,6 +12,7 @@
 #include <random>
 #include <rlgl.h>
 #include <map>
+#include <tuple>
 
 
 //Global Constants
@@ -31,6 +32,7 @@ constexpr int MELEE_ATTACK_SPRITE_MAXNUM = 4;
 
 constexpr int SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
+constexpr int ITEM_ICON_SIZE{ 64 };
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 enum GameState {
@@ -64,13 +66,13 @@ public:
 //Item.cpp
 class Item {
 private:
-	std::map<std::string, Texture> weapon_icon;
-	std::map<std::string, Texture> weapon_sprite;
+	std::map<WeaponId, Texture> weapon_icon;
+	std::map<WeaponId, Texture> weapon_sprite;
 public:
 	Item();
-	Texture GetWeaponIcon(std::string);
+	Texture GetWeaponIcon(WeaponId);
 	void SetWeaponIcon();
-	Texture GetWeaponSprite(std::string);
+	Texture GetWeaponSprite(WeaponId);
 	void SetWeaponSprite();
 };
 
@@ -142,6 +144,7 @@ private:
 
 
 public:
+	Player();
 	Player(Camera2D);
 
 	Vector2 spawnpoint[8] = {
@@ -182,6 +185,8 @@ public:
 	float GetDamage();
 	bool GetisAttacking();
 	Rectangle GetHitbox();
+	int GetMoney();
+	void SetMoney(int);
 
 };
 
@@ -347,14 +352,18 @@ public:
 	void ButtonUpdate();
 };
 
-class Shop {
+class Shop : public Item{
 private:
-	Player player;
+	Player* player;
 	std::vector<Weapon> Items;
+	//WeaponId, Texture, Hitbox, price
+	std::vector < std::tuple<WeaponId, Texture, Rectangle, int> > Icons;
 public:
-	Shop(Player);
-
+	Shop(Player*);
+	void UpdateUI();
+	void UpdatePlayerBuy();
 	void Update();
+	void DrawUI();
 	void Draw();
 };
 
