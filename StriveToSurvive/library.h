@@ -29,6 +29,8 @@ constexpr int PLAYER_WALKING_SPRITE_MAXNUM = 5;
 constexpr int MONSTER1_SPRITE_MAXNUM = 4;
 constexpr int MONSTER2_SPRITE_MAXNUM = 8;
 constexpr int MELEE_ATTACK_SPRITE_MAXNUM = 4;
+constexpr int GAME_TITLE_SPRITE_VERTICAL_MAXNUM = 4;
+constexpr int GAME_TITLE_SPRITE_HORIZON_MAXNUM = 3;
 
 constexpr int SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
@@ -333,13 +335,14 @@ class GameTitle {
 private:
 	//basic sprite
 	Texture DigiPen_logo_sprite = LoadTexture("resourse/DigiPen_logo.png");
-	Texture Game_Title_sprite = LoadTexture("resourse/DigiPen_logo.png");
-	//for update camera
-	Camera camera;
+	Texture Game_Title_sprite = LoadTexture("resourse/game_logo_finished.png");
+	
 	//for making interaction (if you click the button, gametitle state is change)
-	Rectangle game_start_button;
-	Rectangle game_setting_button;
-	Rectangle game_exit_button;
+	Rectangle game_start_button = { 62, 323, 110, 65 };
+	Rectangle game_option_button = { 62, 393, 169, 65  };
+	Rectangle game_credit_button = { 62, 468, 143, 65 };
+	Rectangle game_quit_button = { 62, 542, 92, 65 };
+	std::vector<Rectangle> buttons = { game_start_button , game_option_button , game_credit_button , game_quit_button };
 	//gametitle state
 	enum State {
 		INTRO,
@@ -348,8 +351,14 @@ private:
 		SETTING,
 		EXIT
 	};
+	//timer
+	Timer game_title_timer;
+	int game_title_sprite_vertical_index = 0;
+	int game_title_sprite_horizon_index = 0;
 public:
 	void ButtonUpdate();
+	void Update();
+	void Draw();
 };
 
 class Shop : public Item{

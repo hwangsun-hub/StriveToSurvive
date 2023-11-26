@@ -3,7 +3,7 @@
 bool DEBUGING_MODE = true;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_SHOPPING;
+GameState gamestate = GAMESTATE_TITLE;
 
 int main()
 {
@@ -23,6 +23,7 @@ int main()
     camera.zoom = 1;
     EnemyManager<TestEnemy> testenemy(&player);
     Shop shop(&player);
+    GameTitle gametitle;
     bool isMusicPause = false;
     bool isGamePause = false;
 
@@ -33,6 +34,12 @@ int main()
         switch (gamestate)
         {
         case GAMESTATE_TITLE:
+            camera.target = { WINDOW_START_WIDTH / 2 ,WINDOW_START_HEIGHT / 2 };
+            gametitle.Update();
+            BeginMode2D(camera);
+            gametitle.Draw();
+            EndMode2D();
+            EndDrawing();
             break;
         case GAMESTATE_INGAME:
             //update
