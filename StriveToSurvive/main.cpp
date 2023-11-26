@@ -1,6 +1,7 @@
 ﻿#include "library.h"
 
 bool DEBUGING_MODE = true;
+bool exitWindow = false;
 
 //defalt : GAMESTATE_TITLE
 GameState gamestate = GAMESTATE_TITLE;
@@ -27,7 +28,7 @@ int main()
     bool isMusicPause = false;
     bool isGamePause = false;
 
-    while (WindowShouldClose() == false) {
+    while (!WindowShouldClose() && !exitWindow) {
         BeginDrawing();
         ClearBackground(BLACK);
         //update

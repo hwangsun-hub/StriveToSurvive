@@ -51,6 +51,7 @@ enum WeaponId {
 };
 
 extern GameState gamestate;
+extern bool exitWindow;
 //debug
 extern bool DEBUGING_MODE;
 
@@ -343,14 +344,6 @@ private:
 	Rectangle game_credit_button = { 62, 468, 143, 65 };
 	Rectangle game_quit_button = { 62, 542, 92, 65 };
 	std::vector<Rectangle> buttons = { game_start_button , game_option_button , game_credit_button , game_quit_button };
-	//gametitle state
-	enum State {
-		INTRO,
-		TITLE,
-		GAME_START,
-		SETTING,
-		EXIT
-	};
 	//timer
 	Timer game_title_timer;
 	int game_title_sprite_vertical_index = 0;

@@ -14,6 +14,27 @@ void GameTitle::Update() {
             }
         }
     }
+    for (int i = 0; i < buttons.size(); i++) {
+        if (CheckCollisionPointRec(GetMousePosition(), buttons[i]) && IsMouseButtonReleased(MOUSE_BUTTON_LEFT)) {
+            switch (i)
+            {
+            //start button
+            case 0:
+                gamestate = GAMESTATE_INGAME;
+                break;
+            //option button
+            case 1:
+                break;
+            //credit button
+            case 2:
+                break;
+            //quit button
+            case 3:
+                exitWindow = true;
+                break;
+            }
+        }
+    }
 }
 
 void GameTitle::Draw() {
@@ -27,7 +48,7 @@ void GameTitle::Draw() {
     );
     for (int i = 0; i < buttons.size(); i++) {
         if (CheckCollisionPointRec(GetMousePosition(), buttons[i])) {
-            DrawRectangleLinesEx(buttons[i], 2, BROWN);
+            DrawRectangleLinesEx(buttons[i], 2, LIGHTGRAY);
         }
     }
    

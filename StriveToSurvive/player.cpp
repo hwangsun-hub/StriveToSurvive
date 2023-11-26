@@ -50,7 +50,7 @@ void Player::Move() {
 }
 void Player::Attack() {
     if (GetWeapon() == TEST_MELEE_WEAPON) {
-        if (IsMouseButtonPressed(MOUSE_BUTTON_LEFT) && isAttackReady) {
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
             melee_weapon_attack_sprite_index = 0;
             isAttackReady = false;
             isAttacking = true;
