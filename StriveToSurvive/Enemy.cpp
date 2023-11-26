@@ -33,7 +33,7 @@ void Enemy::Damaged() {
 void Enemy::UpdateState() {
 	if (
 		player->GetisAttacking() &&
-		IsMouseButtonPressed(MOUSE_BUTTON_LEFT) &&
+		IsMouseButtonDown(MOUSE_BUTTON_LEFT) &&
 		CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2}, MELEE_ATTACK_HITBOX_SIZE, hitbox)) {
 		Damaged();
 	}

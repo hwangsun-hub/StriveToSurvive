@@ -348,8 +348,10 @@ private:
 	Timer game_title_timer;
 	int game_title_sprite_vertical_index = 0;
 	int game_title_sprite_horizon_index = 0;
+	Timer digipen_logo_timer;
+	//bool
+	bool isDigiPenLogoEnd = false;
 public:
-	void ButtonUpdate();
 	void Update();
 	void Draw();
 };
