@@ -25,18 +25,35 @@ void Enemy::UpdateHitbox() {
 void Enemy::Damaged() {
 	hp -= player->GetDamage();
 	//knockback
-	position.x -= ENEMY_KNONKBACK * delta_position.x;
-	position.y -= ENEMY_KNONKBACK * delta_position.y;
-	hitbox.x -= ENEMY_KNONKBACK * delta_position.x;
-	hitbox.y -= ENEMY_KNONKBACK * delta_position.y;
+	Knockbacked();
 }
+
+void Enemy::Knockbacked() {
+	delta_position.x = -ENEMY_KNOCKBACK * delta_position.x;
+	delta_position.y = -ENEMY_KNOCKBACK * delta_position.y;
+	isKnockback = true;
+}
+
+
 void Enemy::UpdateState() {
-	if (
-		player->GetisAttacking() &&
-		IsMouseButtonDown(MOUSE_BUTTON_LEFT) &&
-		CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2}, MELEE_ATTACK_HITBOX_SIZE, hitbox)) {
-		Damaged();
+	if (player_attack != player->GetisAttacking() && player_attack == false) {
+		if (
+			CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2 }, MELEE_ATTACK_HITBOX_SIZE, hitbox)
+			) {
+			Damaged();
+		}
+		
 	}
+	else {
+		isKnockback = false;
+	}
+
+	
+	player_attack = player->GetisAttacking();
+}
+
+void Enemy::Attack() {
+
 }
 
 
@@ -106,3 +123,9 @@ void Enemy::SetPosition(Vector2 _position) {
 void Enemy::SetDeltaPosition(Vector2 _deltaposition) {
 	delta_position = _deltaposition;
 }
+
+bool Enemy::GetisKnockback() {
+	return isKnockback;
+}
+
+

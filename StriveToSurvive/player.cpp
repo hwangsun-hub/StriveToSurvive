@@ -32,7 +32,15 @@ void Player::Move() {
     }
     
     // Update the player's delta position
-    delta_position = { moveX * speed * GetFrameTime() , moveY * speed * GetFrameTime() };
+    if (position.x + moveX * speed * GetFrameTime() >= TILE_MAP_SIZE - WINDOW_START_WIDTH / 2 || position.x  + moveX * speed * GetFrameTime() <= -TILE_MAP_SIZE + WINDOW_START_WIDTH / 2) {
+        delta_position = { 0 , moveY * speed * GetFrameTime() };
+    }
+    else if (position.y + moveY * speed * GetFrameTime() >= TILE_MAP_SIZE - WINDOW_START_HEIGHT / 2 || position.y + moveY * speed * GetFrameTime() <= -TILE_MAP_SIZE + WINDOW_START_HEIGHT / 2) {
+        delta_position = { moveX * speed * GetFrameTime() , 0 };
+    }
+    else {
+        delta_position = { moveX * speed * GetFrameTime() , moveY * speed * GetFrameTime() };
+    }
 
     // Check for movement
     if (moveX == 0 && moveY == 0) {
@@ -49,7 +57,7 @@ void Player::Move() {
     }
 }
 void Player::Attack() {
-    if (GetWeapon() == TEST_MELEE_WEAPON) {
+    if (GetisWeaponTypeMelee()) {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
             melee_weapon_attack_sprite_index = 0;
             isAttackReady = false;
@@ -67,7 +75,7 @@ void Player::Attack() {
         }
 
     }
-    else if (GetWeapon() == TEST_RANGED_WEAPON) {
+    else if (!GetisWeaponTypeMelee()) {
 
     }
 }
@@ -126,6 +134,7 @@ void Player::Draw(){
 Vector2 Player::GetPosition() {
     return position;
 }
+
 
 Vector2 Player::GetDeltaPosition() {
     return delta_position;

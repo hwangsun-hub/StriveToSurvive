@@ -22,6 +22,7 @@ int main()
     Player player(camera);
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1;
+    TileMap tilemap(&player);
     EnemyManager<TestEnemy> testenemy(&player);
     Shop shop(&player);
     GameTitle gametitle;
@@ -48,6 +49,7 @@ int main()
             player.Update();
             camera.target = player.GetPosition();
             testenemy.UpdateEnemies();
+            tilemap.Update();
             BeginMode2D(camera);
             //debug mode toggle (KEY_F5)
             if (IsKeyReleased(KEY_F5)) {
@@ -103,6 +105,7 @@ int main()
             }
 
             //draw
+            tilemap.Draw();
             player.Draw();
             testenemy.DrawEnemies();
             EndMode2D();

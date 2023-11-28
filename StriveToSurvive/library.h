@@ -22,7 +22,7 @@ constexpr int WINDOW_FRAMES_PER_SECOND = 60;
 
 constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
 constexpr float MELEE_ATTACK_HITBOX_SIZE = 50;
-constexpr float ENEMY_KNONKBACK = 25;
+constexpr float ENEMY_KNOCKBACK = 25;
 
 constexpr int PLAYER_STANDING_SPRITE_MAXNUM = 6;
 constexpr int PLAYER_WALKING_SPRITE_MAXNUM = 5;
@@ -35,6 +35,8 @@ constexpr int GAME_TITLE_SPRITE_HORIZON_MAXNUM = 3;
 constexpr int SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
 constexpr int ITEM_ICON_SIZE{ 64 };
+constexpr int TILE_MAP_SIZE{ 1920 };
+
 
 constexpr char WINDOW_NAME[]{ "Strive To Survive" };
 enum GameState {
@@ -65,6 +67,8 @@ public:
 	void UpdateTimer();
 	bool TimerDone();
 };
+
+
 
 //Item.cpp
 class Item {
@@ -107,7 +111,7 @@ private:
 	//player state
 	int hp = 100;
 	float damage = 10;
-	float speed = 200;
+	float speed = 500;
 	int money = 0;
 
 	//By default in seconds
@@ -211,8 +215,11 @@ protected:
 	Rectangle hitbox{ 0, };
 
 	float speed = 0;
+	float damage = 0;
 	int hp = 10;
 	bool isPlayerFollowType = true;
+	bool isKnockback = false;
+	bool player_attack = false;
 
 public: 
 	Enemy(Player* player);
@@ -223,7 +230,9 @@ public:
 	void ChasePlayer();
 	void UpdateHitbox();
 	void Damaged();
+	void Knockbacked();
 	void UpdateState();
+	void Attack();
 	void Update();
 
 	//draw
@@ -240,6 +249,7 @@ public:
 	//Set
 	void SetPosition(Vector2);
 	void SetDeltaPosition(Vector2);
+	bool GetisKnockback();
 };
 
 //EnemyManager.cpp
@@ -265,9 +275,9 @@ public:
 
 	void UpdateEnemies() {
 		for (int i = 0; i < enemies.size(); i++) {
-			enemies[i]->ChasePlayer();
-		}
-		for (int i = 0; i < enemies.size(); i++) {
+			if (!(enemies[i]->GetisKnockback())) {
+				enemies[i]->ChasePlayer();
+			}
 			Rectangle MovXHitbox = { enemies[i]->GetHitbox().x + enemies[i]->GetDeltaPosition().x, enemies[i]->GetHitbox().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
 			Rectangle MovYHitbox = { enemies[i]->GetHitbox().x, enemies[i]->GetHitbox().y + enemies[i]->GetDeltaPosition().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
 			if (CheckCollisionRecs(MovXHitbox, player->GetHitbox())) {
@@ -276,25 +286,7 @@ public:
 			if (CheckCollisionRecs(MovYHitbox, player->GetHitbox())) {
 				enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, player->GetDeltaPosition().y });
 			}
-			for (int j = i + 1; j < enemies.size(); j++) {
-
-				if (CheckCollisionRecs(MovXHitbox, enemies[j]->GetHitbox())) {
-					enemies[i]->SetDeltaPosition({ 0, enemies[i]->GetDeltaPosition().y });
-				}
-				
-				if (CheckCollisionRecs(MovYHitbox, enemies[j]->GetHitbox())) {
-					enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, 0 });
-				}
-				
-			}
-			if (CheckCollisionRecs(MovXHitbox, player->GetHitbox())) {
-				enemies[i]->SetDeltaPosition({ player->GetDeltaPosition().x,  enemies[i]->GetDeltaPosition().y });
-			}
-			if (CheckCollisionRecs(MovYHitbox, player->GetHitbox())) {
-				enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, player->GetDeltaPosition().y });
-			}
-			enemies[i]->SetPosition({ enemies[i]->GetPosition().x + enemies[i]->GetDeltaPosition().x, enemies[i]->GetPosition().y + enemies[i]->GetDeltaPosition().y });
-
+			enemies[i]->SetPosition({ enemies[i]->GetPosition().x + enemies[i]->GetDeltaPosition().x , enemies[i]->GetPosition().y + enemies[i]->GetDeltaPosition().y });
 			enemies[i]->Update();
 			if (enemies[i]->Gethp() <= 0) {
 				delete enemies[i];
@@ -369,6 +361,18 @@ public:
 	void Update();
 	void DrawUI();
 	void Draw();
+};
+
+//TileMap.cpp
+class TileMap {
+private:
+	Player* player;
+	Texture map = LoadTexture("resourse/TileMap1920.png");
+public:
+	TileMap(Player* _player);
+	void Update();
+	void Draw();
+
 };
 
 
