@@ -43,6 +43,14 @@ int main()
             EndMode2D();
             EndDrawing();
             break;
+        case GAMESTATE_BEFORE_GAME:
+            camera.target = { 0,0 };
+            //update
+            BeginMode2D(camera);
+            //draw
+            EndMode2D();
+            EndDrawing();
+            break;
         case GAMESTATE_INGAME:
             //update
             UpdateMusicStream(music);
