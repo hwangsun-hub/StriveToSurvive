@@ -32,15 +32,9 @@ void Player::Move() {
     }
     
     // Update the player's delta position
-    if (position.x + moveX * speed * GetFrameTime() >= TILE_MAP_SIZE - WINDOW_START_WIDTH / 2 || position.x  + moveX * speed * GetFrameTime() <= -TILE_MAP_SIZE + WINDOW_START_WIDTH / 2) {
-        delta_position = { 0 , moveY * speed * GetFrameTime() };
-    }
-    else if (position.y + moveY * speed * GetFrameTime() >= TILE_MAP_SIZE - WINDOW_START_HEIGHT / 2 || position.y + moveY * speed * GetFrameTime() <= -TILE_MAP_SIZE + WINDOW_START_HEIGHT / 2) {
-        delta_position = { moveX * speed * GetFrameTime() , 0 };
-    }
-    else {
-        delta_position = { moveX * speed * GetFrameTime() , moveY * speed * GetFrameTime() };
-    }
+    
+     delta_position = { moveX * speed * GetFrameTime() , moveY * speed * GetFrameTime() };
+    
 
     // Check for movement
     if (moveX == 0 && moveY == 0) {
