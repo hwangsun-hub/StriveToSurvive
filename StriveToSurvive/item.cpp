@@ -113,5 +113,35 @@ std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 	}
 }
 
-std::tuple<OrbId, OrbId> Item::GetCombinationtype(OrbId){
+std::tuple<OrbId, OrbId> Item::GetCombinationtype(OrbId _orbid){
+	switch (_orbid)
+	{
+	case UNCOMMON_ARMORORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_LIFEORB, OrbId::COMMON_IRONORB };
+		break;
+	case UNCOMMON_TRANSFUSIONORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_LIFEORB, OrbId::COMMON_BLOODORB };
+		break;
+	case UNCOMMON_ROARORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_SPRINGORB, OrbId::COMMON_RANGEORB };
+		break;
+	case UNCOMMON_RAGEORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_ANGERORB, OrbId::COMMON_IRONORB };
+		break;
+	case UNCOMMON_SEAORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_WATERORB, OrbId::COMMON_WINDORB };
+		break;
+	case UNCOMMON_HUNGERORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_BLOODORB, OrbId::COMMON_BLOODORB };
+		break;
+	case UNCOMMON_SWIFTNESSORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_WINDORB, OrbId::COMMON_WINDORB };
+		break;
+	case UNCOMMON_CHARGEORB:
+		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_ANGERORB, OrbId::COMMON_RANGEORB };
+		break;
+	default:
+		return std::tuple<OrbId, OrbId>{ OrbId::NONE, OrbId::NONE };
+		break;
+	}
 }
