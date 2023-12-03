@@ -43,6 +43,7 @@ enum GameState {
 	GAMESTATE_TITLE,
 	GAMESTATE_BEFORE_GAME,
 	GAMESTATE_INGAME,
+	GAMESTATE_GAMEOVER,
 	GAMESTATE_SETTING,
 	GAMESTATE_SHOPPING
 };
@@ -140,9 +141,11 @@ private:
 public:
 	Texture weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
 	Texture melee_weapon_attack_sprite = LoadTexture("resourse/melee_attack_sprite.png");
+
 	Rectangle weapon_sprite_source{ 0, };
 	Rectangle weapon_sprite_dest{ 0, };
 	Vector2 weapon_sprite_orgin{ 0, };
+
 	bool GetisWeaponTypeMelee();
 	void SetWeapon(WeaponId);
 	WeaponId GetWeapon();
@@ -225,6 +228,7 @@ public:
 
 
 	//draw
+	void DrawUi();
 	void DrawWeapon();
 	void DrawWeaponAttack();
 	void Draw();
