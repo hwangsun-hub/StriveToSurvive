@@ -1,7 +1,7 @@
 #include "library.h"
 
 Player::Player(Camera2D _camera) : camera(_camera){
-    SetWeapon(TEST_MELEE_WEAPON);
+    SetWeapon(COMMON_KATANA_KATANA);
 }
 
 void Player::Move() {
