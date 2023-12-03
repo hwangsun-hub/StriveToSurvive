@@ -237,5 +237,33 @@ void Player::SetMoney(int _money) {
     money = _money;
 }
 
+WeaponId Player::GetInventoryMeleeWeapon() {
+    return inventory_weapon[0];
+}
+
+void Player::SetInventoryMeleeWeapon(WeaponId _weaponid) {
+    inventory_weapon[0] = _weaponid;
+}
+
+WeaponId Player::GetInventoryRangedWeapon() {
+    return inventory_weapon[1];
+}
+
+void Player::SetInventoryRangedWeapon(WeaponId _weaponid) {
+    inventory_weapon[1] = _weaponid;
+}
+
+std::tuple<OrbId, OrbId, OrbId> Player::GetInventoryOrb() {
+    return std::tuple<OrbId, OrbId, OrbId>(inventory_orb[0], inventory_orb[1], inventory_orb[2]);
+}
+
+void Player::SetInventoryOrb(OrbId _orbid) {
+    for (int i = 0; i < sizeof(inventory_orb); i++) {
+        if (inventory_orb[i] != NONE_ORB) {
+            inventory_orb[i] = _orbid;
+            break;
+        }
+    }
+}
 
 
