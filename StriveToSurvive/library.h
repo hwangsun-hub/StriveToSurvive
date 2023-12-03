@@ -55,7 +55,6 @@ enum WeaponId {
 	UNCOMMON_KATANA_ZERO,
 	RARE_KATANA_STORMWIND,
 	RARE_KATANA_THUNDER,
-	RARE_KATANA_THUNDER,
 	RARE_KATANA_MASAMUNE,
 	RARE_KATANA_MURAMASA,
 	COMMON_GREATSWORD_GREATSWORD,
@@ -78,7 +77,8 @@ enum WeaponId {
 	RARE_SNIPERRIFLE_RAILGUN,
 	RARE_SNIPERRIFLE_PIRACY,
 	RARE_SNIPERRIFLE_CATERPILLAR,
-	RARE_SNIPERRIFLE_MAGICENGINEERING
+	RARE_SNIPERRIFLE_MAGICENGINEERING,
+	NONE
 };
 
 enum OrbId {
@@ -98,6 +98,7 @@ enum OrbId {
 	UNCOMMON_HUNGERORB,
 	UNCOMMON_SWIFTNESSORB,
 	UNCOMMON_CHARGEORB,
+	NONE
 };
 
 extern GameState gamestate;
@@ -129,6 +130,8 @@ public:
 	Texture GetWeaponIcon(WeaponId);
 	Texture GetWeaponSprite(WeaponId);
 	Texture GetOrbIcon(OrbId);
+	std::tuple<WeaponId, OrbId> GetCombinationtype(WeaponId);
+	std::tuple<OrbId, OrbId> GetCombinationtype(OrbId);
 };
 
 
