@@ -89,7 +89,7 @@ void Player::Draw(){
         //flip : float(islookingright ? 1 : -1)
         DrawTexturePro(
             standing_sprite,
-            { SPRITE_SIZE * float(standing_sprite_index), 0, SPRITE_SIZE * float(islookingright ? 1 : -1), SPRITE_SIZE},
+            { WEAPON_SPRITE_SIZE * float(standing_sprite_index), 0, WEAPON_SPRITE_SIZE * float(islookingright ? 1 : -1), WEAPON_SPRITE_SIZE},
             { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE},
             { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
             0,
@@ -108,7 +108,7 @@ void Player::Draw(){
         //flip : float(islookingright ? 1 : -1)
         DrawTexturePro(
             walking_sprite,
-            { SPRITE_SIZE * float(walking_sprite_index), 0, SPRITE_SIZE * float(islookingright ? 1 : -1), SPRITE_SIZE },
+            { WEAPON_SPRITE_SIZE * float(walking_sprite_index), 0, WEAPON_SPRITE_SIZE * float(islookingright ? 1 : -1), WEAPON_SPRITE_SIZE },
             { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE },
             { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
             0,
@@ -207,7 +207,7 @@ void Player::DrawWeaponAttack() {
     if (isAttacking) {
         DrawTexturePro(
             melee_weapon_attack_sprite,
-            { SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
+            { WEAPON_SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
             { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width, melee_attack_spritebox.height },
             { melee_attack_spritebox.width / 2, melee_attack_spritebox.height / 2 },
             atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) * RAD2DEG,

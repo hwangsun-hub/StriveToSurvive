@@ -32,8 +32,8 @@ constexpr int MELEE_ATTACK_SPRITE_MAXNUM = 4;
 constexpr int GAME_TITLE_SPRITE_VERTICAL_MAXNUM = 4;
 constexpr int GAME_TITLE_SPRITE_HORIZON_MAXNUM = 3;
 
-constexpr int SPRITE_SIZE = 32;
-constexpr int IN_GAME_SPRITE_SIZE{ SPRITE_SIZE * 4 };
+constexpr int WEAPON_SPRITE_SIZE = 32;
+constexpr int IN_GAME_SPRITE_SIZE{ WEAPON_SPRITE_SIZE * 4 };
 constexpr int ITEM_ICON_SIZE{ 64 };
 constexpr int TILE_MAP_SIZE{ 1920 };
 
@@ -188,9 +188,9 @@ private:
 	Vector2 delta_position{ 0,0 };
 	
 	//Player Hitbox
-	Rectangle hitbox{ float(- SPRITE_SIZE), float(- SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3)};
+	Rectangle hitbox{ float(- WEAPON_SPRITE_SIZE), float(- WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3)};
 	
-	Rectangle melee_attack_spritebox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
+	Rectangle melee_attack_spritebox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3) };
 
 	//sprite timer
 	Timer standing_sprite_timer;
@@ -217,7 +217,7 @@ public:
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
-	Rectangle melee_attack_hitbox{ float(SPRITE_SIZE), float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 3) };
+	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3) };
 	
 	//update
 	void Move();
@@ -367,7 +367,7 @@ public:
 		UnloadTexture(sprite);
 		sprite = LoadTexture("resourse/monster1.png");
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
-		hitbox = { position.x + float(-SPRITE_SIZE), position.y + float(-SPRITE_SIZE * 1.3), float(SPRITE_SIZE * 1.8), float(SPRITE_SIZE * 2) };
+		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) };
 		speed = 100 + rand() % 100;
 		hp = 100;
 	}

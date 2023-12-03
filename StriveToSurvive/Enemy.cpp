@@ -87,7 +87,7 @@ void Enemy::Draw() {
 	//draw
 	DrawTexturePro(
 		sprite,
-		{ SPRITE_SIZE * float(sprite_index), 0, SPRITE_SIZE, SPRITE_SIZE },
+		{ WEAPON_SPRITE_SIZE * float(sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
 		{0, 0, IN_GAME_SPRITE_SIZE, IN_GAME_SPRITE_SIZE },
 		{ IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
 		0,
