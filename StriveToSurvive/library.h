@@ -436,7 +436,7 @@ public:
 class TileMap {
 private:
 	Player* player;
-	Texture map = LoadTexture("resourse/TileMap1920.png");
+	Texture map = LoadTexture("resources/TileMap1920.png");
 public:
 	TileMap(Player* _player);
 	void Update();
