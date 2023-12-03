@@ -78,7 +78,7 @@ enum WeaponId {
 	RARE_SNIPERRIFLE_PIRACY,
 	RARE_SNIPERRIFLE_CATERPILLAR,
 	RARE_SNIPERRIFLE_MAGICENGINEERING,
-	NONE
+	NONE_WEAPON
 };
 
 enum OrbId {
@@ -98,7 +98,15 @@ enum OrbId {
 	UNCOMMON_HUNGERORB,
 	UNCOMMON_SWIFTNESSORB,
 	UNCOMMON_CHARGEORB,
-	NONE
+	NONE_ORB
+};
+
+enum WeaponType {
+	KATANA,
+	GRAEATSWORD,
+	MACHINGUN,
+	SNIPERRIFLE,
+	NONE_TYPE
 };
 
 extern GameState gamestate;
@@ -130,6 +138,7 @@ public:
 	Texture GetWeaponIcon(WeaponId);
 	Texture GetWeaponSprite(WeaponId);
 	Texture GetOrbIcon(OrbId);
+	WeaponType GetWeaponType(WeaponId);
 	std::tuple<WeaponId, OrbId> GetCombinationtype(WeaponId);
 	std::tuple<OrbId, OrbId> GetCombinationtype(OrbId);
 };
@@ -137,13 +146,13 @@ public:
 
 
 //Weapon.cpp
-class Weapon {
+class Weapon : public Item{
 private:
 	WeaponId weaponid = COMMON_KATANA_KATANA;
 	bool isWeaponTypeMelee = true;
 public:
-	Texture weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
-	Texture melee_weapon_attack_sprite = LoadTexture("resourse/melee_attack_sprite.png");
+	Texture weapon_sprite = LoadTexture("resources/test_melee_weapon.png");
+	Texture melee_weapon_attack_sprite = LoadTexture("resources/melee_attack_sprite.png");
 
 	Rectangle weapon_sprite_source{ 0, };
 	Rectangle weapon_sprite_dest{ 0, };
@@ -161,11 +170,16 @@ private:
 	//camera
 	Camera2D camera;
 
+	//inventory
+	WeaponId inventory_weapon[2] = { NONE_WEAPON, };
+	OrbId inventory_orb[3] = { NONE_ORB, };
+
 	//player state
 	int hp = 100;
 	float damage = 10;
 	float speed = 500;
 	int money = 0;
+	int killcount = 0;
 
 	//By default in seconds
 	float attack_cooltime = 0.25f;
@@ -180,8 +194,8 @@ private:
 	bool isstanding = true;
 
 	//Player Sprite
-	Texture standing_sprite{ LoadTexture("resourse/player_standing.png") };
-	Texture walking_sprite{ LoadTexture("resourse/player_walking.png") };
+	Texture standing_sprite{ LoadTexture("resources/player_standing.png") };
+	Texture walking_sprite{ LoadTexture("resources/player_walking.png") };
 
 	//Player Position
 	Vector2 position{ 0, 0 };
@@ -224,6 +238,7 @@ public:
 	void Attack();
 	void Dodge();
 	void Skill();
+	void Kill();
 	void UpdateSpawnpoint();
 	void UpdateHitbox();
 	void UpdateWeapon();
@@ -265,7 +280,7 @@ protected:
 	Player *player;
 	Vector2 position;
 	Vector2 delta_position{ 0,0 };
-	Texture sprite{ LoadTexture("resourse/knight.png") };
+	Texture sprite{ LoadTexture("resources/knight.png") };
 	Rectangle hitbox{ 0, };
 
 	float speed = 0;
@@ -312,7 +327,6 @@ template <typename TEnemyParentClass>
 class EnemyManager {
 private:
 	Player* player;
-
 	
 public:
 	EnemyManager(Player* _player): player(_player){
@@ -343,6 +357,7 @@ public:
 			enemies[i]->SetPosition({ enemies[i]->GetPosition().x + enemies[i]->GetDeltaPosition().x , enemies[i]->GetPosition().y + enemies[i]->GetDeltaPosition().y });
 			enemies[i]->Update();
 			if (enemies[i]->Gethp() <= 0) {
+				player->Kill();
 				delete enemies[i];
 				enemies.erase(enemies.begin() + i);
 
@@ -365,7 +380,7 @@ class TestEnemy : public Enemy {
 public:
 	TestEnemy(Player* player) : Enemy(player) {
 		UnloadTexture(sprite);
-		sprite = LoadTexture("resourse/monster1.png");
+		sprite = LoadTexture("resources/monster1.png");
 		sprite_index_maxnum = MONSTER1_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) };
 		speed = 100 + rand() % 100;
@@ -381,8 +396,8 @@ public:
 class GameTitle {
 private:
 	//basic sprite
-	Texture DigiPen_logo_sprite = LoadTexture("resourse/DigiPen_logo.png");
-	Texture Game_Title_sprite = LoadTexture("resourse/game_logo_finished.png");
+	Texture DigiPen_logo_sprite = LoadTexture("resources/DigiPen_logo.png");
+	Texture Game_Title_sprite = LoadTexture("resources/game_logo_finished.png");
 	
 	//for making interaction (if you click the button, gametitle state is change)
 	Rectangle game_start_button = { 62, 323, 110, 65 };
@@ -427,6 +442,11 @@ public:
 	void Update();
 	void Draw();
 
+};
+//InGameUi.cpp
+class InGameUi {
+private:
+	Player* player;
 };
 
 

@@ -2,8 +2,10 @@
 
 Item::Item() {
 	//weapon_sprite
-	weapon_icon[COMMON_KATANA_KATANA] = LoadTexture("resourse/test_melee_weapon.png");
-	weapon_icon[COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resourse/test_melee_weapon.png");
+	weapon_icon[COMMON_KATANA_KATANA] = LoadTexture("resources/test_melee_weapon.png");
+	weapon_icon[COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resources/test_melee_weapon.png");
+	//orb_icon
+	orb_icon[OrbId::COMMON_LIFEORB] = LoadTexture("")
 
 }
 
@@ -19,11 +21,55 @@ Texture Item::GetOrbIcon(OrbId _orbid) {
 	return orb_icon[_orbid];
 }
 
+WeaponType Item::GetWeaponType(WeaponId _weaponId) {
+	switch (_weaponId)
+	{
+	case COMMON_KATANA_KATANA:
+	case UNCOMMON_KATANA_TAILWIND:
+	case UNCOMMON_KATANA_ZERO:
+	case RARE_KATANA_STORMWIND:
+	case RARE_KATANA_THUNDER:
+	case RARE_KATANA_MASAMUNE:
+	case RARE_KATANA_MURAMASA:
+		return WeaponType::KATANA;
+	case COMMON_GREATSWORD_GREATSWORD:
+	case UNCOMMON_GREATSWORD_KNIGHTLYSWORD:
+	case UNCOMMON_GREATSWORD_BLOODSWORD:
+	case RARE_GREATSWORD_BLACKKNIGHT:
+	case RARE_GREATSWORD_WHITEKNIGHT:
+	case RARE_GREATSWORD_VAMPIRE:
+	case RARE_GREATSWORD_BERSERKER:
+		return WeaponType::GRAEATSWORD;
+		break;
+	case COMMON_MACHINGUN_MACHINGUN:
+	case UNCOMMON_MACHINGUN_LIGHTMACHINGUN:
+	case UNCOMMON_MACHINGUN_HEAVYMACHINGUN:
+	case RARE_MACHINGUN_KRAKEN:
+	case RARE_MACHINGUN_VOID:
+	case RARE_MACHINGUN_REPENTENCE:
+	case RARE_MACHINGUN_WILD:
+		return WeaponType::MACHINGUN;
+		break;
+	case COMMON_SNIPERRIFLE_SNIPERRIFLE:
+	case UNCOMMON_SNIPERRIFLE_BOLTACTION:
+	case UNCOMMON_SNIPERRIFLE_SEMIAUTO:
+	case RARE_SNIPERRIFLE_RAILGUN:
+	case RARE_SNIPERRIFLE_PIRACY:
+	case RARE_SNIPERRIFLE_CATERPILLAR:
+	case RARE_SNIPERRIFLE_MAGICENGINEERING:
+		return WeaponType::SNIPERRIFLE;
+		break;
+	default:
+		return WeaponType::NONE_TYPE;
+		break;
+	}
+}
+
 std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 	switch (_weaponid)
 	{
 	case COMMON_KATANA_KATANA:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE, OrbId::NONE };
+		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
 		break;
 	case UNCOMMON_KATANA_TAILWIND:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_KATANA_KATANA, OrbId::COMMON_WATERORB };
@@ -44,7 +90,7 @@ std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_KATANA_ZERO, OrbId::UNCOMMON_TRANSFUSIONORB };
 		break;
 	case COMMON_GREATSWORD_GREATSWORD:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE, OrbId::NONE };
+		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
 		break;
 	case UNCOMMON_GREATSWORD_KNIGHTLYSWORD:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_GREATSWORD_GREATSWORD, OrbId::COMMON_ANGERORB };
@@ -65,7 +111,7 @@ std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_GREATSWORD_BLOODSWORD, OrbId::UNCOMMON_RAGEORB };
 		break;
 	case COMMON_MACHINGUN_MACHINGUN:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE, OrbId::NONE };
+		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
 		break;
 	case UNCOMMON_MACHINGUN_LIGHTMACHINGUN:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_MACHINGUN_MACHINGUN, OrbId::COMMON_WATERORB };
@@ -86,7 +132,7 @@ std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINGUN_HEAVYMACHINGUN, OrbId::UNCOMMON_ROARORB };
 		break;
 	case COMMON_SNIPERRIFLE_SNIPERRIFLE:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE, OrbId::NONE };
+		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
 		break;
 	case UNCOMMON_SNIPERRIFLE_BOLTACTION:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_SNIPERRIFLE_SNIPERRIFLE, OrbId::COMMON_ANGERORB };
@@ -106,8 +152,8 @@ std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 	case RARE_SNIPERRIFLE_MAGICENGINEERING:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_SNIPERRIFLE_SEMIAUTO, OrbId::UNCOMMON_CHARGEORB };
 		break;
-	case WeaponId::NONE:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE, OrbId::NONE };
+	case WeaponId::NONE_WEAPON:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
 		break;
 
 	}
@@ -141,7 +187,7 @@ std::tuple<OrbId, OrbId> Item::GetCombinationtype(OrbId _orbid){
 		return std::tuple<OrbId, OrbId>{ OrbId::COMMON_ANGERORB, OrbId::COMMON_RANGEORB };
 		break;
 	default:
-		return std::tuple<OrbId, OrbId>{ OrbId::NONE, OrbId::NONE };
+		return std::tuple<OrbId, OrbId>{ OrbId::NONE_ORB, OrbId::NONE_ORB };
 		break;
 	}
 }

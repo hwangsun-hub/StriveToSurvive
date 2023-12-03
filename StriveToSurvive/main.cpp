@@ -13,11 +13,11 @@ int main()
     InitAudioDevice();
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
 
-    Music music = LoadMusicStream("resourse/ypurmo.mp3");
+    Music music = LoadMusicStream("resources/ypurmo.mp3");
     SetMusicVolume(music, 0.01f);
 
     
-    Texture Map = LoadTexture("resourse/Map.png");
+    Texture Map = LoadTexture("resources/Map.png");
     Camera2D camera = { 0, };
     Player player(camera);
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };

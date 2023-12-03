@@ -6,10 +6,10 @@ bool Weapon::GetisWeaponTypeMelee() {
 
 void Weapon::SetWeapon(WeaponId _weaponid) {
 	weaponid = _weaponid;
-	switch (weaponid)
+	switch (GetWeaponType(_weaponid))
 	{
-	case COMMON_KATANA_KATANA:
-		weapon_sprite = LoadTexture("resourse/test_melee_weapon.png");
+	case KATANA:
+		weapon_sprite = GetWeaponSprite(_weaponid);
 		weapon_sprite_source = {
 			WEAPON_SPRITE_SIZE,
 			0,
@@ -19,9 +19,16 @@ void Weapon::SetWeapon(WeaponId _weaponid) {
 		weapon_sprite_dest = { 0, 0, WEAPON_SPRITE_SIZE * 3 , WEAPON_SPRITE_SIZE * 3 };
 		weapon_sprite_orgin = { float(WEAPON_SPRITE_SIZE * 1.5) , WEAPON_SPRITE_SIZE };
 		break;
-	case COMMON_MACHINGUN_MACHINGUN:
+	case GRAEATSWORD:
+		break;
+	case MACHINGUN:
+		break;
+	case SNIPERRIFLE:
+		break;
+	default:
 		break;
 	}
+
 }
 
 WeaponId Weapon::GetWeapon() {
