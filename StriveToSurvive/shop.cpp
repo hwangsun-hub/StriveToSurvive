@@ -1,6 +1,31 @@
 #include "library.h"
 
 Shop::Shop(Player* _player) {
+	Rectangle icon1_1 = { 538, 124, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon1_2 = { 368, 205 , ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon1_3 = { 453, 205, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon1_4 = { 538, 205, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon1_5 = { 368, 288, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon1_6 = { 453, 288, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon1_7 = { 538, 288, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+
+	Rectangle icon2_1 = { 538, 364, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon2_2 = { 368, 445 , ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon2_3 = { 453, 445, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon2_4 = { 538, 445, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon2_5 = { 368, 528, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon2_6 = { 453, 528, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon2_7 = { 538, 528, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+
+	Rectangle icon3_1 = { 453, 124, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle icon4_1 = { 453, 364, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+
+	Rectangle selected_icon = { 764, 128, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle combination_icon1 = { 686, 250, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Rectangle combination_icon2 = { 842, 128, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+
+	Rectangle exit_hitbox = { 1156, 643, 117, 70 };
+
 	player = _player;
 	weapon_icons[COMMON_KATANA_KATANA] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(COMMON_KATANA_KATANA), icon1_1, 100);
 	weapon_icons[UNCOMMON_KATANA_TAILWIND] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_KATANA_TAILWIND), icon1_2, 0);
@@ -78,12 +103,28 @@ void  Shop::UpdatePlayerBuy() {
 }
 
 void Shop::Update(){
-
+	if (CheckCollisionPointRec(GetMousePosition(), { 350, 104, 10, 14 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		state = MELEE;
+	}
+	if (CheckCollisionPointRec(GetMousePosition(), { 360, 104, 10, 14 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		state = RANGED;
+	}
+	if (CheckCollisionPointRec(GetMousePosition(), { 370, 104, 10, 14 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		state = ORB;
+	}
+	
 }
 
 void Shop::DrawUI() {
 	//main UI
-	DrawRectangle(0, 0, 1000, 650, RED);
+	DrawTexturePro(
+		shop_sprite,
+		{ WINDOW_START_WIDTH * float(state), 0,WINDOW_START_WIDTH, WINDOW_START_HEIGHT },
+		{ 0,0, WINDOW_START_WIDTH , WINDOW_START_HEIGHT },
+		{ 0,0 },
+		0,
+		WHITE
+	);
 }
 
 void Shop::Draw() {

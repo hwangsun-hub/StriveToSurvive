@@ -431,30 +431,9 @@ private:
 	std::map< WeaponId, std::tuple<Texture, Rectangle, int> > weapon_icons;
 	std::map< OrbId, std::tuple<Texture, Rectangle, int> > orb_icons;
 
-	Rectangle icon1_1 = { 538, 124, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon1_2 = { 368, 205 , ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon1_3 = { 453, 205, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon1_4 = { 538, 205, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon1_5 = { 368, 288, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon1_6 = { 453, 288, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon1_7 = { 538, 288, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
+	Texture shop_sprite = LoadTexture("resources/shop.png");
 
-	Rectangle icon2_1 = { 538, 364, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon2_2 = { 368, 445 , ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon2_3 = { 453, 445, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon2_4 = { 538, 445, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon2_5 = { 368, 528, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon2_6 = { 453, 528, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon2_7 = { 538, 528, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-
-	Rectangle icon3_1 = { 453, 124, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle icon4_1 = { 453, 364, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-
-	Rectangle selected_icon = { 764, 128, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle combination_icon1 = { 686, 250, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-	Rectangle combination_icon2 = { 842, 128, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
-
-	Rectangle exit_hitbox = { 1156, 643, 117, 70 };
+	
 
 	enum State {
 		MELEE,
