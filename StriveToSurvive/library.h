@@ -427,9 +427,10 @@ public:
 class Shop : public Item{
 private:
 	Player* player;
-	std::vector<Weapon> Items;
 	//Texture, Hitbox, price
-	std::map< WeaponId, std::tuple<Texture, Rectangle, int> > Icons;
+	std::map< WeaponId, std::tuple<Texture, Rectangle, int> > weapon_icons;
+	std::map< OrbId, std::tuple<Texture, Rectangle, int> > orb_icons;
+
 	Rectangle icon1_1 = { 538, 124, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
 	Rectangle icon1_2 = { 368, 205 , ITEM_ICON_SIZE, ITEM_ICON_SIZE };
 	Rectangle icon1_3 = { 453, 205, ITEM_ICON_SIZE, ITEM_ICON_SIZE };
