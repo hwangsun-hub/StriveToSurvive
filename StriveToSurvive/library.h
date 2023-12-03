@@ -80,6 +80,25 @@ enum WeaponId {
 	RARE_SNIPERRIFLE_MAGICENGINEERING
 };
 
+enum OrbId {
+	COMMON_LIFEORB,
+	COMMON_IRONORB,
+	COMMON_SPRINGORB,
+	COMMON_ANGERORB,
+	COMMON_WATERORB,
+	COMMON_BLOODORB,
+	COMMON_WINDORB,
+	COMMON_RANGEORB,
+	UNCOMMON_ARMORORB,
+	UNCOMMON_TRANSFUSIONORB,
+	UNCOMMON_ROARORB,
+	UNCOMMON_RAGEORB,
+	UNCOMMON_SEAORB,
+	UNCOMMON_HUNGERORB,
+	UNCOMMON_SWIFTNESSORB,
+	UNCOMMON_CHARGEORB,
+};
+
 extern GameState gamestate;
 extern bool exitWindow;
 //debug
@@ -103,12 +122,12 @@ class Item {
 private:
 	std::map<WeaponId, Texture> weapon_icon;
 	std::map<WeaponId, Texture> weapon_sprite;
+	std::map<OrbId, Texture> orb_icon;
 public:
 	Item();
 	Texture GetWeaponIcon(WeaponId);
-	void SetWeaponIcon();
 	Texture GetWeaponSprite(WeaponId);
-	void SetWeaponSprite();
+	Texture GetOrbIcon(OrbId);
 };
 
 
