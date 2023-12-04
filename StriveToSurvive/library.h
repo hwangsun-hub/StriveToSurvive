@@ -466,10 +466,27 @@ public:
 	void Draw();
 
 };
-//InGameUi.cpp
-class InGameUi {
+//IUi.cpp
+class Ui {
 private:
 	Player* player;
+	Texture ingame_ui = LoadTexture("resources/ui/ingame_ui.png");
+	Texture shop_ui = LoadTexture("resources/ui/shop_ui.png");
+
+	Texture ingame_ui_orb_icon1;
+	Texture ingame_ui_orb_icon2;
+	Texture ingame_ui_orb_icon3;
+
+	Texture ingame_ui_weapon_icon;
+
+public:
+	Ui(Player*);
+
+	void UpdateIngameUi();
+	void UpdateShopUi();
+
+	void DrawIngameUi();
+	void DrawShopUi();
 };
 
 

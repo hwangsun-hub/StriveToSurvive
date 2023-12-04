@@ -75,7 +75,10 @@ void Player::Attack() {
 }
 void Player::Dodge() {}
 void Player::Skill() {}
-void Player::Kill() {}
+void Player::Kill() {
+    killcount++;
+    money += 10;
+}
 void Player::Draw(){
     //player sprite
     if (isstanding) {

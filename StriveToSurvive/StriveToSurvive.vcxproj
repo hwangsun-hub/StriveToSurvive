@@ -132,6 +132,7 @@
     <ClCompile Include="item.cpp" />
     <ClCompile Include="shop.cpp" />
     <ClCompile Include="tilemap.cpp" />
+    <ClCompile Include="ui.cpp" />
     <ClCompile Include="weapon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
