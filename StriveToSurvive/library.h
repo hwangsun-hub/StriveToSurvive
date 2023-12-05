@@ -131,9 +131,9 @@ public:
 //Item.cpp
 class Item {
 private:
-	std::map<WeaponId, Texture> weapon_icon;
-	std::map<WeaponId, Texture> weapon_sprite;
-	std::map<OrbId, Texture> orb_icon;
+	std::map<WeaponId, Texture> weapon_icons;
+	std::map<WeaponId, Texture> weapon_sprites;
+	std::map<OrbId, Texture> orb_icons;
 public:
 	Item();
 	Texture GetWeaponIcon(WeaponId);

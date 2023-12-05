@@ -2,41 +2,41 @@
 
 Item::Item() {
 	//weapon_sprite
-	weapon_icon[WeaponId::COMMON_KATANA_KATANA] = LoadTexture("resources/katana/common_katana_katana.png");
-	weapon_icon[WeaponId::COMMON_GREATSWORD_GREATSWORD] = LoadTexture("resources/greatsword/common_greatsword_greatsword.png");
-	weapon_icon[WeaponId::COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resources/machinegun/common_machinegun_machinegun.png");
-	weapon_icon[WeaponId::COMMON_SNIPERRIFLE_SNIPERRIFLE] = LoadTexture("resources/sniperrifle/common_sniperrifle_sniperrifle.png");
+	weapon_sprites[WeaponId::COMMON_KATANA_KATANA] = LoadTexture("resources/katana/common_katana_katana.png");
+	weapon_sprites[WeaponId::COMMON_GREATSWORD_GREATSWORD] = LoadTexture("resources/greatsword/common_greatsword_greatsword.png");
+	weapon_sprites[WeaponId::COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resources/machinegun/common_machinegun_machinegun.png");
+	weapon_sprites[WeaponId::COMMON_SNIPERRIFLE_SNIPERRIFLE] = LoadTexture("resources/sniperrifle/common_sniperrifle_sniperrifle.png");
 	//orb_icon
-	orb_icon[OrbId::COMMON_LIFEORB] = LoadTexture("resources/common_orb/lifeorb.png");
-	orb_icon[OrbId::COMMON_IRONORB] = LoadTexture("resources/common_orb/ironorb.png");
-	orb_icon[OrbId::COMMON_SPRINGORB] = LoadTexture("resources/common_orb/springorb.png");
-	orb_icon[OrbId::COMMON_ANGERORB] = LoadTexture("resources/common_orb/angerorb.png");
-	orb_icon[OrbId::COMMON_WATERORB] = LoadTexture("resources/common_orb/waterorb.png");
-	orb_icon[OrbId::COMMON_BLOODORB] = LoadTexture("resources/common_orb/bloodorb.png");
-	orb_icon[OrbId::COMMON_WINDORB] = LoadTexture("resources/common_orb/windorb.png");
-	orb_icon[OrbId::COMMON_RANGEORB] = LoadTexture("resources/common_orb/rangeorb.png");
-	orb_icon[OrbId::UNCOMMON_ARMORORB] = LoadTexture("resources/uncommon_orb/armororb.png");
-	orb_icon[OrbId::UNCOMMON_TRANSFUSIONORB] = LoadTexture("resources/uncommon_orb/transfusionorb.png");
-	orb_icon[OrbId::UNCOMMON_ROARORB] = LoadTexture("resources/uncommon_orb/roarorb.png");
-	orb_icon[OrbId::UNCOMMON_RAGEORB] = LoadTexture("resources/uncommon_orb/rageorb.png");
-	orb_icon[OrbId::UNCOMMON_SEAORB] = LoadTexture("resources/uncommon_orb/seaorb.png");
-	orb_icon[OrbId::UNCOMMON_HUNGERORB] = LoadTexture("resources/uncommon_orb/hungerorb.png");
-	orb_icon[OrbId::UNCOMMON_SWIFTNESSORB] = LoadTexture("resources/uncommon_orb/swiftnessorb.png");
-	orb_icon[OrbId::UNCOMMON_CHARGEORB] = LoadTexture("resources/uncommon_orb/chargeorb.png");
-	orb_icon[OrbId::NONE_ORB] = LoadTexture("resources/common_orb/noneorb.png");
+	orb_icons[OrbId::COMMON_LIFEORB] = LoadTexture("resources/common_orb/lifeorb.png");
+	orb_icons[OrbId::COMMON_IRONORB] = LoadTexture("resources/common_orb/ironorb.png");
+	orb_icons[OrbId::COMMON_SPRINGORB] = LoadTexture("resources/common_orb/springorb.png");
+	orb_icons[OrbId::COMMON_ANGERORB] = LoadTexture("resources/common_orb/angerorb.png");
+	orb_icons[OrbId::COMMON_WATERORB] = LoadTexture("resources/common_orb/waterorb.png");
+	orb_icons[OrbId::COMMON_BLOODORB] = LoadTexture("resources/common_orb/bloodorb.png");
+	orb_icons[OrbId::COMMON_WINDORB] = LoadTexture("resources/common_orb/windorb.png");
+	orb_icons[OrbId::COMMON_RANGEORB] = LoadTexture("resources/common_orb/rangeorb.png");
+	orb_icons[OrbId::UNCOMMON_ARMORORB] = LoadTexture("resources/uncommon_orb/armororb.png");
+	orb_icons[OrbId::UNCOMMON_TRANSFUSIONORB] = LoadTexture("resources/uncommon_orb/transfusionorb.png");
+	orb_icons[OrbId::UNCOMMON_ROARORB] = LoadTexture("resources/uncommon_orb/roarorb.png");
+	orb_icons[OrbId::UNCOMMON_RAGEORB] = LoadTexture("resources/uncommon_orb/rageorb.png");
+	orb_icons[OrbId::UNCOMMON_SEAORB] = LoadTexture("resources/uncommon_orb/seaorb.png");
+	orb_icons[OrbId::UNCOMMON_HUNGERORB] = LoadTexture("resources/uncommon_orb/hungerorb.png");
+	orb_icons[OrbId::UNCOMMON_SWIFTNESSORB] = LoadTexture("resources/uncommon_orb/swiftnessorb.png");
+	orb_icons[OrbId::UNCOMMON_CHARGEORB] = LoadTexture("resources/uncommon_orb/chargeorb.png");
+	orb_icons[OrbId::NONE_ORB] = LoadTexture("resources/common_orb/noneorb.png");
 
 }
 
 Texture Item::GetWeaponIcon(WeaponId _weaponId) {
-	return weapon_icon[_weaponId];
+	return weapon_icons[_weaponId];
 }
 
 Texture Item::GetWeaponSprite(WeaponId _weaponId) {
-	return weapon_sprite[_weaponId];
+	return weapon_sprites[_weaponId];
 }
 
 Texture Item::GetOrbIcon(OrbId _orbid) {
-	return orb_icon[_orbid];
+	return orb_icons[_orbid];
 }
 
 WeaponType Item::GetWeaponType(WeaponId _weaponId) {
