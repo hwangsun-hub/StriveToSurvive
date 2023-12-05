@@ -2,8 +2,10 @@
 
 Item::Item() {
 	//weapon_sprite
-	weapon_icon[COMMON_KATANA_KATANA] = LoadTexture("resources/test_melee_weapon.png");
-	weapon_icon[COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resources/test_melee_weapon.png");
+	weapon_icon[WeaponId::COMMON_KATANA_KATANA] = LoadTexture("resources/katana/common_katana_katana.png");
+	weapon_icon[WeaponId::COMMON_GREATSWORD_GREATSWORD] = LoadTexture("resources/greatsword/common_greatsword_greatsword.png");
+	weapon_icon[WeaponId::COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resources/machinegun/common_machinegun_machinegun.png");
+	weapon_icon[WeaponId::COMMON_SNIPERRIFLE_SNIPERRIFLE] = LoadTexture("resources/sniperrifle/common_sniperrifle_sniperrifle.png");
 	//orb_icon
 	orb_icon[OrbId::COMMON_LIFEORB] = LoadTexture("resources/common_orb/lifeorb.png");
 	orb_icon[OrbId::COMMON_IRONORB] = LoadTexture("resources/common_orb/ironorb.png");

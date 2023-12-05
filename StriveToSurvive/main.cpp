@@ -4,7 +4,7 @@ bool DEBUGING_MODE = true;
 bool exitWindow = false;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_SHOPPING;
+GameState gamestate = GAMESTATE_TITLE;
 
 int main()
 {

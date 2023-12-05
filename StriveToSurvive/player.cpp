@@ -51,6 +51,33 @@ void Player::Move() {
     }
 }
 void Player::Attack() {
+    switch (GetWeaponType(GetWeapon()))
+    {
+    case WeaponType::KATANA:
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+                melee_weapon_attack_sprite_index = 0;
+                isAttackReady = false;
+                isAttacking = true;
+        }
+        if (isAttacking) {
+            melee_weapon_attack_sprite_timer.SetTimer(0.05f);
+            melee_weapon_attack_sprite_timer.UpdateTimer();
+            if (melee_weapon_attack_sprite_timer.TimerDone()) {
+                melee_weapon_attack_sprite_index++;
+                if (melee_weapon_attack_sprite_index == MELEE_ATTACK_SPRITE_MAXNUM) {
+                    isAttacking = false;
+                }
+            }
+        }
+        break;
+    case WeaponType::GRAEATSWORD:
+        break;
+    case WeaponType::MACHINGUN:
+        break;
+    case WeaponType::SNIPERRIFLE:
+        break;
+
+    }
     if (GetisWeaponTypeMelee()) {
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
             melee_weapon_attack_sprite_index = 0;
