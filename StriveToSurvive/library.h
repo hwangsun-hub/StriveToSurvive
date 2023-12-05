@@ -152,8 +152,8 @@ private:
 	WeaponId weaponid = COMMON_KATANA_KATANA;
 	bool isWeaponTypeMelee = true;
 public:
-	Texture weapon_sprite = LoadTexture("resources/test_melee_weapon.png");
-	Texture melee_weapon_attack_sprite = LoadTexture("resources/melee_attack_sprite.png");
+	Texture weapon_sprite;
+	Texture melee_weapon_attack_sprite;
 
 	Rectangle weapon_sprite_source{ 0, };
 	Rectangle weapon_sprite_dest{ 0, };
