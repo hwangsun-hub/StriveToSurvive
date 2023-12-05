@@ -41,13 +41,13 @@ Shop::Shop(Player* _player) {
 	weapon_icons[RARE_GREATSWORD_WHITEKNIGHT] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_GREATSWORD_WHITEKNIGHT), icon2_5, 0);
 	weapon_icons[RARE_GREATSWORD_VAMPIRE] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_GREATSWORD_VAMPIRE), icon2_6, 0);
 	weapon_icons[RARE_GREATSWORD_BERSERKER] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_GREATSWORD_BERSERKER), icon2_7, 0);
-	weapon_icons[COMMON_MACHINGUN_MACHINGUN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(COMMON_MACHINGUN_MACHINGUN), icon1_1, 0);
-	weapon_icons[UNCOMMON_MACHINGUN_LIGHTMACHINGUN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_MACHINGUN_LIGHTMACHINGUN), icon1_2, 0);
-	weapon_icons[UNCOMMON_MACHINGUN_HEAVYMACHINGUN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_MACHINGUN_HEAVYMACHINGUN), icon1_3, 0);
-	weapon_icons[RARE_MACHINGUN_KRAKEN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINGUN_KRAKEN), icon1_4, 0);
-	weapon_icons[RARE_MACHINGUN_VOID] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINGUN_VOID), icon1_5, 0);
-	weapon_icons[RARE_MACHINGUN_REPENTENCE] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINGUN_REPENTENCE), icon1_6, 0);
-	weapon_icons[RARE_MACHINGUN_WILD] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINGUN_WILD), icon1_7, 0);
+	weapon_icons[COMMON_MACHINEGUN_MACHINGUN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(COMMON_MACHINEGUN_MACHINGUN), icon1_1, 0);
+	weapon_icons[UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN), icon1_2, 0);
+	weapon_icons[UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN), icon1_3, 0);
+	weapon_icons[RARE_MACHINEGUN_KRAKEN] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINEGUN_KRAKEN), icon1_4, 0);
+	weapon_icons[RARE_MACHINEGUN_VOID] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINEGUN_VOID), icon1_5, 0);
+	weapon_icons[RARE_MACHINEGUN_REPENTENCE] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINEGUN_REPENTENCE), icon1_6, 0);
+	weapon_icons[RARE_MACHINEGUN_WILD] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_MACHINEGUN_WILD), icon1_7, 0);
 	weapon_icons[COMMON_SNIPERRIFLE_SNIPERRIFLE] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(COMMON_SNIPERRIFLE_SNIPERRIFLE), icon2_1, 0);
 	weapon_icons[UNCOMMON_SNIPERRIFLE_BOLTACTION] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_SNIPERRIFLE_BOLTACTION), icon2_2, 0);
 	weapon_icons[UNCOMMON_SNIPERRIFLE_SEMIAUTO] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(UNCOMMON_SNIPERRIFLE_SEMIAUTO), icon2_3, 0);
@@ -66,7 +66,7 @@ void  Shop::UpdatePlayerBuy() {
 	switch (state)
 	{
 	case Shop::MELEE:
-		for (int i = COMMON_KATANA_KATANA; i < COMMON_MACHINGUN_MACHINGUN; i++) {
+		for (int i = COMMON_KATANA_KATANA; i < COMMON_MACHINEGUN_MACHINGUN; i++) {
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				selected_weapon = static_cast<WeaponId>(i);
 			}
@@ -81,7 +81,7 @@ void  Shop::UpdatePlayerBuy() {
 		}
 		break;
 	case Shop::RANGED:
-		for (int i = COMMON_MACHINGUN_MACHINGUN; i < NONE_WEAPON; i++) {
+		for (int i = COMMON_MACHINEGUN_MACHINGUN; i < NONE_WEAPON; i++) {
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				selected_weapon = static_cast<WeaponId>(i);
 			}

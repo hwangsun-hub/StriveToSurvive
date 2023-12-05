@@ -87,7 +87,7 @@ int main()
                     player.SetWeapon(COMMON_KATANA_KATANA);
                 }
                 else if (IsKeyDown(KEY_DOWN)) {
-                    player.SetWeapon(COMMON_MACHINGUN_MACHINGUN);
+                    player.SetWeapon(COMMON_MACHINEGUN_MACHINGUN);
                 }
                 //Spawn a Enemy (KEY_F1)
                 if (IsKeyReleased(KEY_F1)) {

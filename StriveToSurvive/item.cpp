@@ -3,9 +3,33 @@
 Item::Item() {
 	//weapon_sprite
 	weapon_sprites[WeaponId::COMMON_KATANA_KATANA] = LoadTexture("resources/katana/common_katana_katana.png");
+	weapon_sprites[WeaponId::UNCOMMON_KATANA_TAILWIND] = LoadTexture("resources/katana/uncommon_katana_tailwind.png");
+	weapon_sprites[WeaponId::UNCOMMON_KATANA_ZERO] = LoadTexture("resources/katana/uncommon_katana_zero.png");
+	weapon_sprites[WeaponId::RARE_KATANA_STORMWIND] = LoadTexture("resources/katana/rare_katana_stormwind.png");
+	weapon_sprites[WeaponId::RARE_KATANA_THUNDER] = LoadTexture("resources/katana/rare_katana_thunder.png");
+	weapon_sprites[WeaponId::RARE_KATANA_MURAMASA] = LoadTexture("resources/katana/rare_katana_muramasa.png");
+	weapon_sprites[WeaponId::RARE_KATANA_MASAMUNE] = LoadTexture("resources/katana/rare_katana_masamune.png");
 	weapon_sprites[WeaponId::COMMON_GREATSWORD_GREATSWORD] = LoadTexture("resources/greatsword/common_greatsword_greatsword.png");
-	weapon_sprites[WeaponId::COMMON_MACHINGUN_MACHINGUN] = LoadTexture("resources/machinegun/common_machinegun_machinegun.png");
+	weapon_sprites[WeaponId::UNCOMMON_GREATSWORD_KNIGHTLYSWORD] = LoadTexture("resources/greatsword/uncommon_greatsword_knightlysword.png");
+	weapon_sprites[WeaponId::UNCOMMON_GREATSWORD_BLOODSWORD] = LoadTexture("resources/greatsword/uncommon_greatsword_bloodsword.png");
+	weapon_sprites[WeaponId::RARE_GREATSWORD_BLACKKNIGHT] = LoadTexture("resources/greatsword/rare_greatsword_blackknight.png");
+	weapon_sprites[WeaponId::RARE_GREATSWORD_WHITEKNIGHT] = LoadTexture("resources/greatsword/rare_greatsword_whiteknight.png");
+	weapon_sprites[WeaponId::RARE_GREATSWORD_VAMPIRE] = LoadTexture("resources/greatsword/rare_greatsword_vampire.png");
+	weapon_sprites[WeaponId::RARE_GREATSWORD_BERSERKER] = LoadTexture("resources/greatsword/rare_greatsword_berserker.png");
+	weapon_sprites[WeaponId::COMMON_MACHINEGUN_MACHINGUN] = LoadTexture("resources/machinegun/common_machinegun_machinegun.png");
+	weapon_sprites[WeaponId::UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN] = LoadTexture("resources/machinegun/uncommon_machinegun_lightmachinegun.png");
+	weapon_sprites[WeaponId::UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN] = LoadTexture("resources/machinegun/uncommon_machinegun_heavymachinegun.png");
+	weapon_sprites[WeaponId::RARE_MACHINEGUN_KRAKEN] = LoadTexture("resources/machinegun/rare_machinegun_kraken.png");
+	weapon_sprites[WeaponId::RARE_MACHINEGUN_VOID] = LoadTexture("resources/machinegun/rare_machinegun_void.png");
+	weapon_sprites[WeaponId::RARE_MACHINEGUN_REPENTENCE] = LoadTexture("resources/machinegun/rare_machinegun_repentence.png");
+	weapon_sprites[WeaponId::RARE_MACHINEGUN_WILD] = LoadTexture("resources/machinegun/rare_machinegun_wild.png");
 	weapon_sprites[WeaponId::COMMON_SNIPERRIFLE_SNIPERRIFLE] = LoadTexture("resources/sniperrifle/common_sniperrifle_sniperrifle.png");
+	weapon_sprites[WeaponId::UNCOMMON_SNIPERRIFLE_BOLTACTION] = LoadTexture("resources/sniperrifle/uncommon_sniperrifle_boltaction.png");
+	weapon_sprites[WeaponId::UNCOMMON_SNIPERRIFLE_SEMIAUTO] = LoadTexture("resources/sniperrifle/uncommon_sniperrifle_semiauto.png");
+	weapon_sprites[WeaponId::RARE_SNIPERRIFLE_RAILGUN] = LoadTexture("resources/sniperrifle/rare_sniperrifle_railgun.png");
+	weapon_sprites[WeaponId::RARE_SNIPERRIFLE_PIRACY] = LoadTexture("resources/sniperrifle/rare_sniperrifle_piracy.png");
+	weapon_sprites[WeaponId::RARE_SNIPERRIFLE_CATERPILLAR] = LoadTexture("resources/sniperrifle/rare_sniperrifle_caterpillar.png");
+	weapon_sprites[WeaponId::RARE_SNIPERRIFLE_MAGICENGINEERING] = LoadTexture("resources/sniperrifle/rare_sniperrifle_magicengineering.png");
 	//orb_icon
 	orb_icons[OrbId::COMMON_LIFEORB] = LoadTexture("resources/common_orb/lifeorb.png");
 	orb_icons[OrbId::COMMON_IRONORB] = LoadTexture("resources/common_orb/ironorb.png");
@@ -59,13 +83,13 @@ WeaponType Item::GetWeaponType(WeaponId _weaponId) {
 	case RARE_GREATSWORD_BERSERKER:
 		return WeaponType::GRAEATSWORD;
 		break;
-	case COMMON_MACHINGUN_MACHINGUN:
-	case UNCOMMON_MACHINGUN_LIGHTMACHINGUN:
-	case UNCOMMON_MACHINGUN_HEAVYMACHINGUN:
-	case RARE_MACHINGUN_KRAKEN:
-	case RARE_MACHINGUN_VOID:
-	case RARE_MACHINGUN_REPENTENCE:
-	case RARE_MACHINGUN_WILD:
+	case COMMON_MACHINEGUN_MACHINGUN:
+	case UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN:
+	case UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN:
+	case RARE_MACHINEGUN_KRAKEN:
+	case RARE_MACHINEGUN_VOID:
+	case RARE_MACHINEGUN_REPENTENCE:
+	case RARE_MACHINEGUN_WILD:
 		return WeaponType::MACHINGUN;
 		break;
 	case COMMON_SNIPERRIFLE_SNIPERRIFLE:
@@ -128,26 +152,26 @@ std::tuple<WeaponId, OrbId> Item::GetCombinationtype(WeaponId _weaponid) {
 	case RARE_GREATSWORD_BERSERKER:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_GREATSWORD_BLOODSWORD, OrbId::UNCOMMON_RAGEORB };
 		break;
-	case COMMON_MACHINGUN_MACHINGUN:
+	case COMMON_MACHINEGUN_MACHINGUN:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
 		break;
-	case UNCOMMON_MACHINGUN_LIGHTMACHINGUN:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_MACHINGUN_MACHINGUN, OrbId::COMMON_WATERORB };
+	case UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_MACHINEGUN_MACHINGUN, OrbId::COMMON_WATERORB };
 		break;
-	case UNCOMMON_MACHINGUN_HEAVYMACHINGUN:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_MACHINGUN_MACHINGUN, OrbId::COMMON_ANGERORB };
+	case UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::COMMON_MACHINEGUN_MACHINGUN, OrbId::COMMON_ANGERORB };
 		break;
-	case RARE_MACHINGUN_KRAKEN:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINGUN_LIGHTMACHINGUN, OrbId::UNCOMMON_SEAORB };
+	case RARE_MACHINEGUN_KRAKEN:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN, OrbId::UNCOMMON_SEAORB };
 		break;
-	case RARE_MACHINGUN_VOID:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINGUN_LIGHTMACHINGUN, OrbId::UNCOMMON_ARMORORB };
+	case RARE_MACHINEGUN_VOID:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN, OrbId::UNCOMMON_ARMORORB };
 		break;
-	case RARE_MACHINGUN_REPENTENCE:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINGUN_HEAVYMACHINGUN, OrbId::UNCOMMON_HUNGERORB };
+	case RARE_MACHINEGUN_REPENTENCE:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN, OrbId::UNCOMMON_HUNGERORB };
 		break;
-	case RARE_MACHINGUN_WILD:
-		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINGUN_HEAVYMACHINGUN, OrbId::UNCOMMON_ROARORB };
+	case RARE_MACHINEGUN_WILD:
+		return std::tuple<WeaponId, OrbId>{ WeaponId::UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN, OrbId::UNCOMMON_ROARORB };
 		break;
 	case COMMON_SNIPERRIFLE_SNIPERRIFLE:
 		return std::tuple<WeaponId, OrbId>{ WeaponId::NONE_WEAPON, OrbId::NONE_ORB };
