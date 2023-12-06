@@ -183,12 +183,17 @@ private:
 	int killcount = 0;
 
 	//By default in seconds
-	float attack_cooltime = 0.25f;
+	float attack_cooltime = 0.5f;
 	float dodge_cooltime = 1;
 	float skill_cooltime = 10;
 
 	bool isAttackReady = true;
 	bool isAttacking = false;
+
+	float attack_degree = 0;
+
+	float sex_x = 0;
+	float sex_y = 0;
 	
 	//By default looking right
 	bool islookingright = true;
@@ -216,6 +221,9 @@ private:
 	unsigned int standing_sprite_index = 0;
 	unsigned int walking_sprite_index = 0;
 	unsigned int melee_weapon_attack_sprite_index = MELEE_ATTACK_SPRITE_MAXNUM;
+
+	//attack
+	bool greatsword_motion = false;
 
 
 public:

@@ -4,7 +4,7 @@ bool DEBUGING_MODE = true;
 bool exitWindow = false;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_TITLE;
+GameState gamestate = GAMESTATE_INGAME;
 
 int main()
 {
@@ -84,7 +84,7 @@ int main()
                 }
                 //player weapon change(KEY_UP, KEY_DOWN)
                 if (IsKeyDown(KEY_UP)) {
-                    player.SetWeapon(COMMON_KATANA_KATANA);
+                    player.SetWeapon(COMMON_GREATSWORD_GREATSWORD);
                 }
                 else if (IsKeyDown(KEY_DOWN)) {
                     player.SetWeapon(COMMON_MACHINEGUN_MACHINGUN);
