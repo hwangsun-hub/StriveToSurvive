@@ -178,22 +178,6 @@ void Player::UpdateHitbox() {
 }
 
 void Player::Update() {
-    if (IsKeyDown(KEY_V)) {
-        sex_x++;
-        std::cout << "sex_x :" << sex_x << std::endl;
-    }
-    if (IsKeyDown(KEY_B)) {
-        sex_y++;
-        std::cout << "sex_y :" << sex_y << std::endl;
-    }
-    if (IsKeyDown(KEY_F)) {
-        sex_x--;
-        std::cout << "sex_x :" << sex_x << std::endl;
-    }
-    if (IsKeyDown(KEY_G)) {
-        sex_y--;
-        std::cout << "sex_y :" << sex_y << std::endl;
-    }
     if (isstanding) {
         //sprite timer
         standing_sprite_timer.SetTimer(0.1f);
@@ -232,6 +216,8 @@ void Player::DrawHitbox() {
 
 void Player::DrawWeapon() {
     float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) ;
+    bool x_flip = GetMouseX() > WINDOW_START_WIDTH / 2;
+    bool y_flip = GetMouseY() > WINDOW_START_HEIGHT / 2;
     switch (GetWeaponType(GetWeapon()))
     {
     case KATANA:
@@ -268,7 +254,7 @@ void Player::DrawWeapon() {
                 weapon_sprite_source.x,
                 weapon_sprite_source.y,
                 weapon_sprite_source.width * float(islookingright ? 1 : -1),
-                weapon_sprite_source.height
+                weapon_sprite_source.height 
             },
             weapon_sprite_dest,
             { 0, 0 },
@@ -279,8 +265,50 @@ void Player::DrawWeapon() {
         rlPopMatrix();
         break;
     case MACHINGUN:
+
+        rlPushMatrix();
+
+        rlTranslatef(position.x, position.y, 0);
+
+        rlRotatef(degree * RAD2DEG , 0, 0, 1);
+        DrawTexturePro(
+            weapon_sprite,
+            {
+                weapon_sprite_source.x,
+                weapon_sprite_source.y,
+                weapon_sprite_source.width,
+                weapon_sprite_source.height* float(x_flip ? 1 : -1)
+            },
+            weapon_sprite_dest,
+            { 0, 0 },
+
+            0,
+            WHITE
+        );
+        rlPopMatrix();
         break;
     case SNIPERRIFLE:
+
+        rlPushMatrix();
+
+        rlTranslatef(position.x, position.y, 0);
+
+        rlRotatef(degree * RAD2DEG, 0, 0, 1);
+        DrawTexturePro(
+            weapon_sprite,
+            {
+                weapon_sprite_source.x,
+                weapon_sprite_source.y,
+                weapon_sprite_source.width,
+                weapon_sprite_source.height * float(x_flip ? 1 : -1)
+            },
+            weapon_sprite_dest,
+            { 0, 0 },
+
+            0,
+            WHITE
+        );
+        rlPopMatrix();
         break;
     case NONE_TYPE:
         break;

@@ -31,8 +31,26 @@ void Weapon::SetWeapon(WeaponId _weaponid) {
 		weapon_sprite_orgin = { float(WEAPON_SPRITE_SIZE * 1.5) , WEAPON_SPRITE_SIZE };
 		break;
 	case MACHINGUN:
+		weapon_sprite = GetWeaponSprite(_weaponid);
+		weapon_sprite_source = {
+			WEAPON_SPRITE_SIZE,
+			0,
+			WEAPON_SPRITE_SIZE,
+			WEAPON_SPRITE_SIZE
+		};
+		weapon_sprite_dest = { 0,-WEAPON_SPRITE_SIZE * 1.5, WEAPON_SPRITE_SIZE * 3 , WEAPON_SPRITE_SIZE * 3 };
+		weapon_sprite_orgin = { float(WEAPON_SPRITE_SIZE * 1.5) , WEAPON_SPRITE_SIZE };
 		break;
 	case SNIPERRIFLE:
+		weapon_sprite = GetWeaponSprite(_weaponid);
+		weapon_sprite_source = {
+			WEAPON_SPRITE_SIZE,
+			0,
+			WEAPON_SPRITE_SIZE,
+			WEAPON_SPRITE_SIZE
+		};
+		weapon_sprite_dest = { 0,-WEAPON_SPRITE_SIZE * 1.5, WEAPON_SPRITE_SIZE * 3 , WEAPON_SPRITE_SIZE * 3 };
+		weapon_sprite_orgin = { float(WEAPON_SPRITE_SIZE * 1.5) , WEAPON_SPRITE_SIZE };
 		break;
 	default:
 		break;
