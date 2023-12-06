@@ -153,7 +153,8 @@ private:
 	bool isWeaponTypeMelee = true;
 public:
 	Texture weapon_sprite;
-	Texture melee_weapon_attack_sprite = LoadTexture("resources/melee_attack_sprite.png");
+	Texture katana_weapon_attack_sprite = LoadTexture("resources/katana_attack_sprite.png");
+	Texture greatsword_weapon_attack_sprite = LoadTexture("resources/greatsword_attack_sprite.png");
 
 	Rectangle weapon_sprite_source{ 0, };
 	Rectangle weapon_sprite_dest{ 0, };

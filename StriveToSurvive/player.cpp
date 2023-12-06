@@ -295,7 +295,7 @@ void Player::DrawWeaponAttack() {
     case KATANA:
         if (isAttacking) {
             DrawTexturePro(
-                melee_weapon_attack_sprite,
+                katana_weapon_attack_sprite,
                 { WEAPON_SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
                 { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width, melee_attack_spritebox.height },
                 { melee_attack_spritebox.width / 2, melee_attack_spritebox.height / 2 },
@@ -307,7 +307,7 @@ void Player::DrawWeaponAttack() {
     case GRAEATSWORD:
         if (isAttacking) {
             DrawTexturePro(
-                melee_weapon_attack_sprite,
+                greatsword_weapon_attack_sprite,
                 { WEAPON_SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
                 { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width, melee_attack_spritebox.height },
                 { melee_attack_spritebox.width / 2, melee_attack_spritebox.height / 2 },

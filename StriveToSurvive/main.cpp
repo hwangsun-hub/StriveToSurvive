@@ -28,7 +28,7 @@ int main()
     GameTitle gametitle;
     bool isMusicPause = false;
     bool isGamePause = false;
-
+    int id = 0;
     while (!WindowShouldClose() && !exitWindow) {
         BeginDrawing();
         ClearBackground(BLACK);
@@ -83,11 +83,17 @@ int main()
                     camera.zoom = 1.0f;
                 }
                 //player weapon change(KEY_UP, KEY_DOWN)
-                if (IsKeyDown(KEY_UP)) {
-                    player.SetWeapon(COMMON_GREATSWORD_GREATSWORD);
+                if (IsKeyPressed(KEY_UP)) {
+                    if (id < NONE_WEAPON) {
+                        id++;
+                    }
+                    player.SetWeapon(static_cast<WeaponId>(id));
                 }
-                else if (IsKeyDown(KEY_DOWN)) {
-                    player.SetWeapon(COMMON_MACHINEGUN_MACHINGUN);
+                else if (IsKeyPressed(KEY_DOWN)) {
+                    if (id > COMMON_KATANA_KATANA) {
+                        id--;
+                    }
+                    player.SetWeapon(static_cast<WeaponId>(id));
                 }
                 //Spawn a Enemy (KEY_F1)
                 if (IsKeyReleased(KEY_F1)) {
