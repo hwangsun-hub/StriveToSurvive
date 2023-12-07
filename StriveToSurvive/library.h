@@ -114,6 +114,7 @@ enum WeaponType {
 
 extern GameState gamestate;
 extern bool exitWindow;
+extern int wave_level;
 //debug
 extern bool DEBUGING_MODE;
 

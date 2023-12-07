@@ -130,6 +130,7 @@ void Shop::Update(){
 	if (CheckCollisionPointRec(GetMousePosition(), { 370, 104, 10, 14 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		state = ORB;
 	}
+	UpdatePlayerBuy();
 	
 }
 
@@ -188,4 +189,28 @@ void Shop::Draw() {
 	default:
 		break;
 	}
+	DrawTexturePro(
+		std::get<0>(weapon_icons[selected_weapon]),
+		{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
+		{764, 128,ITEM_ICON_SIZE,ITEM_ICON_SIZE },
+		{ 0,0 },
+		0,
+		WHITE
+	);
+	DrawTexturePro(
+		std::get<0>(weapon_icons[std::get<0>(GetCombinationtype(selected_weapon))]),
+		{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
+		{ 686, 250,ITEM_ICON_SIZE,ITEM_ICON_SIZE },
+		{ 0,0 },
+		0,
+		WHITE
+	);
+	DrawTexturePro(
+		std::get<0>(orb_icons[std::get<1>(GetCombinationtype(selected_weapon))]),
+		{ 0,0,ITEM_ICON_SIZE, ITEM_ICON_SIZE },
+		{ 842, 250,ITEM_ICON_SIZE,ITEM_ICON_SIZE },
+		{ 0,0 },
+		0,
+		WHITE
+	);
 }
