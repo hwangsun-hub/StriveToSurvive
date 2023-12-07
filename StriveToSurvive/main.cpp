@@ -126,6 +126,10 @@ int main()
             EndDrawing();
             break;
         case GAMESTATE_SHOPPING:
+
+            if (IsKeyReleased(KEY_ENTER)) {
+                ToggleFullscreen();
+            }
             camera.target = { WINDOW_START_WIDTH / 2 ,WINDOW_START_HEIGHT / 2 };
             shop.Update();
             BeginMode2D(camera);

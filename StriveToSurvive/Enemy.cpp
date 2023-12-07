@@ -28,6 +28,10 @@ void Enemy::Damaged() {
 	Knockbacked();
 }
 
+void Enemy::RangedDamaged() {
+	hp -= player->GetRangedDamage();
+}
+
 void Enemy::Knockbacked() {
 	delta_position.x = -ENEMY_KNOCKBACK * delta_position.x;
 	delta_position.y = -ENEMY_KNOCKBACK * delta_position.y;
@@ -36,18 +40,25 @@ void Enemy::Knockbacked() {
 
 
 void Enemy::UpdateState() {
-	if (player_attack != player->GetisAttacking() && player_attack == false) {
-		if (
-			CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2 }, MELEE_ATTACK_HITBOX_SIZE, hitbox)
-			) {
-			Damaged();
-		}
-		
-	}
-	else {
-		isKnockback = false;
-	}
+	if (player->GetWeaponType(player->GetWeapon()) == WeaponType::KATANA || player->GetWeaponType(player->GetWeapon()) == WeaponType::GRAEATSWORD) {
+		if (player_attack != player->GetisAttacking() && player_attack == false) {
+			if (
+				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2 }, MELEE_ATTACK_HITBOX_SIZE, hitbox)
+				) {
+				Damaged();
+			}
 
+		}
+		else {
+			isKnockback = false;
+		}
+	}
+	for (int i = 0; i < player->ranged_attack_hitboxs.size(); i++) {
+		if (CheckCollisionCircleRec(std::get<0>(player->ranged_attack_hitboxs[i]), RANGED_ATTACK_SPRITE_RADIUS, hitbox)) {
+			RangedDamaged();
+			player->ranged_attack_hitboxs.erase(player->ranged_attack_hitboxs.begin() + i);
+		}
+	}
 	
 	player_attack = player->GetisAttacking();
 }

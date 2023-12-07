@@ -55,6 +55,24 @@ Shop::Shop(Player* _player) {
 	weapon_icons[RARE_SNIPERRIFLE_PIRACY] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_SNIPERRIFLE_PIRACY), icon2_5, 0);
 	weapon_icons[RARE_SNIPERRIFLE_CATERPILLAR] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_SNIPERRIFLE_CATERPILLAR), icon2_6, 0);
 	weapon_icons[RARE_SNIPERRIFLE_MAGICENGINEERING] = std::tuple<Texture, Rectangle, int>(GetWeaponIcon(RARE_SNIPERRIFLE_MAGICENGINEERING), icon2_7, 0);
+
+
+	orb_icons[OrbId::COMMON_LIFEORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_LIFEORB), icon3_1, 0);
+	orb_icons[OrbId::COMMON_IRONORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_IRONORB), icon1_1, 0);
+	orb_icons[OrbId::COMMON_SPRINGORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_SPRINGORB), icon1_2, 0);
+	orb_icons[OrbId::COMMON_ANGERORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_ANGERORB), icon1_3, 0);
+	orb_icons[OrbId::COMMON_WATERORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_WATERORB), icon1_4, 0);
+	orb_icons[OrbId::COMMON_BLOODORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_BLOODORB), icon1_5, 0);
+	orb_icons[OrbId::COMMON_WINDORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_WINDORB), icon1_6, 0);
+	orb_icons[OrbId::COMMON_RANGEORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(COMMON_RANGEORB), icon1_7, 0);
+	orb_icons[OrbId::UNCOMMON_ARMORORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_ARMORORB), icon4_1, 0);
+	orb_icons[OrbId::UNCOMMON_TRANSFUSIONORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_TRANSFUSIONORB), icon2_1, 0);
+	orb_icons[OrbId::UNCOMMON_ROARORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_ROARORB), icon2_2, 0);
+	orb_icons[OrbId::UNCOMMON_RAGEORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_RAGEORB), icon2_3, 0);
+	orb_icons[OrbId::UNCOMMON_SEAORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_SEAORB), icon2_4, 0);
+	orb_icons[OrbId::UNCOMMON_HUNGERORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_HUNGERORB), icon2_5, 0);
+	orb_icons[OrbId::UNCOMMON_SWIFTNESSORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_SWIFTNESSORB), icon2_6, 0);
+	orb_icons[OrbId::UNCOMMON_CHARGEORB] = std::tuple<Texture, Rectangle, int>(GetOrbIcon(UNCOMMON_CHARGEORB), icon2_7, 0);
 }
 
 void Shop::UpdateUI() {
@@ -156,6 +174,16 @@ void Shop::Draw() {
 		}
 		break;
 	case Shop::ORB:
+		for (int i = COMMON_LIFEORB; i < NONE_ORB; i++) {
+			DrawTexturePro(
+				std::get<0>(orb_icons[static_cast<OrbId>(i)]),
+				{ 0,0,ITEM_ICON_SIZE, ITEM_ICON_SIZE },
+				std::get<1>(orb_icons[static_cast<OrbId>(i)]),
+				{ 0,0 },
+				0,
+				WHITE
+			);
+		}
 		break;
 	default:
 		break;

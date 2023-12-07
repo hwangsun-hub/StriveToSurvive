@@ -36,6 +36,8 @@ constexpr int WEAPON_SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ WEAPON_SPRITE_SIZE * 4 };
 constexpr int ITEM_ICON_SIZE{ 64 };
 constexpr int TILE_MAP_SIZE{ 1920 };
+constexpr int RANGED_ATTACK_SPRITE_RADIUS{ 7 };
+constexpr int RANGED_ATTACK_SPRITE_SPEED{ 1000 };
 
 
 
@@ -155,6 +157,7 @@ public:
 	Texture weapon_sprite;
 	Texture katana_weapon_attack_sprite = LoadTexture("resources/katana_attack_sprite.png");
 	Texture greatsword_weapon_attack_sprite = LoadTexture("resources/greatsword_attack_sprite.png");
+	Texture ranged_weapon_attack_sprite = LoadTexture("resources/ranged_weapon_attack_sprite.png");
 
 	Rectangle weapon_sprite_source{ 0, };
 	Rectangle weapon_sprite_dest{ 0, };
@@ -177,14 +180,21 @@ private:
 	OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
 
 	//player state
+	//life per second, defense, knockback, damage , attack speed, Drain life, speed, range
 	int hp = 100;
+	float life_per_second = 0;
+	float defense = 0;
+	float knockback = 0;
 	float damage = 10;
+	float ranged_damage = 10;
+	float attack_cooltime = 0.5f;
+	float drain_life = 0;
 	float speed = 500;
 	int money = 0;
 	int killcount = 0;
 
 	//By default in seconds
-	float attack_cooltime = 0.5f;
+
 	float dodge_cooltime = 1;
 	float skill_cooltime = 10;
 
@@ -212,6 +222,7 @@ private:
 	Rectangle hitbox{ float(- WEAPON_SPRITE_SIZE), float(- WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3)};
 	
 	Rectangle melee_attack_spritebox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3) };
+
 
 	//sprite timer
 	Timer standing_sprite_timer;
@@ -242,10 +253,13 @@ public:
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
 	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3) };
-	
+
+	//orgin, degree
+	std::vector<std::tuple<Vector2, float>> ranged_attack_hitboxs;
 	//update
 	void Move();
 	void Attack();
+	void RangedAttack();
 	void Dodge();
 	void Skill();
 	void Kill();
@@ -269,6 +283,7 @@ public:
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();
 	float GetDamage();
+	float GetRangedDamage();
 	bool GetisAttacking();
 	Rectangle GetHitbox();
 	int GetMoney();
@@ -315,6 +330,7 @@ public:
 	void ChasePlayer();
 	void UpdateHitbox();
 	void Damaged();
+	void RangedDamaged();
 	void Knockbacked();
 	void UpdateState();
 	void Attack();

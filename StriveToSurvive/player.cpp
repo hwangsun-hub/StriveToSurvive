@@ -89,18 +89,54 @@ void Player::Attack() {
         }
         break;
     case WeaponType::MACHINGUN:
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            ranged_attack_hitboxs.push_back(
+                { { position.x + cosf(atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2)) * 80, position.y + sinf(atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2)) * 80 },
+                atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) }
+            );
+            isAttackReady = false;
+            isAttacking = true;
+        }
+       
         break;
     case WeaponType::SNIPERRIFLE:
+        if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            ranged_attack_hitboxs.push_back(
+                { { position.x + cosf(atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2)) * 80, position.y + sinf(atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2)) * 80 },
+                atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2) }
+            );
+            isAttackReady = false;
+            isAttacking = true;
+        }
         break;
 
     }
 }
+
+void Player::RangedAttack() {
+    for (int i = 0; i < ranged_attack_hitboxs.size(); i++) {
+        std::get<0>(ranged_attack_hitboxs[i]).x += RANGED_ATTACK_SPRITE_SPEED * cosf(std::get<1>(ranged_attack_hitboxs[i])) * GetFrameTime();
+        std::get<0>(ranged_attack_hitboxs[i]).y += RANGED_ATTACK_SPRITE_SPEED * sinf(std::get<1>(ranged_attack_hitboxs[i])) * GetFrameTime();
+        if (
+            std::get<0>(ranged_attack_hitboxs[i]).x > position.x + WINDOW_START_WIDTH ||
+            std::get<0>(ranged_attack_hitboxs[i]).x < position.x - WINDOW_START_WIDTH ||
+            std::get<0>(ranged_attack_hitboxs[i]).y > position.y + WINDOW_START_HEIGHT ||
+            std::get<0>(ranged_attack_hitboxs[i]).y < position.y - WINDOW_START_HEIGHT
+            ) {
+            ranged_attack_hitboxs.erase(ranged_attack_hitboxs.begin() + i);
+        }
+        
+    }
+}
+
 void Player::Dodge() {}
 void Player::Skill() {}
+
 void Player::Kill() {
     killcount++;
     money += 10;
 }
+
 void Player::Draw(){
     //player sprite
     if (isstanding) {
@@ -196,6 +232,7 @@ void Player::Update() {
         isAttackReady = true;
     }
     Attack();
+    RangedAttack();
     Move();
     UpdateSpawnpoint();
     UpdateHitbox();
@@ -212,6 +249,10 @@ void Player::DrawHitbox() {
     float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
     DrawRectangleLinesEx(hitbox, 2, RED);
     DrawCircleLines(melee_attack_hitbox.x+ hitbox.width/2, melee_attack_hitbox.y+ hitbox.height / 2, MELEE_ATTACK_HITBOX_SIZE, RED);
+    
+    for (int i = 0; i < ranged_attack_hitboxs.size(); i++) {
+        DrawCircleLines(std::get<0>(ranged_attack_hitboxs[i]).x, std::get<0>(ranged_attack_hitboxs[i]).y, RANGED_ATTACK_SPRITE_RADIUS, WHITE);
+    }
 }
 
 void Player::DrawWeapon() {
@@ -344,19 +385,29 @@ void Player::DrawWeaponAttack() {
             );
         }
         break;
-    case MACHINGUN:
-        break;
-    case SNIPERRIFLE:
-        break;
-    case NONE_TYPE:
-        break;
     default:
         break;
+    }
+
+    for (int i = 0; i < ranged_attack_hitboxs.size(); i++) {
+        DrawTexturePro(
+            ranged_weapon_attack_sprite,
+            { 0,0,WEAPON_SPRITE_SIZE / 2, WEAPON_SPRITE_SIZE / 2 },
+            { std::get<0>(ranged_attack_hitboxs[i]).x - WEAPON_SPRITE_SIZE / 4, std::get<0>(ranged_attack_hitboxs[i]).y - WEAPON_SPRITE_SIZE / 4, WEAPON_SPRITE_SIZE / 2, WEAPON_SPRITE_SIZE / 2 },
+            { 0,0 },
+            0,
+            WHITE
+        );
+
     }
 }
 
 float Player::GetDamage() {
     return damage;
+}
+
+float Player::GetRangedDamage() {
+    return ranged_damage;
 }
 
 bool Player::GetisAttacking() {
