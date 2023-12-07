@@ -52,7 +52,7 @@ Item::Item() {
 }
 
 Texture Item::GetWeaponIcon(WeaponId _weaponId) {
-	return weapon_icons[_weaponId];
+	return weapon_sprites[_weaponId];
 }
 
 Texture Item::GetWeaponSprite(WeaponId _weaponId) {

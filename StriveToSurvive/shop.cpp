@@ -129,4 +129,35 @@ void Shop::DrawUI() {
 
 void Shop::Draw() {
 	DrawUI();
+	switch (state)
+	{
+	case Shop::MELEE:
+		for (int i = COMMON_KATANA_KATANA; i < COMMON_MACHINEGUN_MACHINGUN; i++) {
+			DrawTexturePro(
+				std::get<0>(weapon_icons[static_cast<WeaponId>(i)]),
+				{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
+				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]),
+				{ 0,0 },
+				0,
+				WHITE
+			);
+		}
+		break;
+	case Shop::RANGED:
+		for (int i = COMMON_MACHINEGUN_MACHINGUN; i < NONE_WEAPON; i++) {
+			DrawTexturePro(
+				std::get<0>(weapon_icons[static_cast<WeaponId>(i)]),
+				{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
+				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]),
+				{ 0,0 },
+				0,
+				WHITE
+			);
+		}
+		break;
+	case Shop::ORB:
+		break;
+	default:
+		break;
+	}
 }
