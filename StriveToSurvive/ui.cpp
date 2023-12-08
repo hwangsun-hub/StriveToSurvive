@@ -16,14 +16,15 @@ void Ui::UpdateIngameUi() {
 }
 
 void Ui::UpdateShopUi() {
+	if (gamestate == GAMESTATE_SHOPPING) {
 
+	}
 }
 
 void Ui::DrawIngameUi() {
 	Vector2 icon1 = {24, 28};
 	Vector2 icon2 = {112, 28};
 	Vector2 icon3 = {200, 28};
-	Rectangle weapon_icon = {990, 560, 256, 128};
 	DrawTexturePro(
 		ingame_ui_orb_icon1,
 		{ 0,0,ITEM_ICON_SIZE,ITEM_ICON_SIZE },

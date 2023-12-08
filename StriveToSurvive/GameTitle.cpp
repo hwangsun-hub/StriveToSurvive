@@ -1,5 +1,7 @@
 #include "library.h"
 
+Camera2D camera;
+
 void GameTitle::Update() {
     //gametitle
     if (isDigiPenLogoEnd) {
@@ -24,6 +26,7 @@ void GameTitle::Update() {
                     //start button
                 case 0:
                     gamestate = GAMESTATE_INGAME;
+                    camera.zoom = 0.75f;
                     break;
                     //option button
                 case 1:

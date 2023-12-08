@@ -4,7 +4,7 @@ bool DEBUGING_MODE = true;
 bool exitWindow = false;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_INGAME;
+GameState gamestate = GAMESTATE_SHOPPING;
 
 
 int main()
@@ -19,10 +19,10 @@ int main()
 
     
     Texture Map = LoadTexture("resources/Map.png");
-    Camera2D camera = { 0, };
-    Player player(camera);
+    camera = { 0, };
+    Player player;
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
-    camera.zoom = 1;
+    camera.zoom = 1.0;
     TileMap tilemap(&player);
     EnemyManager<TestEnemy> testenemy(&player);
     Shop shop(&player);
@@ -56,7 +56,7 @@ int main()
             //update
             UpdateMusicStream(music);
             player.Update();
-            camera.target = Vector2Lerp(camera.target, player.GetPosition(), 10 * GetFrameTime());
+            camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
             testenemy.UpdateEnemies();
             tilemap.Update();
             BeginMode2D(camera);
@@ -81,7 +81,7 @@ int main()
                     camera.zoom -= 0.01f;
                 }
                 else if (IsKeyDown(KEY_HOME)) {
-                    camera.zoom = 1.0f;
+                    camera.zoom = 0.75f;
                 }
                 //player weapon change(KEY_UP, KEY_DOWN)
                 if (IsKeyPressed(KEY_UP)) {

@@ -1,6 +1,6 @@
 #include "library.h"
 
-Player::Player(Camera2D _camera) : camera(_camera){
+Player::Player(){
     SetWeapon(COMMON_KATANA_KATANA);
 }
 

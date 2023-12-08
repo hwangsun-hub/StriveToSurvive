@@ -21,7 +21,7 @@ constexpr int WINDOW_START_WIDTH = 1280;
 constexpr int WINDOW_START_HEIGHT = 720;
 constexpr int WINDOW_FRAMES_PER_SECOND = 60;
 
-constexpr float SPAWNPOINT_CIRCLE_RADIUS = 750;	//{sqrt(WINDOW_START_WIDTH ^ 2 + WINDOW_START_HEIGHT ^ 2) / 2}'s approximation
+constexpr float SPAWNPOINT_CIRCLE_RADIUS = 1000;
 constexpr float MELEE_ATTACK_HITBOX_SIZE = 50;
 constexpr float ENEMY_KNOCKBACK = 25;
 
@@ -119,6 +119,7 @@ enum WeaponType {
 extern GameState gamestate;
 extern bool exitWindow;
 extern int wave_level;
+extern Camera2D camera;
 //debug
 extern bool DEBUGING_MODE;
 
@@ -177,8 +178,6 @@ public:
 //player.cpp
 class Player : public Weapon{
 private:
-	//camera
-	Camera2D camera;
 
 	//inventory
 	WeaponId inventory_weapon[2] = { NONE_WEAPON, NONE_WEAPON };
@@ -201,7 +200,7 @@ private:
 	float speed_coefficient = 1.0f;
 	int money = 0;
 	int killcount = 0;
-	float dodge_cooltime = 1;
+	float dodge_cooltime = 2;
 	float dodge_cooltime_coefficient = 1.0f;
 
 	//attack
@@ -253,7 +252,6 @@ private:
 
 public:
 	Player();
-	Player(Camera2D);
 
 	Vector2 spawnpoint[8] = {
 		{0, SPAWNPOINT_CIRCLE_RADIUS},
