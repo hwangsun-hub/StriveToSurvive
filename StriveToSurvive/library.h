@@ -198,7 +198,7 @@ private:
 	float drain_life = 0;
 	float speed = 300;
 	float speed_coefficient = 1.0f;
-	int money = 0;
+	int money = 100000;
 	int killcount = 0;
 	float dodge_cooltime = 2;
 	float dodge_cooltime_coefficient = 1.0f;
@@ -298,6 +298,7 @@ public:
 	bool GetisDodging();
 	Rectangle GetHitbox();
 	int GetMoney();
+	int GetKillcount();
 	void SetMoney(int);
 	std::tuple<OrbId, OrbId, OrbId> GetInventoryOrb();
 	void SetInventoryOrb(OrbId);

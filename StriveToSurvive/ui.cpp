@@ -22,6 +22,28 @@ void Ui::UpdateShopUi() {
 }
 
 void Ui::DrawIngameUi() {
+	DrawTexturePro(
+		ingame_ui,
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0 },
+		0,
+		WHITE
+	);
+	DrawText(
+		TextFormat("%6d", player->GetMoney()),
+		1016,
+		9,
+		55,
+		BLACK
+	);
+	DrawText(
+		TextFormat("%6d", player->GetKillcount()),
+		1016,
+		84,
+		55,
+		BLACK
+	);
 	Vector2 icon1 = {24, 28};
 	Vector2 icon2 = {112, 28};
 	Vector2 icon3 = {200, 28};

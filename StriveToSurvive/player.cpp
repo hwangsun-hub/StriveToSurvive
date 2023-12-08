@@ -452,6 +452,10 @@ int Player::GetMoney() {
     return money;
 }
 
+int Player::GetKillcount() {
+    return killcount;
+}
+
 void Player::SetMoney(int _money) {
     money = _money;
 }

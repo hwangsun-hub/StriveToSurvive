@@ -89,8 +89,8 @@ void  Shop::UpdatePlayerBuy() {
 				selected_weapon = static_cast<WeaponId>(i);
 			}
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)]) && player->GetWeapon() != NONE_WEAPON) {
-					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetWeapon())) || static_cast<WeaponId>(i) == std::get<1>(GetCombinationtype(player->GetWeapon()))) {
+				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)])) {
+					if (std::get<0>(GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon() || player->GetWeapon() == WeaponId::NONE_WEAPON) {
 						player->SetWeapon(static_cast<WeaponId>(i));
 						player->SetMoney(player->GetMoney() - std::get<2>(weapon_icons[static_cast<WeaponId>(i)]));
 					}
@@ -104,8 +104,8 @@ void  Shop::UpdatePlayerBuy() {
 				selected_weapon = static_cast<WeaponId>(i);
 			}
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)]) && player->GetWeapon() != NONE_WEAPON) {
-					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetWeapon())) || static_cast<WeaponId>(i) == std::get<1>(GetCombinationtype(player->GetWeapon()))) {
+				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)])) {
+					if (std::get<0>(GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon() || player->GetWeapon() == WeaponId::NONE_WEAPON) {
 						player->SetWeapon(static_cast<WeaponId>(i));
 						player->SetMoney(player->GetMoney() - std::get<2>(weapon_icons[static_cast<WeaponId>(i)]));
 					}
@@ -173,6 +173,9 @@ void Shop::Draw() {
 				0,
 				WHITE
 			);
+			if (static_cast<WeaponId>(i) == player->GetWeapon()) {
+				DrawRectangleRec(std::get<1>(weapon_icons[static_cast<WeaponId>(i)]), { 0,0,0,128 });
+			}
 			DrawText(
 				TextFormat("%d", std::get<2>(weapon_icons[static_cast<WeaponId>(i)])),
 				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).x,
@@ -238,6 +241,9 @@ void Shop::Draw() {
 				0,
 				WHITE
 			);
+			if (static_cast<WeaponId>(i) == player->GetWeapon()) {
+				DrawRectangleRec(std::get<1>(weapon_icons[static_cast<WeaponId>(i)]), { 0,0,0,128 });
+			}
 			DrawText(
 				TextFormat("%d", std::get<2>(weapon_icons[static_cast<WeaponId>(i)])),
 				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).x,

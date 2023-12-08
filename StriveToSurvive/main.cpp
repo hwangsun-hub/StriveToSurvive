@@ -27,6 +27,7 @@ int main()
     EnemyManager<TestEnemy> testenemy(&player);
     Shop shop(&player);
     GameTitle gametitle;
+    Ui ui(&player);
     bool isMusicPause = false;
     bool isGamePause = false;
     int id = 0;
@@ -59,6 +60,7 @@ int main()
             camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
             testenemy.UpdateEnemies();
             tilemap.Update();
+            ui.UpdateIngameUi();
             BeginMode2D(camera);
             //debug mode toggle (KEY_F5)
             if (IsKeyReleased(KEY_F5)) {
@@ -124,6 +126,8 @@ int main()
             player.Draw();
             testenemy.DrawEnemies();
             EndMode2D();
+            //drawui
+            ui.DrawIngameUi();
             EndDrawing();
             break;
         case GAMESTATE_SHOPPING:
