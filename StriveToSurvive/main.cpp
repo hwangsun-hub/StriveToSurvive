@@ -137,9 +137,11 @@ int main()
             }
             camera.target = { WINDOW_START_WIDTH / 2 ,WINDOW_START_HEIGHT / 2 };
             shop.Update();
+            ui.UpdateShopUi();
             BeginMode2D(camera);
             shop.Draw();
             EndMode2D();
+            ui.DrawShopUi();
             EndDrawing();
             break;
         
