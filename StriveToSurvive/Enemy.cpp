@@ -29,7 +29,7 @@ void Enemy::Damaged() {
 }
 
 void Enemy::RangedDamaged() {
-	hp -= player->GetRangedDamage();
+	hp -= player->GetDamage();
 }
 
 void Enemy::Knockbacked() {

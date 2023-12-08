@@ -129,7 +129,13 @@ void Player::RangedAttack() {
     }
 }
 
-void Player::Dodge() {}
+void Player::Dodge() {
+    if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
+        isDodgeReady = false;
+        position.x += delta_position.x * DODGE_SPEED;
+        position.y += delta_position.y * DODGE_SPEED;
+    }
+}
 void Player::Skill() {}
 
 void Player::Kill() {
@@ -197,14 +203,20 @@ Vector2 Player::GetDeltaPosition() {
 }
 
 void Player::UpdateSpawnpoint() {
-    for (Vector2& position : spawnpoint) {
-        position = { position.x + GetDeltaPosition().x, position.y + GetDeltaPosition().y };
-    }
+    spawnpoint[0] = { position.x, SPAWNPOINT_CIRCLE_RADIUS + position.y };
+    spawnpoint[1] = { float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.x, float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.y };
+    spawnpoint[2] = { SPAWNPOINT_CIRCLE_RADIUS + position.x, position.y };
+    spawnpoint[3] = { float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.x, -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.y };
+    spawnpoint[4] = { position.x, -SPAWNPOINT_CIRCLE_RADIUS + position.y };
+    spawnpoint[5] = { -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.x, -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.y };
+    spawnpoint[6] = { -SPAWNPOINT_CIRCLE_RADIUS + position.x, position.y };
+    spawnpoint[7] = { -float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.x, float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)) + position.y };
+
 }
 void Player::UpdateHitbox() {
     float degree = atan2f(GetMouseY() - WINDOW_START_HEIGHT / 2, GetMouseX() - WINDOW_START_WIDTH / 2);
-    hitbox.x += GetDeltaPosition().x;
-    hitbox.y += GetDeltaPosition().y;
+    hitbox.x = GetPosition().x - hitbox.width / 2;
+    hitbox.y = GetPosition().y - hitbox.height / 2;
     melee_attack_hitbox.x = hitbox.x + 80 * cosf(degree);
     melee_attack_hitbox.y = hitbox.y + 80 * sinf(degree);
     melee_attack_spritebox.x = hitbox.x + 100 * cosf(degree);
@@ -214,6 +226,9 @@ void Player::UpdateHitbox() {
 }
 
 void Player::Update() {
+    if (before_weaponid != GetWeapon()) {
+        SetWeaponStat(GetWeapon());
+    }
     if (isstanding) {
         //sprite timer
         standing_sprite_timer.SetTimer(0.1f);
@@ -224,18 +239,32 @@ void Player::Update() {
         walking_sprite_timer.SetTimer(0.1f);
         walking_sprite_timer.UpdateTimer();
     }
+
+    //attack timer
     if (!isAttackReady) {
-        attack_cooltimer.SetTimer(attack_cooltime);
+        attack_cooltimer.SetTimer(attack_cooltime * attack_cooltime_coefficient);
         attack_cooltimer.UpdateTimer();
     }
     if (attack_cooltimer.TimerDone()) {
         isAttackReady = true;
     }
+
+    //dodge timer
+    if (!isDodgeReady) {
+        dodge_cooltimer.SetTimer(dodge_cooltime * dodge_cooltime_coefficient);
+        dodge_cooltimer.UpdateTimer();
+    }
+    if (dodge_cooltimer.TimerDone()) {
+        isDodgeReady = true;
+    }
+
     Attack();
     RangedAttack();
     Move();
+    Dodge();
     UpdateSpawnpoint();
     UpdateHitbox();
+    before_weaponid = GetWeapon();
 
 }
 
@@ -406,12 +435,13 @@ float Player::GetDamage() {
     return damage;
 }
 
-float Player::GetRangedDamage() {
-    return ranged_damage;
-}
 
 bool Player::GetisAttacking() {
     return isAttacking;
+}
+
+bool Player::GetisDodging() {
+    return !isDodgeReady;
 }
 
 Rectangle Player::GetHitbox() {
@@ -426,21 +456,6 @@ void Player::SetMoney(int _money) {
     money = _money;
 }
 
-WeaponId Player::GetInventoryMeleeWeapon() {
-    return inventory_weapon[0];
-}
-
-void Player::SetInventoryMeleeWeapon(WeaponId _weaponid) {
-    inventory_weapon[0] = _weaponid;
-}
-
-WeaponId Player::GetInventoryRangedWeapon() {
-    return inventory_weapon[1];
-}
-
-void Player::SetInventoryRangedWeapon(WeaponId _weaponid) {
-    inventory_weapon[1] = _weaponid;
-}
 
 std::tuple<OrbId, OrbId, OrbId> Player::GetInventoryOrb() {
     return std::tuple<OrbId, OrbId, OrbId>(inventory_orb[0], inventory_orb[1], inventory_orb[2]);
@@ -452,6 +467,130 @@ void Player::SetInventoryOrb(OrbId _orbid) {
             inventory_orb[i] = _orbid;
             break;
         }
+    }
+}
+
+void Player::SetWeaponStat(WeaponId _weaponid) {
+    switch (_weaponid)
+    {
+    case COMMON_KATANA_KATANA:
+        damage = 20;
+        attack_cooltime = 0.5f;
+        break;
+    case UNCOMMON_KATANA_TAILWIND:
+        damage = 30;
+        true_damage = 10;
+        attack_cooltime = 0.3f;
+        break;
+    case UNCOMMON_KATANA_ZERO:
+        damage = 60;
+        attack_cooltime = 0.5f;
+        break;
+    case RARE_KATANA_STORMWIND:
+        damage = 40;
+        attack_cooltime = 0.3f;
+        break;
+    case RARE_KATANA_THUNDER:
+        damage = 60;
+        attack_cooltime = 0.3f;
+        break;
+    case RARE_KATANA_MASAMUNE:
+        damage = 85;
+        attack_cooltime = 0.5f;
+        break;
+    case RARE_KATANA_MURAMASA:
+        damage = 100;
+        attack_cooltime = 0.5f;
+        break;
+    case COMMON_GREATSWORD_GREATSWORD:
+        damage = 50;
+        attack_cooltime = 1.0f;
+        break;
+    case UNCOMMON_GREATSWORD_KNIGHTLYSWORD:
+        damage = 150;
+        attack_cooltime = 1.0f;
+        break;
+    case UNCOMMON_GREATSWORD_BLOODSWORD:
+        damage = 120;
+        attack_cooltime = 1.0f;
+        break;
+    case RARE_GREATSWORD_BLACKKNIGHT:
+        damage = 175;
+        attack_cooltime = 0.75f;
+        break;
+    case RARE_GREATSWORD_WHITEKNIGHT:
+        damage = 175;
+        attack_cooltime = 0.75f;
+        break;
+    case RARE_GREATSWORD_VAMPIRE:
+        damage = 150;
+        attack_cooltime = 0.75f;
+        drain_life = 10;
+        break;
+    case RARE_GREATSWORD_BERSERKER:
+        damage = 150;
+        attack_cooltime = 0.75f;
+        break;
+    case COMMON_MACHINEGUN_MACHINGUN:
+        damage = 20;
+        attack_cooltime = 0.3f;
+        break;
+    case UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN:
+        damage = 35;
+        attack_cooltime = 0.2f;
+        break;
+    case UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN:
+        damage = 50;
+        attack_cooltime = 0.3f;
+        break;
+    case RARE_MACHINEGUN_KRAKEN:
+        damage = 40;
+        attack_cooltime = 0.2f;
+        break;
+    case RARE_MACHINEGUN_VOID:
+        damage = 35;
+        attack_cooltime = 0.2f;
+        break;
+    case RARE_MACHINEGUN_REPENTENCE:
+        damage = 50;
+        attack_cooltime = 0.25f;
+        break;
+    case RARE_MACHINEGUN_WILD:
+        damage = 80;
+        attack_cooltime = 0.3f;
+        break;
+    case COMMON_SNIPERRIFLE_SNIPERRIFLE:
+        damage = 40;
+        attack_cooltime = 0.6f;
+        break;
+    case UNCOMMON_SNIPERRIFLE_BOLTACTION:
+        damage = 100;
+        attack_cooltime = 0.6f;
+        break;
+    case UNCOMMON_SNIPERRIFLE_SEMIAUTO:
+        damage = 75;
+        attack_cooltime = 0.45f;
+        break;
+    case RARE_SNIPERRIFLE_RAILGUN:
+        damage = 500;
+        attack_cooltime = 2.0f;
+        break;
+    case RARE_SNIPERRIFLE_PIRACY:
+        damage = 200;
+        attack_cooltime = 1.0f;
+        break;
+    case RARE_SNIPERRIFLE_CATERPILLAR:
+        damage = 80;
+        attack_cooltime = 0.4f;
+        break;
+    case RARE_SNIPERRIFLE_MAGICENGINEERING:
+        damage = 80;
+        attack_cooltime = 0.4f;
+        break;
+    case NONE_WEAPON:
+        break;
+    default:
+        break;
     }
 }
 

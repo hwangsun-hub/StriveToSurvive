@@ -4,7 +4,8 @@ bool DEBUGING_MODE = true;
 bool exitWindow = false;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_SHOPPING;
+GameState gamestate = GAMESTATE_INGAME;
+
 
 int main()
 {
@@ -55,7 +56,7 @@ int main()
             //update
             UpdateMusicStream(music);
             player.Update();
-            camera.target = player.GetPosition();
+            camera.target = Vector2Lerp(camera.target, player.GetPosition(), 10 * GetFrameTime());
             testenemy.UpdateEnemies();
             tilemap.Update();
             BeginMode2D(camera);

@@ -13,6 +13,7 @@
 #include <rlgl.h>
 #include <map>
 #include <tuple>
+#include <raymath.h>
 
 
 //Global Constants
@@ -38,6 +39,9 @@ constexpr int ITEM_ICON_SIZE{ 64 };
 constexpr int TILE_MAP_SIZE{ 1920 };
 constexpr int RANGED_ATTACK_SPRITE_RADIUS{ 7 };
 constexpr int RANGED_ATTACK_SPRITE_SPEED{ 1000 };
+
+constexpr float DODGE_SPEED{ 30 };
+
 
 
 
@@ -182,30 +186,33 @@ private:
 
 	//player state
 	//life per second, defense, knockback, damage , attack speed, Drain life, speed, range
+	//By default in seconds
 	int hp = 100;
 	float life_per_second = 0;
 	float defense = 0;
 	float knockback = 0;
 	float damage = 10;
-	float ranged_damage = 10;
+	float true_damage = 0;
+	float damage_coefficient = 1.0f;
 	float attack_cooltime = 0.5f;
+	float attack_cooltime_coefficient = 1.0f;
 	float drain_life = 0;
-	float speed = 500;
+	float speed = 300;
+	float speed_coefficient = 1.0f;
 	int money = 0;
 	int killcount = 0;
-
-	//By default in seconds
-
 	float dodge_cooltime = 1;
-	float skill_cooltime = 10;
+	float dodge_cooltime_coefficient = 1.0f;
 
+	//attack
 	bool isAttackReady = true;
 	bool isAttacking = false;
 
 	float attack_degree = 0;
 
-	float sex_x = 0;
-	float sex_y = 0;
+	//dodge
+	bool isDodgeReady = true;
+
 	
 	//By default looking right
 	bool islookingright = true;
@@ -229,14 +236,19 @@ private:
 	Timer standing_sprite_timer;
 	Timer walking_sprite_timer;
 	Timer melee_weapon_attack_sprite_timer;
-	Timer attack_cooltimer;
 
 	unsigned int standing_sprite_index = 0;
 	unsigned int walking_sprite_index = 0;
 	unsigned int melee_weapon_attack_sprite_index = MELEE_ATTACK_SPRITE_MAXNUM;
 
-	//attack
+	//action timer
+	Timer attack_cooltimer;
+	Timer dodge_cooltimer;
+
 	bool greatsword_motion = false;
+
+	//weaponid_changed_check
+	WeaponId before_weaponid = NONE_WEAPON;
 
 
 public:
@@ -284,17 +296,15 @@ public:
 	Vector2 GetPosition();
 	Vector2 GetDeltaPosition();
 	float GetDamage();
-	float GetRangedDamage();
 	bool GetisAttacking();
+	bool GetisDodging();
 	Rectangle GetHitbox();
 	int GetMoney();
 	void SetMoney(int);
-	WeaponId GetInventoryMeleeWeapon();
-	void SetInventoryMeleeWeapon(WeaponId);
-	WeaponId GetInventoryRangedWeapon();
-	void SetInventoryRangedWeapon(WeaponId);
 	std::tuple<OrbId, OrbId, OrbId> GetInventoryOrb();
 	void SetInventoryOrb(OrbId);
+
+	void SetWeaponStat(WeaponId);
 
 };
 
@@ -321,6 +331,7 @@ protected:
 	bool isPlayerFollowType = true;
 	bool isKnockback = false;
 	bool player_attack = false;
+	bool player_dodge = false;
 
 public: 
 	Enemy(Player* player);

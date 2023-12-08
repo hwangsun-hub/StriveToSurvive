@@ -89,9 +89,9 @@ void  Shop::UpdatePlayerBuy() {
 				selected_weapon = static_cast<WeaponId>(i);
 			}
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)]) && player->GetInventoryMeleeWeapon() != NONE_WEAPON) {
-					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetInventoryMeleeWeapon())) || static_cast<WeaponId>(i) == std::get<1>(GetCombinationtype(player->GetInventoryMeleeWeapon()))) {
-						player->SetInventoryMeleeWeapon(static_cast<WeaponId>(i));
+				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)]) && player->GetWeapon() != NONE_WEAPON) {
+					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetWeapon())) || static_cast<WeaponId>(i) == std::get<1>(GetCombinationtype(player->GetWeapon()))) {
+						player->SetWeapon(static_cast<WeaponId>(i));
 						player->SetMoney(player->GetMoney() - std::get<2>(weapon_icons[static_cast<WeaponId>(i)]));
 					}
 				}
@@ -104,9 +104,9 @@ void  Shop::UpdatePlayerBuy() {
 				selected_weapon = static_cast<WeaponId>(i);
 			}
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)]) && player->GetInventoryRangedWeapon() != NONE_WEAPON) {
-					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetInventoryRangedWeapon())) || static_cast<WeaponId>(i) == std::get<1>(GetCombinationtype(player->GetInventoryRangedWeapon()))) {
-						player->SetInventoryRangedWeapon(static_cast<WeaponId>(i));
+				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)]) && player->GetWeapon() != NONE_WEAPON) {
+					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetWeapon())) || static_cast<WeaponId>(i) == std::get<1>(GetCombinationtype(player->GetWeapon()))) {
+						player->SetWeapon(static_cast<WeaponId>(i));
 						player->SetMoney(player->GetMoney() - std::get<2>(weapon_icons[static_cast<WeaponId>(i)]));
 					}
 				}
