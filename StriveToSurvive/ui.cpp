@@ -16,6 +16,10 @@ void Ui::UpdateIngameUi() {
 }
 
 void Ui::UpdateShopUi() {
+	ingame_ui_orb_icon1 = player->GetOrbIcon(std::get<0>(player->GetInventoryOrb()));
+	ingame_ui_orb_icon2 = player->GetOrbIcon(std::get<1>(player->GetInventoryOrb()));
+	ingame_ui_orb_icon3 = player->GetOrbIcon(std::get<2>(player->GetInventoryOrb()));
+	ingame_ui_weapon_icon = player->GetWeaponIcon(player->GetWeapon());
 	if (gamestate == GAMESTATE_SHOPPING) {
 
 	}

@@ -43,7 +43,8 @@ constexpr int RANGED_ATTACK_SPRITE_RADIUS{ 7 };
 constexpr int RANGED_ATTACK_SPRITE_SPEED{ 1000 };
 
 constexpr int PLAYER_MAX_HP = 500;
-constexpr float DODGE_SPEED{ 30 };
+constexpr float PLAYER_DODGE_SPEED{ 30 };
+constexpr float PLAYE_SPEED{ 300 };
 
 constexpr int RUNNER_HP_COEFFICIENT = 40;
 constexpr int RUNNER_DEFENSE_COEFFICIENT = 5;
@@ -214,14 +215,14 @@ private:
 	int hp = 500;
 	float life_per_second = 0;
 	float defense = 0;
-	float knockback = 0;
+	float true_defense = 0;
 	float damage = 10;
 	float true_damage = 0;
 	float damage_coefficient = 1.0f;
 	float attack_cooltime = 0.5f;
 	float attack_cooltime_coefficient = 1.0f;
-	float drain_life = 0;
-	float speed = 300;
+	float drain_life_coefficient = 1.0f;
+	float speed = PLAYE_SPEED;
 	float speed_coefficient = 1.0f;
 
 	int money = 100000;
@@ -274,6 +275,7 @@ private:
 	Timer attack_cooltimer;
 	Timer dodge_cooltimer;
 	Timer invincible_cooltimer;
+	Timer life_heal_cooltimer;
 
 	bool greatsword_motion = false;
 
@@ -296,6 +298,7 @@ public:
 	};
 	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), MELEE_ATTACK_RANGE_WIDTH, MELEE_ATTACK_RANGE_HEIGHT };
 	float range_coefficient = 1.0f;
+	float knockback_coefficient = 1.0f;
 	//orgin, degree
 	std::vector<std::tuple<Vector2, float>> ranged_attack_hitboxs;
 	//update
@@ -332,7 +335,10 @@ public:
 	void SetMoney(int);
 	std::tuple<OrbId, OrbId, OrbId> GetInventoryOrb();
 	void SetInventoryOrb(OrbId);
+	void RemoveInventoryOrb(OrbId);
 	void SetWeaponStat(WeaponId);
+	void SetOrbStat(OrbId);
+	void DesetOrbStat(OrbId);
 	int GetHp();
 	float GetTrueDamage();
 	void Damaged(float);

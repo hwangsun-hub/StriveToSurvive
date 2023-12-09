@@ -32,8 +32,8 @@ void Enemy::RangedDamaged() {
 }
 
 void Enemy::Knockbacked() {
-	delta_position.x = -ENEMY_KNOCKBACK * delta_position.x;
-	delta_position.y = -ENEMY_KNOCKBACK * delta_position.y;
+	delta_position.x = -ENEMY_KNOCKBACK * player->knockback_coefficient * delta_position.x;
+	delta_position.y = -ENEMY_KNOCKBACK * player->knockback_coefficient * delta_position.y;
 	isKnockback = true;
 }
 

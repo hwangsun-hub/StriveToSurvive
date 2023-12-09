@@ -85,14 +85,36 @@ void  Shop::UpdatePlayerBuy() {
 	{
 	case Shop::MELEE:
 		for (int i = COMMON_KATANA_KATANA; i < COMMON_MACHINEGUN_MACHINGUN; i++) {
+			int price = std::get<2>(weapon_icons[static_cast<WeaponId>(i)]);
+			if (std::get<0>(player->GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon()) {
+				price -= std::get<2>(weapon_icons[player->GetWeapon()]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+			}
+
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 				selected_weapon = static_cast<WeaponId>(i);
 			}
+
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)])) {
-					if (std::get<0>(GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon() || player->GetWeapon() == WeaponId::NONE_WEAPON) {
-						player->SetWeapon(static_cast<WeaponId>(i));
-						player->SetMoney(player->GetMoney() - std::get<2>(weapon_icons[static_cast<WeaponId>(i)]));
+				if (player->GetMoney() > price) {
+					player->SetMoney((player->GetMoney() - price));
+					player->SetWeapon(static_cast<WeaponId>(i));
+					if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+						player->RemoveInventoryOrb(std::get<0>(player->GetInventoryOrb()));
+					}
+					if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+						player->RemoveInventoryOrb(std::get<1>(player->GetInventoryOrb()));
+					}
+					if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+						player->RemoveInventoryOrb(std::get<2>(player->GetInventoryOrb()));
 					}
 				}
 			}
@@ -100,14 +122,38 @@ void  Shop::UpdatePlayerBuy() {
 		break;
 	case Shop::RANGED:
 		for (int i = COMMON_MACHINEGUN_MACHINGUN; i < NONE_WEAPON; i++) {
-			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				selected_weapon = static_cast<WeaponId>(i);
-			}
-			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(weapon_icons[static_cast<WeaponId>(i)])) {
-					if (std::get<0>(GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon() || player->GetWeapon() == WeaponId::NONE_WEAPON) {
+			{
+				int price = std::get<2>(weapon_icons[static_cast<WeaponId>(i)]);
+				if (std::get<0>(player->GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon()) {
+					price -= std::get<2>(weapon_icons[player->GetWeapon()]);
+				}
+				if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+					price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+				}
+				if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+					price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+				}
+				if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+					price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+				}
+
+				if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+					selected_weapon = static_cast<WeaponId>(i);
+				}
+
+				if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+					if (player->GetMoney() > price) {
+						player->SetMoney((player->GetMoney() - price));
 						player->SetWeapon(static_cast<WeaponId>(i));
-						player->SetMoney(player->GetMoney() - std::get<2>(weapon_icons[static_cast<WeaponId>(i)]));
+						if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+							player->RemoveInventoryOrb(std::get<0>(player->GetInventoryOrb()));
+						}
+						if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+							player->RemoveInventoryOrb(std::get<1>(player->GetInventoryOrb()));
+						}
+						if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+							player->RemoveInventoryOrb(std::get<2>(player->GetInventoryOrb()));
+						}
 					}
 				}
 			}
@@ -115,14 +161,55 @@ void  Shop::UpdatePlayerBuy() {
 		break;
 	case Shop::ORB:
 		for (int i = COMMON_LIFEORB; i < NONE_ORB; i++) {
-			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(orb_icons[static_cast<OrbId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
-				selected_orb = static_cast<OrbId>(i);
-			}
-			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(orb_icons[static_cast<OrbId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > std::get<2>(orb_icons[static_cast<OrbId>(i)]) && player->GetWeapon() != NONE_WEAPON) {
-					if (static_cast<WeaponId>(i) == std::get<0>(GetCombinationtype(player->GetWeapon())) || static_cast<OrbId>(i) == std::get<1>(GetCombinationtype(player->GetWeapon()))) {
-						player->SetInventoryOrb(static_cast<OrbId>(i));
-						player->SetMoney(player->GetMoney() - std::get<2>(orb_icons[static_cast<OrbId>(i)]));
+			{
+				{
+					int price = std::get<2>(orb_icons[static_cast<OrbId>(i)]);
+					if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+						price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+					}
+					if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+						price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+					}
+					if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+						price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+					}
+					if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+						price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+					}
+					if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+						price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+					}
+					if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+						price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+					}
+
+					if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(orb_icons[static_cast<OrbId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+						selected_orb = static_cast<OrbId>(i);
+					}
+
+					if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(orb_icons[static_cast<OrbId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
+						if (player->GetMoney() > price) {
+							player->SetMoney((player->GetMoney() - price));
+							if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+								player->RemoveInventoryOrb(std::get<0>(player->GetInventoryOrb()));
+							}
+							if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+								player->RemoveInventoryOrb(std::get<1>(player->GetInventoryOrb()));
+							}
+							if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+								player->RemoveInventoryOrb(std::get<2>(player->GetInventoryOrb()));
+							}
+							if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+								player->RemoveInventoryOrb(std::get<0>(player->GetInventoryOrb()));
+							}
+							if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+								player->RemoveInventoryOrb(std::get<1>(player->GetInventoryOrb()));
+							}
+							if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+								player->RemoveInventoryOrb(std::get<2>(player->GetInventoryOrb()));
+							}
+							player->SetInventoryOrb(static_cast<OrbId>(i));
+						}
 					}
 				}
 			}
@@ -168,8 +255,21 @@ void Shop::Draw() {
 	DrawUI();
 	switch (state)
 	{
-	case Shop::MELEE:
+	case Shop::MELEE: {
 		for (int i = COMMON_KATANA_KATANA; i < COMMON_MACHINEGUN_MACHINGUN; i++) {
+			int price = std::get<2>(weapon_icons[static_cast<WeaponId>(i)]);
+			if (std::get<0>(player->GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon()) {
+				price -= std::get<2>(weapon_icons[player->GetWeapon()]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+			}
 			DrawTexturePro(
 				std::get<0>(weapon_icons[static_cast<WeaponId>(i)]),
 				{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
@@ -182,13 +282,27 @@ void Shop::Draw() {
 				DrawRectangleRec(std::get<1>(weapon_icons[static_cast<WeaponId>(i)]), { 0,0,0,128 });
 			}
 			DrawText(
-				TextFormat("%d", std::get<2>(weapon_icons[static_cast<WeaponId>(i)])),
+				TextFormat("%d", price),
 				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).x,
 				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).y + std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).height,
 				18,
 				BLACK
 			);
 		}
+		int selected_weapon_price = std::get<2>(weapon_icons[selected_weapon]);
+		if (std::get<0>(player->GetCombinationtype(selected_weapon)) == player->GetWeapon()) {
+			selected_weapon_price -= std::get<2>(weapon_icons[player->GetWeapon()]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_weapon)) == std::get<0>(player->GetInventoryOrb())) {
+			selected_weapon_price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_weapon)) == std::get<1>(player->GetInventoryOrb())) {
+			selected_weapon_price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_weapon)) == std::get<2>(player->GetInventoryOrb())) {
+			selected_weapon_price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+		}
+
 		DrawTexturePro(
 			std::get<0>(weapon_icons[selected_weapon]),
 			{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
@@ -198,7 +312,7 @@ void Shop::Draw() {
 			WHITE
 		);
 		DrawText(
-			TextFormat("%d", std::get<2>(weapon_icons[selected_weapon])),
+			TextFormat("%d", selected_weapon_price),
 			764,
 			128 + ITEM_ICON_SIZE,
 			18,
@@ -212,13 +326,6 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
-		DrawText(
-			TextFormat("%d", std::get<2>(weapon_icons[std::get<0>(GetCombinationtype(selected_weapon))])),
-			686,
-			250 + ITEM_ICON_SIZE,
-			18,
-			BLACK
-		);
 		DrawTexturePro(
 			std::get<0>(orb_icons[std::get<1>(GetCombinationtype(selected_weapon))]),
 			{ 0,0,ITEM_ICON_SIZE, ITEM_ICON_SIZE },
@@ -227,17 +334,24 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
-		DrawText(
-			TextFormat("%d", std::get<2>(orb_icons[std::get<1>(GetCombinationtype(selected_weapon))])),
-			842,
-			250 + ITEM_ICON_SIZE,
-			18,
-			BLACK
-		);
+	}
 		
 		break;
-	case Shop::RANGED:
+	case Shop::RANGED: {
 		for (int i = COMMON_MACHINEGUN_MACHINGUN; i < NONE_WEAPON; i++) {
+			int price = std::get<2>(weapon_icons[static_cast<WeaponId>(i)]);
+			if (std::get<0>(player->GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon()) {
+				price -= std::get<2>(weapon_icons[player->GetWeapon()]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+			}
 			DrawTexturePro(
 				std::get<0>(weapon_icons[static_cast<WeaponId>(i)]),
 				{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
@@ -250,13 +364,27 @@ void Shop::Draw() {
 				DrawRectangleRec(std::get<1>(weapon_icons[static_cast<WeaponId>(i)]), { 0,0,0,128 });
 			}
 			DrawText(
-				TextFormat("%d", std::get<2>(weapon_icons[static_cast<WeaponId>(i)])),
+				TextFormat("%d", price),
 				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).x,
 				std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).y + std::get<1>(weapon_icons[static_cast<WeaponId>(i)]).height,
 				18,
 				BLACK
 			);
 		}
+		int selected_weapon_price = std::get<2>(weapon_icons[selected_weapon]);
+		if (std::get<0>(player->GetCombinationtype(selected_weapon)) == player->GetWeapon()) {
+			selected_weapon_price -= std::get<2>(weapon_icons[player->GetWeapon()]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_weapon)) == std::get<0>(player->GetInventoryOrb())) {
+			selected_weapon_price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_weapon)) == std::get<1>(player->GetInventoryOrb())) {
+			selected_weapon_price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_weapon)) == std::get<2>(player->GetInventoryOrb())) {
+			selected_weapon_price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+		}
+
 		DrawTexturePro(
 			std::get<0>(weapon_icons[selected_weapon]),
 			{ 0,0,WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
@@ -266,7 +394,7 @@ void Shop::Draw() {
 			WHITE
 		);
 		DrawText(
-			TextFormat("%d", std::get<2>(weapon_icons[selected_weapon])),
+			TextFormat("%d", selected_weapon_price),
 			764,
 			128 + ITEM_ICON_SIZE,
 			18,
@@ -280,13 +408,6 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
-		DrawText(
-			TextFormat("%d", std::get<2>(weapon_icons[std::get<0>(GetCombinationtype(selected_weapon))])),
-			686,
-			250 + ITEM_ICON_SIZE,
-			18,
-			BLACK
-		);
 		DrawTexturePro(
 			std::get<0>(orb_icons[std::get<1>(GetCombinationtype(selected_weapon))]),
 			{ 0,0,ITEM_ICON_SIZE, ITEM_ICON_SIZE },
@@ -295,16 +416,29 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
-		DrawText(
-			TextFormat("%d", std::get<2>(orb_icons[std::get<1>(GetCombinationtype(selected_weapon))])),
-			842,
-			250 + ITEM_ICON_SIZE,
-			18,
-			BLACK
-		);
+	}
 		break;
-	case Shop::ORB:
+	case Shop::ORB: {
 		for (int i = COMMON_LIFEORB; i < NONE_ORB; i++) {
+			int price = std::get<2>(orb_icons[static_cast<OrbId>(i)]);
+			if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+			}
+			if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+			}
+			if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+			}
+			if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+				price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+			}
 			DrawTexturePro(
 				std::get<0>(orb_icons[static_cast<OrbId>(i)]),
 				{ 0,0,ITEM_ICON_SIZE, ITEM_ICON_SIZE },
@@ -314,12 +448,31 @@ void Shop::Draw() {
 				WHITE
 			);
 			DrawText(
-				TextFormat("%d", std::get<2>(orb_icons[static_cast<OrbId>(i)])),
+				TextFormat("%d", price),
 				std::get<1>(orb_icons[static_cast<OrbId>(i)]).x,
 				std::get<1>(orb_icons[static_cast<OrbId>(i)]).y + std::get<1>(orb_icons[static_cast<OrbId>(i)]).height,
 				18,
 				BLACK
 			);
+		}
+		int selected_orb_price = std::get<2>(orb_icons[selected_orb]);
+		if (std::get<0>(player->GetCombinationtype(selected_orb)) == std::get<0>(player->GetInventoryOrb())) {
+			selected_orb_price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+		}
+		if (std::get<0>(player->GetCombinationtype(selected_orb)) == std::get<1>(player->GetInventoryOrb())) {
+			selected_orb_price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+		}
+		if (std::get<0>(player->GetCombinationtype(selected_orb)) == std::get<2>(player->GetInventoryOrb())) {
+			selected_orb_price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_orb)) == std::get<0>(player->GetInventoryOrb())) {
+			selected_orb_price -= std::get<2>(orb_icons[std::get<0>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_orb)) == std::get<1>(player->GetInventoryOrb())) {
+			selected_orb_price -= std::get<2>(orb_icons[std::get<1>(player->GetInventoryOrb())]);
+		}
+		if (std::get<1>(player->GetCombinationtype(selected_orb)) == std::get<2>(player->GetInventoryOrb())) {
+			selected_orb_price -= std::get<2>(orb_icons[std::get<2>(player->GetInventoryOrb())]);
 		}
 		DrawTexturePro(
 			std::get<0>(orb_icons[selected_orb]),
@@ -330,7 +483,7 @@ void Shop::Draw() {
 			WHITE
 		);
 		DrawText(
-			TextFormat("%d", std::get<2>(orb_icons[selected_orb])),
+			TextFormat("%d", selected_orb_price),
 			764,
 			128 + ITEM_ICON_SIZE,
 			18,
@@ -344,13 +497,6 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
-		DrawText(
-			TextFormat("%d", std::get<2>(orb_icons[std::get<0>(GetCombinationtype(selected_orb))])),
-			686,
-			250 + ITEM_ICON_SIZE,
-			18,
-			BLACK
-		);
 		DrawTexturePro(
 			std::get<0>(orb_icons[std::get<1>(GetCombinationtype(selected_orb))]),
 			{ 0,0,ITEM_ICON_SIZE, ITEM_ICON_SIZE },
@@ -359,13 +505,7 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
-		DrawText(
-			TextFormat("%d", std::get<2>(orb_icons[std::get<1>(GetCombinationtype(selected_orb))])),
-			842,
-			250 + ITEM_ICON_SIZE,
-			18,
-			BLACK
-		);
+	}
 		
 		break;
 	default:

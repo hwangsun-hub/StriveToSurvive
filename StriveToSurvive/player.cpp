@@ -133,8 +133,8 @@ void Player::RangedAttack() {
 void Player::Dodge() {
     if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
         isDodgeReady = false;
-        position.x += delta_position.x * DODGE_SPEED;
-        position.y += delta_position.y * DODGE_SPEED;
+        position.x += delta_position.x * PLAYER_DODGE_SPEED;
+        position.y += delta_position.y * PLAYER_DODGE_SPEED;
     }
 }
 
@@ -246,6 +246,9 @@ void Player::Update() {
     if (before_weaponid != GetWeapon()) {
         SetWeaponStat(GetWeapon());
     }
+
+    speed = PLAYE_SPEED * speed_coefficient;
+
     if (isstanding) {
         //sprite timer
         standing_sprite_timer.SetTimer(0.1f);
@@ -282,6 +285,12 @@ void Player::Update() {
     }
     if (invincible_cooltimer.TimerDone()) {
         isInvincible = false;
+    }
+    life_heal_cooltimer.SetTimer(1);
+    life_heal_cooltimer.UpdateTimer();
+    
+    if (life_heal_cooltimer.TimerDone()) {
+        hp += life_per_second;
     }
 
     Attack();
@@ -493,8 +502,19 @@ std::tuple<OrbId, OrbId, OrbId> Player::GetInventoryOrb() {
 
 void Player::SetInventoryOrb(OrbId _orbid) {
     for (int i = 0; i < sizeof(inventory_orb); i++) {
-        if (inventory_orb[i] != NONE_ORB) {
+        if (inventory_orb[i] == NONE_ORB) {
             inventory_orb[i] = _orbid;
+            SetOrbStat(_orbid);
+            break;
+        }
+    }
+}
+
+void Player::RemoveInventoryOrb(OrbId _orbid) {
+    for (int i = 0; i < sizeof(inventory_orb); i++) {
+        if (inventory_orb[i] == _orbid) {
+            inventory_orb[i] = NONE_ORB;
+            DesetOrbStat(_orbid);
             break;
         }
     }
@@ -555,7 +575,7 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
     case RARE_GREATSWORD_VAMPIRE:
         damage = 150;
         attack_cooltime = 0.75f;
-        drain_life = 10;
+        drain_life_coefficient = 10;
         break;
     case RARE_GREATSWORD_BERSERKER:
         damage = 150;
@@ -618,6 +638,148 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
         attack_cooltime = 0.4f;
         break;
     case NONE_WEAPON:
+        break;
+    default:
+        break;
+    }
+}
+
+void Player::SetOrbStat(OrbId _orbid) {
+    switch (_orbid)
+    {
+    case COMMON_LIFEORB:
+        life_per_second++;
+        break;
+    case COMMON_IRONORB:
+        defense += 10;
+        break;
+    case COMMON_SPRINGORB:
+        knockback_coefficient += 0.5f;
+        break;
+    case COMMON_ANGERORB:
+        damage_coefficient += 0.25f;
+        break;
+    case COMMON_WATERORB:
+        attack_cooltime_coefficient += 0.25f;
+        break;
+    case COMMON_BLOODORB:
+        drain_life_coefficient += 0.02f;
+        break;
+    case COMMON_WINDORB:
+        speed_coefficient += 0.25f;
+        break;
+    case COMMON_RANGEORB:
+        range_coefficient += 0.25f;
+        break;
+    case UNCOMMON_ARMORORB:
+        true_defense += 5;
+        life_per_second += 2;
+        defense += 20;
+        break;
+    case UNCOMMON_TRANSFUSIONORB:
+        life_per_second += 3;
+        drain_life_coefficient += 3;
+        break;
+    case UNCOMMON_ROARORB:
+        //special
+        knockback_coefficient += 0.5;
+        range_coefficient += 0.25;
+        break;
+    case UNCOMMON_RAGEORB:
+        //special
+        damage_coefficient += 0.3;
+        attack_cooltime_coefficient += 0.3;
+        break;
+    case UNCOMMON_SEAORB:
+        //special
+        speed_coefficient += 0.3;
+        attack_cooltime_coefficient += 0.3;
+        break;
+    case UNCOMMON_HUNGERORB:
+        //special
+        drain_life_coefficient += 4;
+        break;
+    case UNCOMMON_SWIFTNESSORB:
+        dodge_cooltime_coefficient -= 0.5;
+        speed_coefficient += 1.65;
+        break;
+    case UNCOMMON_CHARGEORB:
+        //special
+        damage_coefficient += 0.3;
+        range_coefficient += 0.3;
+        break;
+    case NONE_ORB:
+        break;
+    default:
+        break;
+    }
+}
+
+void Player::DesetOrbStat(OrbId _orbid) {
+    switch (_orbid)
+    {
+    case COMMON_LIFEORB:
+        life_per_second--;
+        break;
+    case COMMON_IRONORB:
+        defense -= 10;
+        break;
+    case COMMON_SPRINGORB:
+        knockback_coefficient -= 0.5f;
+        break;
+    case COMMON_ANGERORB:
+        damage_coefficient -= 0.25f;
+        break;
+    case COMMON_WATERORB:
+        attack_cooltime_coefficient -= 0.25f;
+        break;
+    case COMMON_BLOODORB:
+        drain_life_coefficient -= 0.02f;
+        break;
+    case COMMON_WINDORB:
+        speed_coefficient -= 0.25f;
+        break;
+    case COMMON_RANGEORB:
+        range_coefficient -= 0.25f;
+        break;
+    case UNCOMMON_ARMORORB:
+        true_defense -= 5;
+        life_per_second -= 2;
+        defense -= 20;
+        break;
+    case UNCOMMON_TRANSFUSIONORB:
+        life_per_second -= 3;
+        drain_life_coefficient -= 3;
+        break;
+    case UNCOMMON_ROARORB:
+        //special
+        knockback_coefficient -= 0.5;
+        range_coefficient -= 0.25;
+        break;
+    case UNCOMMON_RAGEORB:
+        //special
+        damage_coefficient -= 0.3;
+        attack_cooltime_coefficient -= 0.3;
+        break;
+    case UNCOMMON_SEAORB:
+        //special
+        speed_coefficient -= 0.3;
+        attack_cooltime_coefficient -= 0.3;
+        break;
+    case UNCOMMON_HUNGERORB:
+        //special
+        drain_life_coefficient -= 4;
+        break;
+    case UNCOMMON_SWIFTNESSORB:
+        dodge_cooltime_coefficient += 0.5;
+        speed_coefficient -= 1.65;
+        break;
+    case UNCOMMON_CHARGEORB:
+        //special
+        damage_coefficient -= 0.3;
+        range_coefficient -= 0.3;
+        break;
+    case NONE_ORB:
         break;
     default:
         break;
