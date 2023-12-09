@@ -23,13 +23,12 @@ void Enemy::UpdateHitbox() {
 }
 
 void Enemy::Damaged() {
-	hp -= player->GetDamage();
-	//knockback
+	hp -= player->GetDamage() * 100 / (100 + defence) + player->GetTrueDamage();
 	Knockbacked();
 }
 
 void Enemy::RangedDamaged() {
-	hp -= player->GetDamage();
+	hp -= player->GetDamage() * 100 / (100 + defence) + player->GetTrueDamage();
 }
 
 void Enemy::Knockbacked() {
@@ -82,7 +81,7 @@ void Enemy::DrawHitbox() {
 
 void Enemy::DrawhpBar() {
 	DrawRectangleV({ position.x - 50, position.y + 30 }, { 100,10 }, WHITE);
-	DrawRectangleV({ position.x-50, position.y+30 }, { float(hp),10 }, GREEN);
+	DrawRectangleV({ position.x-50, position.y+30 }, { float(hp)/float(max_hp) * 100,10 }, GREEN);
 }
 
 

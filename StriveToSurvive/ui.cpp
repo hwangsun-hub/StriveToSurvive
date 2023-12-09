@@ -72,6 +72,7 @@ void Ui::DrawIngameUi() {
 	);
 
 
+
 }
 void Ui::DrawShopUi() {
 	DrawTexturePro(

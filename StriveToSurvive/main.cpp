@@ -3,8 +3,10 @@
 bool DEBUGING_MODE = true;
 bool exitWindow = false;
 
+int wave_level = 1;
+
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_SHOPPING;
+GameState gamestate = GAMESTATE_TITLE;
 
 
 int main()
@@ -24,7 +26,10 @@ int main()
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1.0;
     TileMap tilemap(&player);
-    EnemyManager<TestEnemy> testenemy(&player);
+    EnemyManager<Runner> runner(&player);
+    EnemyManager<Tanker> tanker(&player);
+    EnemyManager<Spider> spider(&player);
+    WaveManager wavemanager(&player);
     Shop shop(&player);
     GameTitle gametitle;
     Ui ui(&player);
@@ -58,7 +63,7 @@ int main()
             UpdateMusicStream(music);
             player.Update();
             camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
-            testenemy.UpdateEnemies();
+            wavemanager.Update();
             tilemap.Update();
             ui.UpdateIngameUi();
             BeginMode2D(camera);
@@ -98,9 +103,18 @@ int main()
                     }
                     player.SetWeapon(static_cast<WeaponId>(id));
                 }
-                //Spawn a Enemy (KEY_F1)
+                //Spawn a Enemy (KEY_F1,F2,F3)
                 if (IsKeyReleased(KEY_F1)) {
-                    testenemy.SpawnEnemies(2);
+                    runner.SpawnEnemies(1)
+                        ;
+                }
+                if (IsKeyReleased(KEY_F2)) {
+                    tanker.SpawnEnemies(1)
+                        ;
+                }
+                if (IsKeyReleased(KEY_F3)) {
+                    spider.SpawnEnemies(1)
+                        ;
                 }
                 // Restart music playing (stop and play) (KEY_F10)
                 if (IsKeyPressed(KEY_F10)) {
@@ -124,7 +138,7 @@ int main()
             //draw
             tilemap.Draw();
             player.Draw();
-            testenemy.DrawEnemies();
+            wavemanager.Draw();
             EndMode2D();
             //drawui
             ui.DrawIngameUi();

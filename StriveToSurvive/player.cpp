@@ -185,6 +185,9 @@ void Player::Draw(){
     }
     DrawWeapon();
     DrawWeaponAttack();
+    //hp bar
+    DrawRectangleV({ position.x - 50, position.y + 60 }, { 100,10 }, WHITE);
+    DrawRectangleV({ position.x - 50, position.y + 60 }, { float(hp),10 }, GREEN);
 
     if (DEBUGING_MODE) {
         DrawSpawnPoint();
@@ -596,6 +599,14 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
     default:
         break;
     }
+}
+
+int Player::GetHp() {
+    return hp;
+}
+
+float Player::GetTrueDamage() {
+    return true_damage;
 }
 
 
