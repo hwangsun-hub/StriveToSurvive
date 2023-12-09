@@ -104,7 +104,7 @@ void  Shop::UpdatePlayerBuy() {
 			}
 
 			if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-				if (player->GetMoney() > price) {
+				if (player->GetMoney() > price && (player->GetWeapon() == NONE_WEAPON || std::get<0>(player->GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon())) {
 					player->SetMoney((player->GetMoney() - price));
 					player->SetWeapon(static_cast<WeaponId>(i));
 					if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
@@ -142,7 +142,7 @@ void  Shop::UpdatePlayerBuy() {
 				}
 
 				if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(weapon_icons[static_cast<WeaponId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-					if (player->GetMoney() > price) {
+					if (player->GetMoney() > price && (player->GetWeapon() == NONE_WEAPON || std::get<0>(player->GetCombinationtype(static_cast<WeaponId>(i))) == player->GetWeapon())) {
 						player->SetMoney((player->GetMoney() - price));
 						player->SetWeapon(static_cast<WeaponId>(i));
 						if (std::get<1>(player->GetCombinationtype(static_cast<WeaponId>(i))) == std::get<0>(player->GetInventoryOrb())) {
@@ -188,24 +188,34 @@ void  Shop::UpdatePlayerBuy() {
 					}
 
 					if (CheckCollisionPointRec(GetMousePosition(), std::get<1>(orb_icons[static_cast<OrbId>(i)])) && IsMouseButtonPressed(MOUSE_BUTTON_RIGHT)) {
-						if (player->GetMoney() > price) {
+						if (
+							player->GetMoney() > price &&
+							(
+								std::get<0>(player->GetInventoryOrb()) == static_cast<OrbId>(i) ||
+								std::get<1>(player->GetInventoryOrb()) == static_cast<OrbId>(i) ||
+								std::get<2>(player->GetInventoryOrb()) == static_cast<OrbId>(i) ||
+								std::get<0>(player->GetInventoryOrb()) == NONE_ORB ||
+								std::get<1>(player->GetInventoryOrb()) == NONE_ORB ||
+								std::get<2>(player->GetInventoryOrb()) == NONE_ORB
+							)
+							) {
 							player->SetMoney((player->GetMoney() - price));
 							if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
 								player->RemoveInventoryOrb(std::get<0>(player->GetInventoryOrb()));
 							}
-							if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+							else if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
 								player->RemoveInventoryOrb(std::get<1>(player->GetInventoryOrb()));
 							}
-							if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+							else if (std::get<0>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
 								player->RemoveInventoryOrb(std::get<2>(player->GetInventoryOrb()));
 							}
 							if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<0>(player->GetInventoryOrb())) {
 								player->RemoveInventoryOrb(std::get<0>(player->GetInventoryOrb()));
 							}
-							if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
+							else if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<1>(player->GetInventoryOrb())) {
 								player->RemoveInventoryOrb(std::get<1>(player->GetInventoryOrb()));
 							}
-							if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
+							else if (std::get<1>(player->GetCombinationtype(static_cast<OrbId>(i))) == std::get<2>(player->GetInventoryOrb())) {
 								player->RemoveInventoryOrb(std::get<2>(player->GetInventoryOrb()));
 							}
 							player->SetInventoryOrb(static_cast<OrbId>(i));
