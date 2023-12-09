@@ -37,6 +37,8 @@ constexpr int WEAPON_SPRITE_SIZE = 32;
 constexpr int IN_GAME_SPRITE_SIZE{ WEAPON_SPRITE_SIZE * 4 };
 constexpr int ITEM_ICON_SIZE{ 64 };
 constexpr int TILE_MAP_SIZE{ 1920 };
+constexpr float MELEE_ATTACK_RANGE_WIDTH{ float(WEAPON_SPRITE_SIZE * 1.8) };
+constexpr float MELEE_ATTACK_RANGE_HEIGHT{ float(WEAPON_SPRITE_SIZE * 3) };
 constexpr int RANGED_ATTACK_SPRITE_RADIUS{ 7 };
 constexpr int RANGED_ATTACK_SPRITE_SPEED{ 1000 };
 
@@ -221,6 +223,7 @@ private:
 	float drain_life = 0;
 	float speed = 300;
 	float speed_coefficient = 1.0f;
+
 	int money = 100000;
 	int killcount = 0;
 	float dodge_cooltime = 2;
@@ -255,7 +258,7 @@ private:
 	//Player Hitbox
 	Rectangle hitbox{ float(- WEAPON_SPRITE_SIZE), float(- WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3)};
 	
-	Rectangle melee_attack_spritebox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3) };
+	Rectangle melee_attack_spritebox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), MELEE_ATTACK_RANGE_WIDTH, MELEE_ATTACK_RANGE_HEIGHT };
 
 
 	//sprite timer
@@ -291,8 +294,8 @@ public:
 		{-SPAWNPOINT_CIRCLE_RADIUS, 0},
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
-	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3) };
-
+	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), MELEE_ATTACK_RANGE_WIDTH, MELEE_ATTACK_RANGE_HEIGHT };
+	float range_coefficient = 1.0f;
 	//orgin, degree
 	std::vector<std::tuple<Vector2, float>> ranged_attack_hitboxs;
 	//update

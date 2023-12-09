@@ -42,7 +42,7 @@ void Enemy::UpdateState() {
 	if (player->GetWeaponType(player->GetWeapon()) == WeaponType::KATANA || player->GetWeaponType(player->GetWeapon()) == WeaponType::GRAEATSWORD) {
 		if (player_attack != player->GetisAttacking() && player_attack == false) {
 			if (
-				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + hitbox.width / 2,  player->melee_attack_hitbox.y + hitbox.height / 2 }, MELEE_ATTACK_HITBOX_SIZE, hitbox)
+				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + player->GetHitbox().width / 2,  player->melee_attack_hitbox.y + player->GetHitbox().height / 2 }, MELEE_ATTACK_HITBOX_SIZE * player->range_coefficient, hitbox)
 				) {
 				Damaged();
 			}
@@ -53,7 +53,7 @@ void Enemy::UpdateState() {
 		}
 	}
 	for (int i = 0; i < player->ranged_attack_hitboxs.size(); i++) {
-		if (CheckCollisionCircleRec(std::get<0>(player->ranged_attack_hitboxs[i]), RANGED_ATTACK_SPRITE_RADIUS, hitbox)) {
+		if (CheckCollisionCircleRec(std::get<0>(player->ranged_attack_hitboxs[i]), RANGED_ATTACK_SPRITE_RADIUS * player->range_coefficient * 2, hitbox)) {
 			RangedDamaged();
 			player->ranged_attack_hitboxs.erase(player->ranged_attack_hitboxs.begin() + i);
 		}

@@ -58,8 +58,8 @@ int main()
         case GAMESTATE_INGAME:
             //update
             UpdateMusicStream(music);
-            player.Update();
             camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
+            player.Update();
             wavemanager.Update();
             tilemap.Update();
             ui.UpdateIngameUi();
