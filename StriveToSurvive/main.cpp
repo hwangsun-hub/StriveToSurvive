@@ -6,7 +6,7 @@ bool exitWindow = false;
 int wave_level = 1;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_TITLE;
+GameState gamestate = GAMESTATE_INGAME;
 
 
 int main()
@@ -26,9 +26,6 @@ int main()
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
     camera.zoom = 1.0;
     TileMap tilemap(&player);
-    EnemyManager<Runner> runner(&player);
-    EnemyManager<Tanker> tanker(&player);
-    EnemyManager<Spider> spider(&player);
     WaveManager wavemanager(&player);
     Shop shop(&player);
     GameTitle gametitle;
@@ -105,16 +102,13 @@ int main()
                 }
                 //Spawn a Enemy (KEY_F1,F2,F3)
                 if (IsKeyReleased(KEY_F1)) {
-                    runner.SpawnEnemies(1)
-                        ;
+                    wavemanager.runner_enemymanager->SpawnEnemies(1);
                 }
                 if (IsKeyReleased(KEY_F2)) {
-                    tanker.SpawnEnemies(1)
-                        ;
+                    wavemanager.tanker_enemymanager->SpawnEnemies(1);
                 }
                 if (IsKeyReleased(KEY_F3)) {
-                    spider.SpawnEnemies(1)
-                        ;
+                    wavemanager.spider_enemymanager->SpawnEnemies(1);
                 }
                 // Restart music playing (stop and play) (KEY_F10)
                 if (IsKeyPressed(KEY_F10)) {

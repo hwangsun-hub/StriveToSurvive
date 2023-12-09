@@ -80,8 +80,8 @@ void Enemy::DrawHitbox() {
 }
 
 void Enemy::DrawhpBar() {
-	DrawRectangleV({ position.x - 50, position.y + 30 }, { 100,10 }, WHITE);
-	DrawRectangleV({ position.x-50, position.y+30 }, { float(hp)/float(max_hp) * 100,10 }, GREEN);
+	DrawRectangleV({ position.x - 50, position.y + hpbar_y }, { 100,10 }, WHITE);
+	DrawRectangleV({ position.x-50, position.y + hpbar_y }, { float(hp)/float(max_hp) * 100,10 }, GREEN);
 }
 
 
@@ -97,7 +97,7 @@ void Enemy::Draw() {
 	//draw
 	DrawTexturePro(
 		sprite,
-		{ WEAPON_SPRITE_SIZE * float(sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
+		{ WEAPON_SPRITE_SIZE * float(sprite_index), 0, WEAPON_SPRITE_SIZE * float(position.x < player->GetPosition().x ? 1 : -1), WEAPON_SPRITE_SIZE},
 		{0, 0, IN_GAME_SPRITE_SIZE, IN_GAME_SPRITE_SIZE },
 		{ IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
 		0,

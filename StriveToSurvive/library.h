@@ -353,6 +353,8 @@ protected:
 	float defence = 0;
 	int max_hp = 10;
 	int hp = max_hp;
+	int hpbar_y = 30;
+
 	bool isPlayerFollowType = true;
 	bool isKnockback = false;
 	bool player_attack = false;
@@ -473,12 +475,13 @@ public:
 		UnloadTexture(sprite);
 		sprite = LoadTexture("resources/enemy/tanker.png");
 		sprite_index_maxnum = TANKER_SPRITE_MAXNUM;
-		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) };
-		damage = 10 + TANKER_DAMAGE_COEFFICIENT * (wave_level - TANKER_SPAWN_LEVEL);
+		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.2), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3.5) };
+		damage = 10 + TANKER_DAMAGE_COEFFICIENT * ((wave_level - TANKER_SPAWN_LEVEL) > 0 ? (wave_level - TANKER_SPAWN_LEVEL) : 0);
 		speed = 100;
-		max_hp = 100 + TANKER_HP_COEFFICIENT * (wave_level - TANKER_SPAWN_LEVEL);
+		max_hp = 100 + TANKER_HP_COEFFICIENT * ((wave_level - TANKER_SPAWN_LEVEL) > 0 ? (wave_level - TANKER_SPAWN_LEVEL) : 0);
 		hp = max_hp;
-		defence = 25 + TANKER_DEFENSE_COEFFICIENT * (wave_level - TANKER_SPAWN_LEVEL);
+		defence = 25 + TANKER_DEFENSE_COEFFICIENT * ((wave_level - TANKER_SPAWN_LEVEL) > 0 ? (wave_level - TANKER_SPAWN_LEVEL) : 0);
+		hpbar_y = 60;
 	}
 	~Tanker() {
 		UnloadTexture(sprite);
@@ -493,11 +496,11 @@ public:
 		sprite = LoadTexture("resources/enemy/tanker.png");
 		sprite_index_maxnum = TANKER_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) };
-		damage = 150 + SPIDER_DAMAGE_COEFFICIENT * (wave_level - TANKER_SPAWN_LEVEL);
+		damage = 150 + SPIDER_DAMAGE_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
 		speed = 300;
-		max_hp = 300 + SPIDER_HP_COEFFICIENT * (wave_level - SPIDER_SPAWN_LEVEL);
+		max_hp = 300 + SPIDER_HP_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
 		hp = max_hp;
-		defence = SPIDER_DEFENSE_COEFFICIENT * (wave_level - SPIDER_SPAWN_LEVEL);
+		defence = SPIDER_DEFENSE_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
 	}
 	~Spider() {
 		UnloadTexture(sprite);
@@ -507,9 +510,6 @@ public:
 //WaveManager.cpp
 class WaveManager {
 private:
-	EnemyManager<Runner>* runner_enemymanager;
-	EnemyManager<Tanker>* tanker_enemymanager;
-	EnemyManager<Spider>* spider_enemymanager;
 	Timer wave_timer;
 	Timer runner_spawn_timer;
 	Timer tanker_spawn_timer;
@@ -518,6 +518,9 @@ private:
 	bool isTankerSpawnReady = false;
 	bool isSpiderSpawnReady = false;
 public:
+	EnemyManager<Runner>* runner_enemymanager;
+	EnemyManager<Tanker>* tanker_enemymanager;
+	EnemyManager<Spider>* spider_enemymanager;
 	WaveManager(Player* _player);
 	void Update();
 	void Draw();

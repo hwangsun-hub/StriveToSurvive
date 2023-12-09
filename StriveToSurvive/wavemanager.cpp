@@ -147,6 +147,7 @@ void WaveManager::Update() {
 
 	if (wave_timer.TimerDone()) {
 		gamestate = GAMESTATE_SHOPPING;
+		camera.zoom = 1;
 		runner_enemymanager->Reset();
 		tanker_enemymanager->Reset();
 		spider_enemymanager->Reset();
