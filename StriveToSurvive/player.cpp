@@ -136,7 +136,6 @@ void Player::Dodge() {
         position.y += delta_position.y * DODGE_SPEED;
     }
 }
-void Player::Skill() {}
 
 void Player::Kill() {
     killcount++;
@@ -144,6 +143,17 @@ void Player::Kill() {
 }
 
 void Player::Draw(){
+    Color player_color;
+    if (isInvincible) {
+        player_color = { 255, 255, 255, 128 };
+        if (isDamaged) {
+            player_color = RED;
+            isDamaged = false;
+        }
+    }
+    else {
+        player_color = WHITE;
+    }
     //player sprite
     if (isstanding) {
         //sprite timer
@@ -161,7 +171,7 @@ void Player::Draw(){
             { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE},
             { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
             0,
-            WHITE
+            player_color
         );
     }
     else {
@@ -180,14 +190,14 @@ void Player::Draw(){
             { 0, 0, IN_GAME_SPRITE_SIZE , IN_GAME_SPRITE_SIZE },
             { IN_GAME_SPRITE_SIZE / 2 - position.x , IN_GAME_SPRITE_SIZE / 2 - position.y },
             0,
-            WHITE
+            player_color
         );
     }
     DrawWeapon();
     DrawWeaponAttack();
     //hp bar
     DrawRectangleV({ position.x - 50, position.y + 60 }, { 100,10 }, WHITE);
-    DrawRectangleV({ position.x - 50, position.y + 60 }, { float(hp),10 }, GREEN);
+    DrawRectangleV({ position.x - 50, position.y + 60 }, { float(hp) / float(500) * 100,10 }, GREEN);
 
     if (DEBUGING_MODE) {
         DrawSpawnPoint();
@@ -259,6 +269,15 @@ void Player::Update() {
     }
     if (dodge_cooltimer.TimerDone()) {
         isDodgeReady = true;
+    }
+
+    //invincible timer
+    if (isInvincible) {
+        invincible_cooltimer.SetTimer(1);
+        invincible_cooltimer.UpdateTimer();
+    }
+    if (invincible_cooltimer.TimerDone()) {
+        isInvincible = false;
     }
 
     Attack();
@@ -607,6 +626,14 @@ int Player::GetHp() {
 
 float Player::GetTrueDamage() {
     return true_damage;
+}
+
+void Player::Damaged(float enemy_damage) {
+    if (!isInvincible) {
+        hp -= enemy_damage * 100 / (100 + defense);
+        isInvincible = true;
+        isDamaged = true;
+    }
 }
 
 

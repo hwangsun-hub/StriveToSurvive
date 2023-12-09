@@ -209,7 +209,7 @@ private:
 	//player state
 	//life per second, defense, knockback, damage , attack speed, Drain life, speed, range
 	//By default in seconds
-	int hp = 100;
+	int hp = 500;
 	float life_per_second = 0;
 	float defense = 0;
 	float knockback = 0;
@@ -234,6 +234,10 @@ private:
 
 	//dodge
 	bool isDodgeReady = true;
+
+	//Invincible
+	bool isInvincible = false;
+	bool isDamaged = false;
 
 	
 	//By default looking right
@@ -266,6 +270,7 @@ private:
 	//action timer
 	Timer attack_cooltimer;
 	Timer dodge_cooltimer;
+	Timer invincible_cooltimer;
 
 	bool greatsword_motion = false;
 
@@ -295,7 +300,6 @@ public:
 	void Attack();
 	void RangedAttack();
 	void Dodge();
-	void Skill();
 	void Kill();
 	void UpdateSpawnpoint();
 	void UpdateHitbox();
@@ -328,6 +332,7 @@ public:
 	void SetWeaponStat(WeaponId);
 	int GetHp();
 	float GetTrueDamage();
+	void Damaged(float);
 
 };
 
@@ -385,6 +390,7 @@ public:
 	Vector2 GetDeltaPosition();
 	int Gethp();
 	Rectangle GetHitbox();
+	float GetDamage();
 
 	//Set
 	void SetPosition(Vector2);
@@ -420,9 +426,11 @@ public:
 			Rectangle MovXHitbox = { enemies[i]->GetHitbox().x + enemies[i]->GetDeltaPosition().x, enemies[i]->GetHitbox().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
 			Rectangle MovYHitbox = { enemies[i]->GetHitbox().x, enemies[i]->GetHitbox().y + enemies[i]->GetDeltaPosition().y, enemies[i]->GetHitbox().width, enemies[i]->GetHitbox().height };
 			if (CheckCollisionRecs(MovXHitbox, player->GetHitbox())) {
+				player->Damaged(enemies[i]->GetDamage());
 				enemies[i]->SetDeltaPosition({ player->GetDeltaPosition().x, enemies[i]->GetDeltaPosition().y });
 			}
 			if (CheckCollisionRecs(MovYHitbox, player->GetHitbox())) {
+				player->Damaged(enemies[i]->GetDamage());
 				enemies[i]->SetDeltaPosition({ enemies[i]->GetDeltaPosition().x, player->GetDeltaPosition().y });
 			}
 			enemies[i]->SetPosition({ enemies[i]->GetPosition().x + enemies[i]->GetDeltaPosition().x , enemies[i]->GetPosition().y + enemies[i]->GetDeltaPosition().y });

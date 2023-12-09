@@ -138,4 +138,8 @@ bool Enemy::GetisKnockback() {
 	return isKnockback;
 }
 
+float Enemy::GetDamage() {
+	return damage;
+}
+
 
