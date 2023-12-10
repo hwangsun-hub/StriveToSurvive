@@ -131,16 +131,128 @@ void Player::RangedAttack() {
 }
 
 void Player::Dodge() {
-    if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
-        isDodgeReady = false;
-        position.x += delta_position.x * PLAYER_DODGE_SPEED;
-        position.y += delta_position.y * PLAYER_DODGE_SPEED;
+    if (GetWeapon() != WeaponId::RARE_KATANA_THUNDER) {
+        if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
+            isDodgeReady = false;
+            position.x += delta_position.x * PLAYER_DODGE_SPEED;
+            position.y += delta_position.y * PLAYER_DODGE_SPEED;
+        }
+    }
+    else {
+        if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
+            dash_attack_sprite_index = 0;
+            isDodgeReady = false;
+            isDashAttacking = true;
+            
+        }
+        if (isDashAttacking) {
+            dash_attack_sprite_timer.SetTimer(0.05f);
+            dash_attack_sprite_timer.UpdateTimer();
+            if (dash_attack_sprite_timer.TimerDone()) {
+                dash_attack_sprite_index++;
+                if (dash_attack_sprite_index == MELEE_ATTACK_SPRITE_MAXNUM) {
+                    isDashAttacking = false;
+                }
+            }
+        }
+        
     }
 }
 
 void Player::Kill() {
     killcount++;
     money += 10;
+}
+
+void Player::Buff() {
+    switch (GetWeapon()) {
+        case RARE_KATANA_STORMWIND:
+            true_damage = (speed - PLAYER_SPEED > 0 ? int((speed - PLAYER_SPEED) / 10) : 0);
+            break;
+        case RARE_KATANA_THUNDER:
+            //special
+            break;
+        case RARE_KATANA_MASAMUNE:
+            //special
+            damage = 85;
+            attack_cooltime = 0.5f;
+            break;
+        case RARE_KATANA_MURAMASA:
+            //special
+            damage = 100;
+            attack_cooltime = 0.5f;
+            break;
+        case UNCOMMON_GREATSWORD_BLOODSWORD:
+            //special
+            damage = 120;
+            attack_cooltime = 1.0f;
+            break;
+        case RARE_GREATSWORD_BLACKKNIGHT:
+            //special
+            damage = 175;
+            attack_cooltime = 0.75f;
+            break;
+        case RARE_GREATSWORD_WHITEKNIGHT:
+            //special
+            damage = 175;
+            attack_cooltime = 0.75f;
+            break;
+        case RARE_GREATSWORD_VAMPIRE:
+            //special
+            damage = 150;
+            attack_cooltime = 0.75f;
+            drain_life_coefficient = 10;
+            break;
+        case RARE_GREATSWORD_BERSERKER:
+            //special
+            damage = 150;
+            attack_cooltime = 0.75f;
+            break;
+        case RARE_MACHINEGUN_KRAKEN:
+            //special
+            damage = 40;
+            attack_cooltime = 0.2f;
+            break;
+        case RARE_MACHINEGUN_VOID:
+            //special
+            damage = 35;
+            attack_cooltime = 0.2f;
+            break;
+        case RARE_MACHINEGUN_REPENTENCE:
+            //special
+            damage = 50;
+            attack_cooltime = 0.25f;
+            break;
+        case RARE_MACHINEGUN_WILD:
+            //special
+            damage = 80;
+            attack_cooltime = 0.3f;
+            break;
+        case RARE_SNIPERRIFLE_RAILGUN:
+            //special
+            damage = 500;
+            attack_cooltime = 2.0f;
+            break;
+        case RARE_SNIPERRIFLE_PIRACY:
+            //special
+            damage = 200;
+            attack_cooltime = 1.0f;
+            break;
+        case RARE_SNIPERRIFLE_CATERPILLAR:
+            //special
+            damage = 80;
+            attack_cooltime = 0.4f;
+            break;
+        case RARE_SNIPERRIFLE_MAGICENGINEERING:
+            //special
+            damage = 80;
+            attack_cooltime = 0.4f;
+            break;
+        case NONE_WEAPON:
+            break;
+        default:
+            break;
+    }
 }
 
 void Player::Draw(){
@@ -200,6 +312,11 @@ void Player::Draw(){
     DrawRectangleV({ position.x - 50, position.y + 60 }, { 100,10 }, WHITE);
     DrawRectangleV({ position.x - 50, position.y + 60 }, { float(hp) / float(500) * 100,10 }, GREEN);
 
+    if (GetWeapon() == RARE_KATANA_THUNDER) {
+
+
+    }
+
     if (DEBUGING_MODE) {
         DrawSpawnPoint();
         DrawHitbox();
@@ -247,7 +364,7 @@ void Player::Update() {
         SetWeaponStat(GetWeapon());
     }
 
-    speed = PLAYE_SPEED * speed_coefficient;
+    speed = PLAYER_SPEED * speed_coefficient;
 
     if (isstanding) {
         //sprite timer
@@ -280,7 +397,7 @@ void Player::Update() {
 
     //invincible timer
     if (isInvincible) {
-        invincible_cooltimer.SetTimer(1);
+        invincible_cooltimer.SetTimer(0.5);
         invincible_cooltimer.UpdateTimer();
     }
     if (invincible_cooltimer.TimerDone()) {
@@ -436,6 +553,16 @@ void Player::DrawWeaponAttack() {
                 WHITE
             );
         }
+        if (isDashAttacking) {
+            DrawTexturePro(
+                katana_weapon_attack_sprite,
+                { WEAPON_SPRITE_SIZE * float(dash_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
+                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient, melee_attack_spritebox.height * range_coefficient },
+                { melee_attack_spritebox.width * range_coefficient / 2, melee_attack_spritebox.height * range_coefficient / 2 },
+                atan2f(GetMouseY() - GetWorldToScreen2D(position, camera).y, GetMouseX() - GetWorldToScreen2D(position, camera).x) * RAD2DEG,
+                YELLOW
+            );
+        }
         break;
     case GRAEATSWORD:
         if (isAttacking) {
@@ -537,18 +664,22 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
         attack_cooltime = 0.5f;
         break;
     case RARE_KATANA_STORMWIND:
+        //special
         damage = 40;
         attack_cooltime = 0.3f;
         break;
     case RARE_KATANA_THUNDER:
+        //special
         damage = 60;
         attack_cooltime = 0.3f;
         break;
     case RARE_KATANA_MASAMUNE:
+        //special
         damage = 85;
         attack_cooltime = 0.5f;
         break;
     case RARE_KATANA_MURAMASA:
+        //special
         damage = 100;
         attack_cooltime = 0.5f;
         break;
@@ -561,23 +692,28 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
         attack_cooltime = 1.0f;
         break;
     case UNCOMMON_GREATSWORD_BLOODSWORD:
+        //special
         damage = 120;
         attack_cooltime = 1.0f;
         break;
     case RARE_GREATSWORD_BLACKKNIGHT:
+        //special
         damage = 175;
         attack_cooltime = 0.75f;
         break;
     case RARE_GREATSWORD_WHITEKNIGHT:
+        //special
         damage = 175;
         attack_cooltime = 0.75f;
         break;
     case RARE_GREATSWORD_VAMPIRE:
+        //special
         damage = 150;
         attack_cooltime = 0.75f;
         drain_life_coefficient = 10;
         break;
     case RARE_GREATSWORD_BERSERKER:
+        //special
         damage = 150;
         attack_cooltime = 0.75f;
         break;
@@ -594,18 +730,22 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
         attack_cooltime = 0.3f;
         break;
     case RARE_MACHINEGUN_KRAKEN:
+        //special
         damage = 40;
         attack_cooltime = 0.2f;
         break;
     case RARE_MACHINEGUN_VOID:
+        //special
         damage = 35;
         attack_cooltime = 0.2f;
         break;
     case RARE_MACHINEGUN_REPENTENCE:
+        //special
         damage = 50;
         attack_cooltime = 0.25f;
         break;
     case RARE_MACHINEGUN_WILD:
+        //special
         damage = 80;
         attack_cooltime = 0.3f;
         break;
@@ -622,18 +762,22 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
         attack_cooltime = 0.45f;
         break;
     case RARE_SNIPERRIFLE_RAILGUN:
+        //special
         damage = 500;
         attack_cooltime = 2.0f;
         break;
     case RARE_SNIPERRIFLE_PIRACY:
+        //special
         damage = 200;
         attack_cooltime = 1.0f;
         break;
     case RARE_SNIPERRIFLE_CATERPILLAR:
+        //special
         damage = 80;
         attack_cooltime = 0.4f;
         break;
     case RARE_SNIPERRIFLE_MAGICENGINEERING:
+        //special
         damage = 80;
         attack_cooltime = 0.4f;
         break;
@@ -801,5 +945,6 @@ void Player::Damaged(float enemy_damage) {
         isDamaged = true;
     }
 }
+
 
 

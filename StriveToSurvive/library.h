@@ -44,7 +44,7 @@ constexpr int RANGED_ATTACK_SPRITE_SPEED{ 1000 };
 
 constexpr int PLAYER_MAX_HP = 500;
 constexpr float PLAYER_DODGE_SPEED{ 30 };
-constexpr float PLAYE_SPEED{ 300 };
+constexpr float PLAYER_SPEED{ 300 };
 
 constexpr int RUNNER_HP_COEFFICIENT = 40;
 constexpr int RUNNER_DEFENSE_COEFFICIENT = 5;
@@ -222,7 +222,7 @@ private:
 	float attack_cooltime = 0.5f;
 	float attack_cooltime_coefficient = 1.0f;
 	float drain_life_coefficient = 1.0f;
-	float speed = PLAYE_SPEED;
+	float speed = PLAYER_SPEED;
 	float speed_coefficient = 1.0f;
 
 	int money = 100000;
@@ -233,6 +233,9 @@ private:
 	//attack
 	bool isAttackReady = true;
 	bool isAttacking = false;
+
+	//dash attack
+	bool isDashAttacking = false;
 
 	float attack_degree = 0;
 
@@ -266,10 +269,13 @@ private:
 	Timer standing_sprite_timer;
 	Timer walking_sprite_timer;
 	Timer melee_weapon_attack_sprite_timer;
+	Timer dash_attack_sprite_timer;
+	Timer effect_timer;
 
 	unsigned int standing_sprite_index = 0;
 	unsigned int walking_sprite_index = 0;
 	unsigned int melee_weapon_attack_sprite_index = MELEE_ATTACK_SPRITE_MAXNUM;
+	unsigned int dash_attack_sprite_index = 0;
 
 	//action timer
 	Timer attack_cooltimer;
@@ -277,10 +283,13 @@ private:
 	Timer invincible_cooltimer;
 	Timer life_heal_cooltimer;
 
+	
 	bool greatsword_motion = false;
 
 	//weaponid_changed_check
 	WeaponId before_weaponid = NONE_WEAPON;
+
+	Texture tunder_effect = LoadTexture("resources/Lightning Strike.png");
 
 
 public:
@@ -297,7 +306,7 @@ public:
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
 	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), MELEE_ATTACK_RANGE_WIDTH, MELEE_ATTACK_RANGE_HEIGHT };
-	float range_coefficient = 1.0f;
+	float range_coefficient = 10.0f;
 	float knockback_coefficient = 1.0f;
 	//orgin, degree
 	std::vector<std::tuple<Vector2, float>> ranged_attack_hitboxs;
@@ -307,6 +316,7 @@ public:
 	void RangedAttack();
 	void Dodge();
 	void Kill();
+	void Buff();
 	void UpdateSpawnpoint();
 	void UpdateHitbox();
 	void UpdateWeapon();
@@ -342,6 +352,7 @@ public:
 	int GetHp();
 	float GetTrueDamage();
 	void Damaged(float);
+	void Dodgereset();
 
 };
 
@@ -372,6 +383,7 @@ protected:
 	bool isPlayerFollowType = true;
 	bool isKnockback = false;
 	bool player_attack = false;
+	bool player_dashattack = false;
 	bool player_dodge = false;
 
 public: 
@@ -384,6 +396,7 @@ public:
 	void UpdateHitbox();
 	void Damaged();
 	void RangedDamaged();
+	void DashDamaged();
 	void Knockbacked();
 	void UpdateState();
 	void Attack();

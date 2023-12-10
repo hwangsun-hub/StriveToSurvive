@@ -6,7 +6,7 @@ bool exitWindow = false;
 int wave_level = 1;
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_SHOPPING;
+GameState gamestate = GAMESTATE_TITLE;
 
 
 int main()
