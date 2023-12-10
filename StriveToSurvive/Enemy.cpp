@@ -46,7 +46,7 @@ void Enemy::UpdateState() {
 	if (player->GetWeaponType(player->GetWeapon()) == WeaponType::KATANA || player->GetWeaponType(player->GetWeapon()) == WeaponType::GRAEATSWORD) {
 		if (player_attack != player->GetisAttacking() && player_attack == false) {
 			if (
-				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + player->GetHitbox().width / 2,  player->melee_attack_hitbox.y + player->GetHitbox().height / 2 }, MELEE_ATTACK_HITBOX_SIZE * player->range_coefficient, hitbox)
+				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + player->GetHitbox().width / 2,  player->melee_attack_hitbox.y + player->GetHitbox().height / 2 }, MELEE_ATTACK_HITBOX_SIZE * player->range_coefficient * player->charge_range_coefficient, hitbox)
 				) {
 				Damaged();
 			}
@@ -57,14 +57,14 @@ void Enemy::UpdateState() {
 		}
 		if (player_dashattack != player->GetisDodging() && player_dashattack == false && player->GetWeapon() == RARE_KATANA_THUNDER) {
 			if (
-				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + player->GetHitbox().width / 2,  player->melee_attack_hitbox.y + player->GetHitbox().height / 2 }, MELEE_ATTACK_HITBOX_SIZE * player->range_coefficient, hitbox)
+				CheckCollisionCircleRec({ player->melee_attack_hitbox.x + player->GetHitbox().width / 2,  player->melee_attack_hitbox.y + player->GetHitbox().height / 2 }, MELEE_ATTACK_HITBOX_SIZE * player->range_coefficient * player->charge_range_coefficient, hitbox)
 				) {
 				DashDamaged();
 			}
 		}
 	}
 	for (int i = 0; i < player->ranged_attack_hitboxs.size(); i++) {
-		if (CheckCollisionCircleRec(std::get<0>(player->ranged_attack_hitboxs[i]), RANGED_ATTACK_SPRITE_RADIUS * player->range_coefficient * 2, hitbox)) {
+		if (CheckCollisionCircleRec(std::get<0>(player->ranged_attack_hitboxs[i]), RANGED_ATTACK_SPRITE_RADIUS * player->range_coefficient * player->charge_range_coefficient * 2, hitbox)) {
 			RangedDamaged();
 			player->ranged_attack_hitboxs.erase(player->ranged_attack_hitboxs.begin() + i);
 		}

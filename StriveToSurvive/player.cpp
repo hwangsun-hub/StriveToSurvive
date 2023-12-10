@@ -50,12 +50,34 @@ void Player::Move() {
         position.y += delta_position.y;
     }
 }
+
 void Player::Attack() {
+    std::cout << charge_attack_time << std::endl;
+    if (charge_attack_time < 3) {
+        charge_damage_coefficient = 1;
+        charge_range_coefficient = 1;
+        charge_attack_time += GetFrameTime();
+    }
+    else {
+        for (int i = 0; i < sizeof(inventory_orb); i++) {
+            if (inventory_orb[i] == UNCOMMON_CHARGEORB) {
+                charge_range_coefficient = 2;
+                charge_damage_coefficient = 2;
+            }
+        }
+        if (GetWeapon() == RARE_KATANA_MASAMUNE) {
+            charge_range_coefficient = 2;
+            charge_damage_coefficient = 5;
+        }
+    }
+
+
     float degree = atan2f(GetMouseY() - GetWorldToScreen2D(position, camera).y, GetMouseX() - GetWorldToScreen2D(position, camera).x);
     switch (GetWeaponType(GetWeapon()))
     {
     case WeaponType::KATANA:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            charge_attack_time = 0;
             melee_weapon_attack_sprite_index = 0;
             isAttackReady = false;
             isAttacking = true;
@@ -73,6 +95,7 @@ void Player::Attack() {
         break;
     case WeaponType::GRAEATSWORD:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            charge_attack_time = 0;
             greatsword_motion = !greatsword_motion;
             melee_weapon_attack_sprite_index = 0;
             isAttackReady = false;
@@ -91,6 +114,7 @@ void Player::Attack() {
         break;
     case WeaponType::MACHINGUN:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            charge_attack_time = 0;
             ranged_attack_hitboxs.push_back(
                 { { position.x + cosf(degree) * 80, position.y + sinf(degree) * 80 },
                 degree }
@@ -102,6 +126,7 @@ void Player::Attack() {
         break;
     case WeaponType::SNIPERRIFLE:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            charge_attack_time = 0;
             ranged_attack_hitboxs.push_back(
                 { { position.x + cosf(degree) * 80, position.y + sinf(degree) * 80 },
                 degree }
@@ -112,6 +137,7 @@ void Player::Attack() {
         break;
 
     }
+
 }
 
 void Player::RangedAttack() {
@@ -168,9 +194,6 @@ void Player::Buff() {
     switch (GetWeapon()) {
         case RARE_KATANA_STORMWIND:
             true_damage = (speed - PLAYER_SPEED > 0 ? int((speed - PLAYER_SPEED) / 10) : 0);
-            break;
-        case RARE_KATANA_THUNDER:
-            //special
             break;
         case RARE_KATANA_MASAMUNE:
             //special
@@ -429,10 +452,10 @@ void Player::DrawSpawnPoint() {
 void Player::DrawHitbox() {
     float degree = atan2f(GetMouseY() - GetWorldToScreen2D(position, camera).y, GetMouseX() - GetWorldToScreen2D(position, camera).x);
     DrawRectangleLinesEx(hitbox, 2, RED);
-    DrawCircleLines(melee_attack_hitbox.x + hitbox.width/2, melee_attack_hitbox.y + hitbox.height/2, MELEE_ATTACK_HITBOX_SIZE * range_coefficient, RED);
+    DrawCircleLines(melee_attack_hitbox.x + hitbox.width/2, melee_attack_hitbox.y + hitbox.height/2, MELEE_ATTACK_HITBOX_SIZE * range_coefficient * charge_range_coefficient, RED);
     
     for (int i = 0; i < ranged_attack_hitboxs.size(); i++) {
-        DrawCircleLines(std::get<0>(ranged_attack_hitboxs[i]).x, std::get<0>(ranged_attack_hitboxs[i]).y, RANGED_ATTACK_SPRITE_RADIUS * range_coefficient * 2, WHITE);
+        DrawCircleLines(std::get<0>(ranged_attack_hitboxs[i]).x, std::get<0>(ranged_attack_hitboxs[i]).y, RANGED_ATTACK_SPRITE_RADIUS * range_coefficient * charge_range_coefficient * 2, WHITE);
     }
 }
 
@@ -547,8 +570,8 @@ void Player::DrawWeaponAttack() {
             DrawTexturePro(
                 katana_weapon_attack_sprite,
                 { WEAPON_SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
-                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient, melee_attack_spritebox.height * range_coefficient },
-                { melee_attack_spritebox.width * range_coefficient / 2, melee_attack_spritebox.height * range_coefficient / 2 },
+                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient * charge_range_coefficient, melee_attack_spritebox.height * range_coefficient * charge_range_coefficient },
+                { melee_attack_spritebox.width * range_coefficient * charge_range_coefficient / 2, melee_attack_spritebox.height * range_coefficient * charge_range_coefficient / 2 },
                 atan2f(GetMouseY() - GetWorldToScreen2D(position, camera).y, GetMouseX() - GetWorldToScreen2D(position, camera).x)* RAD2DEG,
                 WHITE
             );
@@ -557,8 +580,8 @@ void Player::DrawWeaponAttack() {
             DrawTexturePro(
                 katana_weapon_attack_sprite,
                 { WEAPON_SPRITE_SIZE * float(dash_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
-                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient, melee_attack_spritebox.height * range_coefficient },
-                { melee_attack_spritebox.width * range_coefficient / 2, melee_attack_spritebox.height * range_coefficient / 2 },
+                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient * charge_range_coefficient, melee_attack_spritebox.height * range_coefficient * charge_range_coefficient },
+                { melee_attack_spritebox.width * range_coefficient * charge_range_coefficient / 2, melee_attack_spritebox.height * range_coefficient * charge_range_coefficient / 2 },
                 atan2f(GetMouseY() - GetWorldToScreen2D(position, camera).y, GetMouseX() - GetWorldToScreen2D(position, camera).x) * RAD2DEG,
                 YELLOW
             );
@@ -569,8 +592,8 @@ void Player::DrawWeaponAttack() {
             DrawTexturePro(
                 katana_weapon_attack_sprite,
                 { WEAPON_SPRITE_SIZE * float(melee_weapon_attack_sprite_index), 0, WEAPON_SPRITE_SIZE, WEAPON_SPRITE_SIZE },
-                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient, melee_attack_spritebox.height * range_coefficient },
-                { melee_attack_spritebox.width * range_coefficient / 2, melee_attack_spritebox.height * range_coefficient / 2 },
+                { melee_attack_spritebox.x + melee_attack_spritebox.width / 2, melee_attack_spritebox.y + melee_attack_spritebox.height / 2, melee_attack_spritebox.width * range_coefficient * charge_range_coefficient, melee_attack_spritebox.height * range_coefficient * charge_range_coefficient },
+                { melee_attack_spritebox.width * range_coefficient * charge_range_coefficient / 2, melee_attack_spritebox.height * range_coefficient * charge_range_coefficient / 2 },
                 atan2f(GetMouseY() - GetWorldToScreen2D(position, camera).y, GetMouseX() - GetWorldToScreen2D(position, camera).x) * RAD2DEG,
                 WHITE
             );
@@ -584,7 +607,7 @@ void Player::DrawWeaponAttack() {
         DrawTexturePro(
             ranged_weapon_attack_sprite,
             { 0,0,WEAPON_SPRITE_SIZE / 2, WEAPON_SPRITE_SIZE / 2 },
-            { std::get<0>(ranged_attack_hitboxs[i]).x - (WEAPON_SPRITE_SIZE / 2 * range_coefficient * 2)/2, std::get<0>(ranged_attack_hitboxs[i]).y - (WEAPON_SPRITE_SIZE / 2 * range_coefficient * 2) / 2, WEAPON_SPRITE_SIZE / 2 * range_coefficient * 2, WEAPON_SPRITE_SIZE / 2 * range_coefficient * 2 },
+            { std::get<0>(ranged_attack_hitboxs[i]).x - (WEAPON_SPRITE_SIZE / 2 * range_coefficient * charge_range_coefficient * 2)/2, std::get<0>(ranged_attack_hitboxs[i]).y - (WEAPON_SPRITE_SIZE / 2 * range_coefficient * charge_range_coefficient * 2) / 2, WEAPON_SPRITE_SIZE / 2 * range_coefficient * charge_range_coefficient * 2, WEAPON_SPRITE_SIZE / 2 * range_coefficient * charge_range_coefficient * 2 },
             { 0,0 },
             0,
             WHITE
@@ -594,7 +617,7 @@ void Player::DrawWeaponAttack() {
 }
 
 float Player::GetDamage() {
-    return damage;
+    return damage * damage_coefficient * charge_damage_coefficient;
 }
 
 

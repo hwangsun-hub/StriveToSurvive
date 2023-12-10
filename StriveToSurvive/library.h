@@ -218,6 +218,7 @@ private:
 	float true_defense = 0;
 	float damage = 10;
 	float true_damage = 0;
+	float charge_damage_coefficient = 1.0f;
 	float damage_coefficient = 1.0f;
 	float attack_cooltime = 0.5f;
 	float attack_cooltime_coefficient = 1.0f;
@@ -270,7 +271,6 @@ private:
 	Timer walking_sprite_timer;
 	Timer melee_weapon_attack_sprite_timer;
 	Timer dash_attack_sprite_timer;
-	Timer effect_timer;
 
 	unsigned int standing_sprite_index = 0;
 	unsigned int walking_sprite_index = 0;
@@ -294,6 +294,8 @@ private:
 
 public:
 	Player();
+	float charge_attack_time = 0;
+	float time = 0;
 
 	Vector2 spawnpoint[8] = {
 		{0, SPAWNPOINT_CIRCLE_RADIUS},
@@ -306,7 +308,8 @@ public:
 		{-float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2)), float(SPAWNPOINT_CIRCLE_RADIUS / sqrt(2))}
 	};
 	Rectangle melee_attack_hitbox{ float(WEAPON_SPRITE_SIZE), float(-WEAPON_SPRITE_SIZE * 1.3), MELEE_ATTACK_RANGE_WIDTH, MELEE_ATTACK_RANGE_HEIGHT };
-	float range_coefficient = 10.0f;
+	float range_coefficient = 1.0f;
+	float charge_range_coefficient = 1.0f;
 	float knockback_coefficient = 1.0f;
 	//orgin, degree
 	std::vector<std::tuple<Vector2, float>> ranged_attack_hitboxs;
