@@ -553,14 +553,15 @@ class Spider : public Enemy {
 public:
 	Spider(Player* player) : Enemy(player) {
 		UnloadTexture(sprite);
-		sprite = LoadTexture("resources/enemy/tanker.png");
-		sprite_index_maxnum = TANKER_SPRITE_MAXNUM;
+		sprite = LoadTexture("resources/enemy/spider.png");
+		sprite_index_maxnum = TANKER_SPRITE_MAXNUM - 1;
 		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) };
 		damage = 150 + SPIDER_DAMAGE_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
 		speed = 300;
 		max_hp = 300 + SPIDER_HP_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
 		hp = max_hp;
 		defence = SPIDER_DEFENSE_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
+		hpbar_y = 50;
 	}
 	~Spider() {
 		UnloadTexture(sprite);

@@ -345,6 +345,9 @@ void Player::Draw(){
     //hp bar
     DrawRectangleV({ position.x - 50, position.y + 60 }, { 100,10 }, WHITE);
     DrawRectangleV({ position.x - 50, position.y + 60 }, { float(hp) / float(500) * 100,10 }, GREEN);
+    if (IsKeyDown(KEY_C)) {
+        DrawText(TextFormat("%3d", hp), position.x - 40, position.y + 80, 50, WHITE);
+    }
 
     if (GetWeapon() == RARE_KATANA_THUNDER) {
 
