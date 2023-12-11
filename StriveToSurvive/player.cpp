@@ -52,7 +52,6 @@ void Player::Move() {
 }
 
 void Player::Attack() {
-    std::cout << charge_attack_time << std::endl;
     if (charge_attack_time < 3) {
         charge_damage_coefficient = 1;
         charge_range_coefficient = 1;
@@ -187,7 +186,16 @@ void Player::Dodge() {
 
 void Player::Kill() {
     killcount++;
-    money += 10;
+    money += 10 + 5 * (wave_level -1);
+    if (GetWeapon() == UNCOMMON_GREATSWORD_BLOODSWORD) {
+        hp++;
+        if (hp > PLAYER_MAX_HP) {
+            hp = PLAYER_MAX_HP;
+        }
+    }
+    if (GetWeapon() == RARE_GREATSWORD_VAMPIRE || GetWeapon() == RARE_MACHINEGUN_KRAKEN || GetWeapon() == RARE_MACHINEGUN_WILD) {
+        buff_killcount++;
+    }
 }
 
 void Player::Buff() {
@@ -195,46 +203,41 @@ void Player::Buff() {
         case RARE_KATANA_STORMWIND:
             true_damage = (speed - PLAYER_SPEED > 0 ? int((speed - PLAYER_SPEED) / 10) : 0);
             break;
-        case RARE_KATANA_MASAMUNE:
-            //special
-            damage = 85;
-            attack_cooltime = 0.5f;
-            break;
         case RARE_KATANA_MURAMASA:
-            //special
-            damage = 100;
-            attack_cooltime = 0.5f;
-            break;
-        case UNCOMMON_GREATSWORD_BLOODSWORD:
-            //special
-            damage = 120;
-            attack_cooltime = 1.0f;
+            if (IsKeyPressed(KEY_TAB)) {
+                if (!isToggled) {
+                    attack_cooltime_coefficient *= 0.25;
+                    drain_life_coefficient += 25;
+                    isToggled = !isToggled;
+                }
+                else {
+                    attack_cooltime_coefficient /= 0.25;
+                    drain_life_coefficient -= 25;
+                    isToggled = !isToggled;
+                }
+            }
             break;
         case RARE_GREATSWORD_BLACKKNIGHT:
-            //special
-            damage = 175;
-            attack_cooltime = 0.75f;
+            buff_damage = PLAYER_MAX_HP - hp;
+            buff_drain_life_coefficient = (PLAYER_MAX_HP - hp) * 0.1f;
             break;
         case RARE_GREATSWORD_WHITEKNIGHT:
-            //special
-            damage = 175;
-            attack_cooltime = 0.75f;
+            buff_damage = defense;
             break;
         case RARE_GREATSWORD_VAMPIRE:
-            //special
-            damage = 150;
-            attack_cooltime = 0.75f;
-            drain_life_coefficient = 10;
+            buff_drain_life_coefficient = int(buff_killcount / 50) * 2;
             break;
         case RARE_GREATSWORD_BERSERKER:
-            //special
-            damage = 150;
-            attack_cooltime = 0.75f;
+            if (hp < 50 && isBuffed == false) {
+                hp = PLAYER_MAX_HP;
+                damage_coefficient *= 2;
+                isRoared == true;
+                isBuffed == true;
+            }
             break;
         case RARE_MACHINEGUN_KRAKEN:
-            //special
-            damage = 40;
-            attack_cooltime = 0.2f;
+            buffed_speed = int(buff_killcount / 50) * 10 > 500 ? 500 : int(buff_killcount / 50) * 10;
+            true_damage = (speed - PLAYER_SPEED > 0 ? int((speed - PLAYER_SPEED) / 50) * 10 : 0);
             break;
         case RARE_MACHINEGUN_VOID:
             //special
@@ -242,34 +245,42 @@ void Player::Buff() {
             attack_cooltime = 0.2f;
             break;
         case RARE_MACHINEGUN_REPENTENCE:
-            //special
-            damage = 50;
-            attack_cooltime = 0.25f;
-            break;
-        case RARE_MACHINEGUN_WILD:
-            //special
-            damage = 80;
-            attack_cooltime = 0.3f;
-            break;
-        case RARE_SNIPERRIFLE_RAILGUN:
-            //special
-            damage = 500;
-            attack_cooltime = 2.0f;
+            if (IsKeyPressed(KEY_TAB)) {
+                if (!isToggled) {
+                    buff_drain_life_coefficient = drain_life_coefficient;
+                    defense += drain_life_coefficient * 2;
+                    damage += drain_life_coefficient * 7;
+                    drain_life_coefficient = 0;
+                    isToggled = !isToggled;
+                }
+                else {
+                    drain_life_coefficient = buff_drain_life_coefficient;
+                    defense += drain_life_coefficient / 2;
+                    damage += drain_life_coefficient / 7;
+                    buff_drain_life_coefficient = 0;
+                    isToggled = !isToggled;
+                }
+            }
             break;
         case RARE_SNIPERRIFLE_PIRACY:
-            //special
-            damage = 200;
-            attack_cooltime = 1.0f;
+            buff_damage = (attack_cooltime_coefficient - 1) * 200;
             break;
         case RARE_SNIPERRIFLE_CATERPILLAR:
             //special
-            damage = 80;
-            attack_cooltime = 0.4f;
+            if (!isDodgeReady) {
+                buff_damage = damage;
+            }
+            if (!isAttackReady) {
+                buff_damage = 0;
+            }
             break;
         case RARE_SNIPERRIFLE_MAGICENGINEERING:
-            //special
-            damage = 80;
-            attack_cooltime = 0.4f;
+            if (charge_attack_time > 3) {
+                buff_damage = 7 * damage;
+            }
+            else {
+                buff_damage = 0;
+            }
             break;
         case NONE_WEAPON:
             break;
@@ -386,8 +397,9 @@ void Player::Update() {
     if (before_weaponid != GetWeapon()) {
         SetWeaponStat(GetWeapon());
     }
+    Buff();
 
-    speed = PLAYER_SPEED * speed_coefficient;
+    speed = (PLAYER_SPEED + buffed_speed) * speed_coefficient;
 
     if (isstanding) {
         //sprite timer
@@ -402,7 +414,7 @@ void Player::Update() {
 
     //attack timer
     if (!isAttackReady) {
-        attack_cooltimer.SetTimer(attack_cooltime * attack_cooltime_coefficient);
+        attack_cooltimer.SetTimer((GetWeapon() != RARE_SNIPERRIFLE_PIRACY ? attack_cooltime * attack_cooltime_coefficient : 1));
         attack_cooltimer.UpdateTimer();
     }
     if (attack_cooltimer.TimerDone()) {
@@ -617,7 +629,7 @@ void Player::DrawWeaponAttack() {
 }
 
 float Player::GetDamage() {
-    return damage * damage_coefficient * charge_damage_coefficient;
+    return (damage +buff_damage) * damage_coefficient * charge_damage_coefficient;
 }
 
 
@@ -966,8 +978,65 @@ void Player::Damaged(float enemy_damage) {
         hp -= enemy_damage * 100 / (100 + defense);
         isInvincible = true;
         isDamaged = true;
+        if (GetWeapon() == RARE_MACHINEGUN_VOID) {
+            damage++;
+        }
+        if (GetWeapon() == RARE_MACHINEGUN_WILD) {
+            isRoared == true;
+        }
     }
 }
+
+void Player::Drain() {
+    if (GetWeapon() != RARE_GREATSWORD_WHITEKNIGHT) {
+        hp += GetDamage() * (drain_life_coefficient + buff_drain_life_coefficient) / 100;
+        if (hp > PLAYER_MAX_HP) {
+            hp = PLAYER_MAX_HP;
+        }
+    }
+}
+
+bool Player::GetisRoared() {
+    return isRoared;
+}
+
+void Player::SetisRoared() {
+    isRoared == false;
+}
+
+float Player::GetStat(PlayerStat _stat) {
+    switch (_stat)
+    {
+    case DAMAGE:
+        return (damage + buff_damage) * damage_coefficient * charge_damage_coefficient;
+        break;
+    case ATTACK_SPEED:
+        return GetWeapon() == RARE_SNIPERRIFLE_PIRACY ? 1 : attack_cooltime * attack_cooltime_coefficient;
+        break;
+    case TRUE_DAMAGE:
+        return true_damage;
+        break;
+    case DRAIN:
+        return buff_drain_life_coefficient + drain_life_coefficient;
+        break;
+    case DEFENCE:
+        return defense;
+        break;
+    case HPS:
+        return life_per_second;
+        break;
+    case RANGE:
+        return MELEE_ATTACK_HITBOX_SIZE * range_coefficient * charge_range_coefficient;
+        break;
+    case SPEED:
+        return speed * speed_coefficient;
+        break;
+    default:
+        break;
+    }
+}
+
+
 
 
 

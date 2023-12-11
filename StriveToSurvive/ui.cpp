@@ -74,6 +74,26 @@ void Ui::DrawIngameUi() {
 		0,
 		WHITE
 	);
+	DrawTextEx(GetFontDefault(), TextFormat("WAVE%2d", wave_level), Vector2Subtract({ WINDOW_START_WIDTH / 2, 70}, Vector2Divide(MeasureTextEx(GetFontDefault(), TextFormat("WAVE%2d", wave_level), 80, 10), { 2,2 })), 80, 10, BLACK);
+	int fontsize = 45;
+	if (IsKeyDown(KEY_C)) {
+		DrawTexturePro(
+			stat_ui,
+			{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+			{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+			{ 0,0 },
+			0,
+			WHITE
+		);
+		DrawText(TextFormat("%3d", (int)player->GetStat(DAMAGE)), 56, 496, fontsize, WHITE);
+		DrawText(TextFormat("%0.2f", player->GetStat(ATTACK_SPEED)), 186, 496, fontsize, WHITE);
+		DrawText(TextFormat("%3d", (int)player->GetStat(TRUE_DAMAGE)), 56, 551, fontsize, WHITE);
+		DrawText(TextFormat("%3d", (int)player->GetStat(DRAIN)), 186, 551, fontsize, WHITE);
+		DrawText(TextFormat("%3d", (int)player->GetStat(DEFENCE)), 56, 616, fontsize, WHITE);
+		DrawText(TextFormat("%3d", (int)player->GetStat(HPS)), 186, 616, fontsize, WHITE);
+		DrawText(TextFormat("%3d", (int)player->GetStat(RANGE)), 56, 670, fontsize, WHITE);
+		DrawText(TextFormat("%3d", (int)player->GetStat(SPEED)), 186, 670, fontsize, WHITE);
+	}
 
 
 

@@ -24,6 +24,7 @@ void Enemy::UpdateHitbox() {
 
 void Enemy::Damaged() {
 	hp -= player->GetDamage() * 100 / (100 + defence) + player->GetTrueDamage();
+	player->Drain();
 	Knockbacked();
 }
 
@@ -66,10 +67,21 @@ void Enemy::UpdateState() {
 	for (int i = 0; i < player->ranged_attack_hitboxs.size(); i++) {
 		if (CheckCollisionCircleRec(std::get<0>(player->ranged_attack_hitboxs[i]), RANGED_ATTACK_SPRITE_RADIUS * player->range_coefficient * player->charge_range_coefficient * 2, hitbox)) {
 			RangedDamaged();
-			player->ranged_attack_hitboxs.erase(player->ranged_attack_hitboxs.begin() + i);
+			if (player->GetWeapon() != RARE_SNIPERRIFLE_RAILGUN) {
+				player->ranged_attack_hitboxs.erase(player->ranged_attack_hitboxs.begin() + i);
+			}
 		}
 	}
-	
+	if (player->GetisRoared()) {
+		if (player->GetWeapon() == RARE_GREATSWORD_BERSERKER) {
+			delta_position.x = -ENEMY_KNOCKBACK * 5 * delta_position.x;
+			delta_position.y = -ENEMY_KNOCKBACK * 5 * delta_position.y;
+		}
+		else {
+			Knockbacked();
+		}
+
+	}
 	player_attack = player->GetisAttacking();
 	player_dashattack = player->GetisDodging();
 }

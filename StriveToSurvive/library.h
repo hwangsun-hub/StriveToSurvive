@@ -142,10 +142,22 @@ enum WeaponType {
 	NONE_TYPE
 };
 
+enum PlayerStat {
+	DAMAGE,
+	ATTACK_SPEED,
+	TRUE_DAMAGE,
+	DRAIN,
+	DEFENCE,
+	HPS,
+	RANGE,
+	SPEED
+};
+
 extern GameState gamestate;
 extern bool exitWindow;
 extern int wave_level;
 extern Camera2D camera;
+
 //debug
 extern bool DEBUGING_MODE;
 
@@ -219,15 +231,19 @@ private:
 	float damage = 10;
 	float true_damage = 0;
 	float charge_damage_coefficient = 1.0f;
+	float buff_damage = 0;
 	float damage_coefficient = 1.0f;
 	float attack_cooltime = 0.5f;
 	float attack_cooltime_coefficient = 1.0f;
-	float drain_life_coefficient = 1.0f;
+	float drain_life_coefficient = 0.0f;
+	float buff_drain_life_coefficient = 0;
 	float speed = PLAYER_SPEED;
 	float speed_coefficient = 1.0f;
+	float buffed_speed = 0;
 
 	int money = 100000;
 	int killcount = 0;
+	int buff_killcount = 0;
 	float dodge_cooltime = 2;
 	float dodge_cooltime_coefficient = 1.0f;
 
@@ -245,7 +261,11 @@ private:
 
 	//Invincible
 	bool isInvincible = false;
+
 	bool isDamaged = false;
+	bool isToggled = false;
+	bool isBuffed = false;
+	bool isRoared = false;
 
 	
 	//By default looking right
@@ -290,6 +310,8 @@ private:
 	WeaponId before_weaponid = NONE_WEAPON;
 
 	Texture tunder_effect = LoadTexture("resources/Lightning Strike.png");
+
+
 
 
 public:
@@ -356,6 +378,10 @@ public:
 	float GetTrueDamage();
 	void Damaged(float);
 	void Dodgereset();
+	void Drain();
+	bool GetisRoared();
+	void SetisRoared();
+	float GetStat(PlayerStat);
 
 };
 
@@ -467,6 +493,7 @@ public:
 
 			}
 		}
+		player->SetisRoared();
 	}
 
 	//draw
@@ -633,6 +660,7 @@ private:
 	Player* player;
 	Texture ingame_ui = LoadTexture("resources/ui/ingame_ui.png");
 	Texture shop_ui = LoadTexture("resources/ui/shop_ui.png");
+	Texture stat_ui = LoadTexture("resources/ui/stat_ui.png");
 
 	Texture ingame_ui_orb_icon1;
 	Texture ingame_ui_orb_icon2;
