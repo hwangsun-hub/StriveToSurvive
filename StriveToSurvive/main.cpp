@@ -4,6 +4,7 @@ bool DEBUGING_MODE = true;
 bool exitWindow = false;
 
 int wave_level = 1;
+int talent_score = 20;
 
 //defalt : GAMESTATE_TITLE
 GameState gamestate = GAMESTATE_TITLE;
@@ -40,6 +41,7 @@ int main()
         switch (gamestate)
         {
         case GAMESTATE_TITLE:
+            camera.zoom = 1.0f;
             camera.target = { WINDOW_START_WIDTH / 2 ,WINDOW_START_HEIGHT / 2 };
             gametitle.Update();
             BeginMode2D(camera);
@@ -48,14 +50,18 @@ int main()
             EndDrawing();
             break;
         case GAMESTATE_BEFORE_GAME:
-            camera.target = { 0,0 };
+            camera.zoom = 1.0f;
+            camera.target = { WINDOW_START_WIDTH/2,WINDOW_START_HEIGHT/2 };
             //update
+            ui.UpdateBeforeGameUi();
             BeginMode2D(camera);
             //draw
             EndMode2D();
+            ui.DrawBeforeGameUi();
             EndDrawing();
             break;
         case GAMESTATE_INGAME:
+            camera.zoom = 0.75f;
             //update
             UpdateMusicStream(music);
             camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
@@ -138,8 +144,19 @@ int main()
             ui.DrawIngameUi();
             EndDrawing();
             break;
+        case GAMESTATE_GAMEOVER:
+            camera.zoom = 1.0f;
+            camera.target = { WINDOW_START_WIDTH / 2,WINDOW_START_HEIGHT / 2 };
+            //update
+            ui.UpdateGameoverUi();
+            BeginMode2D(camera);
+            //draw
+            EndMode2D();
+            ui.DrawGameoverUi();
+            EndDrawing();
+            break;
         case GAMESTATE_SHOPPING:
-
+            camera.zoom = 1.0f;
             if (IsKeyReleased(KEY_ENTER)) {
                 ToggleFullscreen();
             }

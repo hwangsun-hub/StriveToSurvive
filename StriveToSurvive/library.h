@@ -156,6 +156,7 @@ enum PlayerStat {
 extern GameState gamestate;
 extern bool exitWindow;
 extern int wave_level;
+extern int talent_score;
 extern Camera2D camera;
 
 //debug
@@ -216,9 +217,8 @@ public:
 //player.cpp
 class Player : public Weapon{
 private:
-
+	friend class Ui;
 	//inventory
-	WeaponId inventory_weapon[2] = { NONE_WEAPON, NONE_WEAPON };
 	OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
 
 	//player state
@@ -241,7 +241,7 @@ private:
 	float speed_coefficient = 1.0f;
 	float buffed_speed = 0;
 
-	int money = 100000;
+	int money = 0;
 	int killcount = 0;
 	int buff_killcount = 0;
 	float dodge_cooltime = 2;
@@ -518,7 +518,7 @@ public:
 		sprite_index_maxnum = RUNNER_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) }; \
 		damage = 25 + RUNNER_DAMAGE_COEFFICIENT * (wave_level - RUNNER_SPAWN_LEVEL);
-		speed = 100 + RUNNER_SPEED_COEFFICIENT * (wave_level-RUNNER_SPAWN_LEVEL);
+		speed = 100 + RUNNER_SPEED_COEFFICIENT * (wave_level - RUNNER_SPAWN_LEVEL) + rand() % 50 + 1;
 		max_hp = 50 + RUNNER_HP_COEFFICIENT * (wave_level - RUNNER_SPAWN_LEVEL);
 		hp = max_hp;
 		defence = RUNNER_DEFENSE_COEFFICIENT * (wave_level - RUNNER_SPAWN_LEVEL);
@@ -537,7 +537,7 @@ public:
 		sprite_index_maxnum = TANKER_SPRITE_MAXNUM;
 		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.2), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 3.5) };
 		damage = 10 + TANKER_DAMAGE_COEFFICIENT * ((wave_level - TANKER_SPAWN_LEVEL) > 0 ? (wave_level - TANKER_SPAWN_LEVEL) : 0);
-		speed = 100;
+		speed = 100 + rand() % 25 + 1;;
 		max_hp = 100 + TANKER_HP_COEFFICIENT * ((wave_level - TANKER_SPAWN_LEVEL) > 0 ? (wave_level - TANKER_SPAWN_LEVEL) : 0);
 		hp = max_hp;
 		defence = 25 + TANKER_DEFENSE_COEFFICIENT * ((wave_level - TANKER_SPAWN_LEVEL) > 0 ? (wave_level - TANKER_SPAWN_LEVEL) : 0);
@@ -557,7 +557,7 @@ public:
 		sprite_index_maxnum = TANKER_SPRITE_MAXNUM - 1;
 		hitbox = { position.x + float(-WEAPON_SPRITE_SIZE), position.y + float(-WEAPON_SPRITE_SIZE * 1.3), float(WEAPON_SPRITE_SIZE * 1.8), float(WEAPON_SPRITE_SIZE * 2) };
 		damage = 150 + SPIDER_DAMAGE_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
-		speed = 300;
+		speed = 300 + rand() % 50 + 1;;
 		max_hp = 300 + SPIDER_HP_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
 		hp = max_hp;
 		defence = SPIDER_DEFENSE_COEFFICIENT * ((wave_level - SPIDER_SPAWN_LEVEL) > 0 ? (wave_level - SPIDER_SPAWN_LEVEL) : 0);
@@ -658,10 +658,25 @@ public:
 //IUi.cpp
 class Ui {
 private:
+	enum Talent {
+		NORMAL,
+		RAGE,
+		FORT,
+		CELE,
+		WEAPON_SELECT
+	};
+	Talent talent = NORMAL;
 	Player* player;
 	Texture ingame_ui = LoadTexture("resources/ui/ingame_ui.png");
 	Texture shop_ui = LoadTexture("resources/ui/shop_ui.png");
 	Texture stat_ui = LoadTexture("resources/ui/stat_ui.png");
+	Texture lobby_ui = LoadTexture("resources/ui/lobby.png");
+	Texture rage_ui = LoadTexture("resources/ui/rage.png");
+	Texture celerity_ui = LoadTexture("resources/ui/celerity.png");
+	Texture fortification_ui = LoadTexture("resources/ui/fortification.png");
+	Texture select_weapon_ui = LoadTexture("resources/ui/select_weapon.png");
+	Texture gameover_ui = LoadTexture("resources/ui/gmaeover_final.png");
+	Texture gameclear_ui = LoadTexture("resources/ui/game_clear.png");
 
 	Texture ingame_ui_orb_icon1;
 	Texture ingame_ui_orb_icon2;
@@ -669,14 +684,23 @@ private:
 
 	Texture ingame_ui_weapon_icon;
 
+	int rage_talent_score = 0;
+	int fortification__talent_score = 0;
+	int celerity__talent_score = 0;
+
 public:
 	Ui(Player*);
 
 	void UpdateIngameUi();
 	void UpdateShopUi();
+	void UpdateBeforeGameUi();
+	void UpdateGameoverUi();
 
 	void DrawIngameUi();
 	void DrawShopUi();
+	void DrawBeforeGameUi();
+	void DrawGameoverUi();
+
 };
 
 

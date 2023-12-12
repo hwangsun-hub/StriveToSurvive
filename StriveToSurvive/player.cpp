@@ -456,6 +456,65 @@ void Player::Update() {
     UpdateHitbox();
     before_weaponid = GetWeapon();
 
+    if (hp < 0) {
+
+        OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
+
+
+        hp = 500;
+        life_per_second = 0;
+        defense = 0;
+        true_defense = 0;
+        damage = 10;
+        true_damage = 0;
+        charge_damage_coefficient = 1.0f;
+        buff_damage = 0;
+        damage_coefficient = 1.0f;
+        attack_cooltime = 0.5f;
+        attack_cooltime_coefficient = 1.0f;
+        drain_life_coefficient = 0.0f;
+        buff_drain_life_coefficient = 0;
+        speed = PLAYER_SPEED;
+        speed_coefficient = 1.0f;
+        buffed_speed = 0;
+
+        money = 0;
+        buff_killcount = 0;
+        dodge_cooltime = 2;
+        dodge_cooltime_coefficient = 1.0f;
+
+        //attack
+        isAttackReady = true;
+        isAttacking = false;
+
+        //dash attack
+        isDashAttacking = false;
+
+        attack_degree = 0;
+
+        //dodge
+        isDodgeReady = true;
+
+        //Invincible
+        isInvincible = false;
+
+        isDamaged = false;
+        isToggled = false;
+        isBuffed = false;
+        isRoared = false;
+        charge_attack_time = 0;
+        time = 0;
+
+
+        //By default looking right
+        islookingright = true;
+        isstanding = true;
+        range_coefficient = 1.0f;
+        charge_range_coefficient = 1.0f;
+        knockback_coefficient = 1.0f;
+        gamestate = GAMESTATE_GAMEOVER;
+    }
+
 }
 
 void Player::DrawSpawnPoint() {
@@ -863,23 +922,19 @@ void Player::SetOrbStat(OrbId _orbid) {
         drain_life_coefficient += 3;
         break;
     case UNCOMMON_ROARORB:
-        //special
         knockback_coefficient += 0.5;
-        range_coefficient += 0.25;
+        range_coefficient += 0.5;
         break;
     case UNCOMMON_RAGEORB:
-        //special
-        damage_coefficient += 0.3;
-        attack_cooltime_coefficient += 0.3;
+        damage_coefficient += 0.5;
+        defense += 10;
         break;
     case UNCOMMON_SEAORB:
-        //special
-        speed_coefficient += 0.3;
-        attack_cooltime_coefficient += 0.3;
+        speed_coefficient += 0.5;
+        attack_cooltime_coefficient += 0.5;
         break;
     case UNCOMMON_HUNGERORB:
-        //special
-        drain_life_coefficient += 4;
+        drain_life_coefficient += 5;
         break;
     case UNCOMMON_SWIFTNESSORB:
         dodge_cooltime_coefficient -= 0.5;

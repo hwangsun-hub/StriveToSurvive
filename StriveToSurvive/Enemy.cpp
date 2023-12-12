@@ -30,6 +30,7 @@ void Enemy::Damaged() {
 
 void Enemy::RangedDamaged() {
 	hp -= player->GetDamage() * 100 / (100 + defence) + player->GetTrueDamage();
+	player->Drain();
 }
 
 void Enemy::DashDamaged() {

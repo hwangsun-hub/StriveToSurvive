@@ -25,8 +25,7 @@ void GameTitle::Update() {
                 {
                     //start button
                 case 0:
-                    gamestate = GAMESTATE_INGAME;
-                    camera.zoom = 0.75f;
+                    gamestate = GAMESTATE_BEFORE_GAME;
                     break;
                     //option button
                 case 1:

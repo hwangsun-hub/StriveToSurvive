@@ -244,7 +244,7 @@ void Shop::Update(){
 	if (CheckCollisionPointRec(GetMousePosition(), { 1151, 638, 128, 80 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
 		gamestate = GAMESTATE_INGAME;
 		wave_level++;
-		camera.zoom = 0.75;
+
 	}
 	
 }
