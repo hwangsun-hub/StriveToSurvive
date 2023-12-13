@@ -48,6 +48,7 @@ void GameTitle::Update() {
         digipen_logo_timer.UpdateTimer();
         if (digipen_logo_timer.TimerDone()) {
             isDigiPenLogoEnd = true;
+            isMenuReady = true;
             UnloadTexture(DigiPen_logo_sprite);
         }
     }

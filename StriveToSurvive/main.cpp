@@ -3,8 +3,11 @@
 bool DEBUGING_MODE = false;
 bool exitWindow = false;
 
-int wave_level = 1;
+int wave_level = 7;
 int talent_score = 5;
+bool isMenuReady = false;
+GameState before_gamestate = GAMESTATE_TITLE;
+
 
 //defalt : GAMESTATE_TITLE
 GameState gamestate = GAMESTATE_TITLE;
@@ -17,8 +20,18 @@ int main()
     InitAudioDevice();
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
 
-    Music ingame_music = LoadMusicStream("resources/ypurmo.mp3");
-    SetMusicVolume(ingame_music, 0.1f);
+    Music ingame_music1 = LoadMusicStream("resources/music/normal1.mp3");
+    Music ingame_music2 = LoadMusicStream("resources/music/spider.wav");
+    Music ingame_music3 = LoadMusicStream("resources/music/Bottomless_Knight.mp3");
+    Music title_music = LoadMusicStream("resources/music/menu2.mp3");
+    Music shop_music = LoadMusicStream("resources/music/menu2.mp3");
+    Music gameover_music = LoadMusicStream("resources/music/gameover.mp3");
+    SetMusicVolume(ingame_music1, 0.3f);
+    SetMusicVolume(ingame_music2, 0.5f);
+    SetMusicVolume(ingame_music3, 0.5f);
+    SetMusicVolume(title_music, 0.7f);
+    SetMusicVolume(shop_music, 0.7f);
+    SetMusicVolume(gameover_music, 0.5f);
 
     camera = { 0, };
     Player player;
@@ -30,7 +43,10 @@ int main()
     GameTitle gametitle;
     Ui ui(&player);
     int id = 0;
+
     while (!WindowShouldClose() && !exitWindow) {
+
+
         BeginDrawing();
         ClearBackground(BLACK);
         //update
@@ -39,6 +55,11 @@ int main()
         case GAMESTATE_TITLE:
             camera.zoom = 1.0f;
             camera.target = { WINDOW_START_WIDTH / 2 ,WINDOW_START_HEIGHT / 2 };
+            if (isMenuReady) {
+                PlayMusicStream(title_music);
+                UpdateMusicStream(title_music);
+
+            }
             gametitle.Update();
             BeginMode2D(camera);
             gametitle.Draw();
@@ -48,6 +69,9 @@ int main()
         case GAMESTATE_BEFORE_GAME:
             camera.zoom = 1.0f;
             camera.target = { WINDOW_START_WIDTH/2,WINDOW_START_HEIGHT/2 };
+            if (before_gamestate != gamestate) {
+                StopMusicStream(title_music);
+            }
             //update
             ui.UpdateBeforeGameUi();
             BeginMode2D(camera);
@@ -59,8 +83,21 @@ int main()
         case GAMESTATE_INGAME:
             camera.zoom = 0.75f;
             //update
-            UpdateMusicStream(ingame_music);
-            PlayMusicStream(ingame_music);
+            if (wave_level < 7) {
+                PlayMusicStream(ingame_music1);
+                UpdateMusicStream(ingame_music1);
+
+            }
+            else if (wave_level == 7 || wave_level == 8) {
+                PlayMusicStream(ingame_music2);
+                UpdateMusicStream(ingame_music2);
+
+            }
+            else if (wave_level == 9 || wave_level == 10) {
+                PlayMusicStream(ingame_music3);
+                UpdateMusicStream(ingame_music3);
+
+            }
             camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
             player.Update();
             wavemanager.Update();
@@ -87,11 +124,6 @@ int main()
                 if (IsKeyReleased(KEY_F3)) {
                     wavemanager.spider_enemymanager->SpawnEnemies(1);
                 }
-                // Restart music playing (stop and play) (KEY_F10)
-                if (IsKeyPressed(KEY_F10)) {
-                    StopMusicStream(ingame_music);
-                    PlayMusicStream(ingame_music);
-                }
             }
 
             //draw
@@ -107,6 +139,9 @@ int main()
             camera.zoom = 1.0f;
             camera.target = { WINDOW_START_WIDTH / 2,WINDOW_START_HEIGHT / 2 };
             //update
+            PlayMusicStream(gameover_music);
+            UpdateMusicStream(gameover_music);
+
             ui.UpdateGameoverUi();
             BeginMode2D(camera);
             //draw
@@ -120,6 +155,9 @@ int main()
                 ToggleFullscreen();
             }
             camera.target = { WINDOW_START_WIDTH / 2 ,WINDOW_START_HEIGHT / 2 };
+            PlayMusicStream(shop_music);
+            UpdateMusicStream(shop_music);
+
             shop.Update();
             ui.UpdateShopUi();
             BeginMode2D(camera);
@@ -162,9 +200,16 @@ int main()
             EndDrawing();
             break;
         }
+        if (before_gamestate != gamestate) {
+            StopMusicStream(ingame_music1);
+            StopMusicStream(ingame_music2);
+            StopMusicStream(ingame_music3);
+            StopMusicStream(title_music);
+            StopMusicStream(shop_music);
+            StopMusicStream(gameover_music);
+        }
 
-
-       
+        before_gamestate = gamestate;
     }
 
     CloseWindow();

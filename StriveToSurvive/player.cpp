@@ -76,6 +76,8 @@ void Player::Attack() {
     {
     case WeaponType::KATANA:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            SetSoundVolume(machinegun_sound, 1);
+            PlaySound(katana_sound);
             charge_attack_time = 0;
             melee_weapon_attack_sprite_index = 0;
             isAttackReady = false;
@@ -94,6 +96,8 @@ void Player::Attack() {
         break;
     case WeaponType::GRAEATSWORD:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            SetSoundVolume(greatsword_sound, 1);
+            PlaySound(greatsword_sound);
             charge_attack_time = 0;
             greatsword_motion = !greatsword_motion;
             melee_weapon_attack_sprite_index = 0;
@@ -113,6 +117,8 @@ void Player::Attack() {
         break;
     case WeaponType::MACHINGUN:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            SetSoundVolume(machinegun_sound, 1);
+            PlaySound(machinegun_sound);
             charge_attack_time = 0;
             ranged_attack_hitboxs.push_back(
                 { { position.x + cosf(degree) * 80, position.y + sinf(degree) * 80 },
@@ -125,6 +131,8 @@ void Player::Attack() {
         break;
     case WeaponType::SNIPERRIFLE:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
+            SetSoundVolume(sniper_sound, 0.2);
+            PlaySound(sniper_sound);
             charge_attack_time = 0;
             ranged_attack_hitboxs.push_back(
                 { { position.x + cosf(degree) * 80, position.y + sinf(degree) * 80 },
@@ -158,6 +166,7 @@ void Player::RangedAttack() {
 void Player::Dodge() {
     if (GetWeapon() != WeaponId::RARE_KATANA_THUNDER) {
         if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
+            PlaySound(machinegun_sound);
             isDodgeReady = false;
             position.x += delta_position.x * PLAYER_DODGE_SPEED;
             position.y += delta_position.y * PLAYER_DODGE_SPEED;
@@ -165,6 +174,8 @@ void Player::Dodge() {
     }
     else {
         if (IsKeyPressed(KEY_SPACE) && isDodgeReady) {
+            SetSoundVolume(dash_sound, 500);
+            PlaySound(dash_sound);
             dash_attack_sprite_index = 0;
             isDodgeReady = false;
             isDashAttacking = true;
@@ -1097,6 +1108,7 @@ float Player::GetTrueDamage() {
 
 void Player::Damaged(float enemy_damage) {
     if (!isInvincible) {
+        PlaySound(katana_sound);
         hp -= enemy_damage * 100 / (100 + defense);
         isInvincible = true;
         isDamaged = true;

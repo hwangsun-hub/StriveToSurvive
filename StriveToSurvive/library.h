@@ -160,6 +160,7 @@ extern bool exitWindow;
 extern int wave_level;
 extern int talent_score;
 extern Camera2D camera;
+extern bool isMenuReady;
 
 //debug
 extern bool DEBUGING_MODE;
@@ -222,6 +223,13 @@ private:
 	friend class Ui;
 	//inventory
 	OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
+
+	Sound dash_sound = LoadSound("resources/sound/dash.mp3");
+	Sound greatsword_sound = LoadSound("resources/sound/greatswords.mp3");
+	Sound katana_sound = LoadSound("resources/sound/katanas.mp3");
+	Sound machinegun_sound = LoadSound("resources/sound/machinegun.mp3");
+	Sound sniper_sound = LoadSound("resources/sound/sniper.mp3");
+
 
 	//player state
 	//life per second, defense, knockback, damage , attack speed, Drain life, speed, range
