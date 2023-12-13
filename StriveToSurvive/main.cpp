@@ -1,10 +1,10 @@
 ﻿#include "library.h"
 
-bool DEBUGING_MODE = true;
+bool DEBUGING_MODE = false;
 bool exitWindow = false;
 
 int wave_level = 1;
-int talent_score = 20;
+int talent_score = 5;
 
 //defalt : GAMESTATE_TITLE
 GameState gamestate = GAMESTATE_TITLE;
@@ -17,11 +17,9 @@ int main()
     InitAudioDevice();
     SetTargetFPS(WINDOW_FRAMES_PER_SECOND);
 
-    Music music = LoadMusicStream("resources/ypurmo.mp3");
-    SetMusicVolume(music, 0.01f);
+    Music ingame_music = LoadMusicStream("resources/ypurmo.mp3");
+    SetMusicVolume(ingame_music, 0.1f);
 
-    
-    Texture Map = LoadTexture("resources/Map.png");
     camera = { 0, };
     Player player;
     camera.offset = { float(GetScreenWidth() / 2) , float(GetScreenHeight() / 2) };
@@ -31,8 +29,6 @@ int main()
     Shop shop(&player);
     GameTitle gametitle;
     Ui ui(&player);
-    bool isMusicPause = false;
-    bool isGamePause = false;
     int id = 0;
     while (!WindowShouldClose() && !exitWindow) {
         BeginDrawing();
@@ -63,7 +59,8 @@ int main()
         case GAMESTATE_INGAME:
             camera.zoom = 0.75f;
             //update
-            UpdateMusicStream(music);
+            UpdateMusicStream(ingame_music);
+            PlayMusicStream(ingame_music);
             camera.target = Vector2Lerp(camera.target, player.GetPosition(), 7 * GetFrameTime());
             player.Update();
             wavemanager.Update();
@@ -76,35 +73,9 @@ int main()
             }
             //debug mode
             if (DEBUGING_MODE) {
-                if (IsKeyReleased(KEY_SPACE)) {
-                    isGamePause = !isGamePause;
-                }
                 //Fullscreen (KEY_ENTER)
                 if (IsKeyReleased(KEY_ENTER)) {
                     ToggleFullscreen();
-                }
-                //zoom in & out & reset (KEY_PAGE_UP, KEY_PAGE_DOWN, KEY_HOME)
-                if (IsKeyDown(KEY_PAGE_UP)) {
-                    camera.zoom += 0.01f;
-                }
-                else if (IsKeyDown(KEY_PAGE_DOWN)) {
-                    camera.zoom -= 0.01f;
-                }
-                else if (IsKeyDown(KEY_HOME)) {
-                    camera.zoom = 0.75f;
-                }
-                //player weapon change(KEY_UP, KEY_DOWN)
-                if (IsKeyPressed(KEY_UP)) {
-                    if (id < NONE_WEAPON) {
-                        id++;
-                    }
-                    player.SetWeapon(static_cast<WeaponId>(id));
-                }
-                else if (IsKeyPressed(KEY_DOWN)) {
-                    if (id > COMMON_KATANA_KATANA) {
-                        id--;
-                    }
-                    player.SetWeapon(static_cast<WeaponId>(id));
                 }
                 //Spawn a Enemy (KEY_F1,F2,F3)
                 if (IsKeyReleased(KEY_F1)) {
@@ -118,21 +89,9 @@ int main()
                 }
                 // Restart music playing (stop and play) (KEY_F10)
                 if (IsKeyPressed(KEY_F10)) {
-                    StopMusicStream(music);
-                    PlayMusicStream(music);
+                    StopMusicStream(ingame_music);
+                    PlayMusicStream(ingame_music);
                 }
-                else if (IsKeyPressed(KEY_F11)) {
-                    isMusicPause = !isMusicPause;
-                    if (isMusicPause) {
-                        PauseMusicStream(music);
-                    }
-                    else {
-                        ResumeMusicStream(music);
-                    }
-                }
-
-                //draw test map
-                DrawTextureEx(Map, { -float(Map.width / 2), -float(Map.height / 2) }, 0, 1, WHITE);
             }
 
             //draw
@@ -169,8 +128,42 @@ int main()
             ui.DrawShopUi();
             EndDrawing();
             break;
-        
+        case GAMESTATE_SETTING:
+            camera.zoom = 1.0f;
+            camera.target = { WINDOW_START_WIDTH / 2,WINDOW_START_HEIGHT / 2 };
+            //update
+            ui.UpdateOptionUi();
+            BeginMode2D(camera);
+            //draw
+            EndMode2D();
+            ui.DrawOptionUi();
+            EndDrawing();
+            break;
+        case GAMESTATE_CREDIT:
+            camera.zoom = 1.0f;
+            camera.target = { WINDOW_START_WIDTH / 2,WINDOW_START_HEIGHT / 2 };
+            //update
+            ui.UpdateCreditUi();
+            BeginMode2D(camera);
+            //draw
+            EndMode2D();
+            ui.DrawCreditUi();
+            EndDrawing();
+            break;
+        case GAMESTATE_CLEAR:
+            camera.zoom = 1.0f;
+            camera.target = { WINDOW_START_WIDTH / 2,WINDOW_START_HEIGHT / 2 };
+            //update
+            ui.UpdateClearUi();
+            BeginMode2D(camera);
+            //draw
+            EndMode2D();
+            ui.DrawClearUi();
+            EndDrawing();
+            break;
         }
+
+
        
     }
 

@@ -29,9 +29,11 @@ void GameTitle::Update() {
                     break;
                     //option button
                 case 1:
+                    gamestate = GAMESTATE_SETTING;
                     break;
                     //credit button
                 case 2:
+                    gamestate = GAMESTATE_CREDIT;
                     break;
                     //quit button
                 case 3:

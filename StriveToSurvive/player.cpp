@@ -238,11 +238,7 @@ void Player::Buff() {
         case RARE_MACHINEGUN_KRAKEN:
             buffed_speed = int(buff_killcount / 50) * 10 > 500 ? 500 : int(buff_killcount / 50) * 10;
             true_damage = (speed - PLAYER_SPEED > 0 ? int((speed - PLAYER_SPEED) / 50) * 10 : 0);
-            break;
-        case RARE_MACHINEGUN_VOID:
-            //special
-            damage = 35;
-            attack_cooltime = 0.2f;
+
             break;
         case RARE_MACHINEGUN_REPENTENCE:
             if (IsKeyPressed(KEY_TAB)) {
@@ -512,7 +508,77 @@ void Player::Update() {
         range_coefficient = 1.0f;
         charge_range_coefficient = 1.0f;
         knockback_coefficient = 1.0f;
+
+        wave_level = 0;
+        before_weaponid = NONE_WEAPON;
+
         gamestate = GAMESTATE_GAMEOVER;
+    }
+    if (wave_level == 11) {
+
+        OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
+
+        hp = 500;
+        life_per_second = 0;
+        defense = 0;
+        true_defense = 0;
+        damage = 10;
+        true_damage = 0;
+        charge_damage_coefficient = 1.0f;
+        buff_damage = 0;
+        damage_coefficient = 1.0f;
+        attack_cooltime = 0.5f;
+        attack_cooltime_coefficient = 1.0f;
+        drain_life_coefficient = 0.0f;
+        buff_drain_life_coefficient = 0;
+        speed = PLAYER_SPEED;
+        speed_coefficient = 1.0f;
+        buffed_speed = 0;
+
+        money = 0;
+        buff_killcount = 0;
+        dodge_cooltime = 2;
+        dodge_cooltime_coefficient = 1.0f;
+
+        //attack
+        isAttackReady = true;
+        isAttacking = false;
+
+        //dash attack
+        isDashAttacking = false;
+
+        attack_degree = 0;
+
+        //dodge
+        isDodgeReady = true;
+
+        //Invincible
+        isInvincible = false;
+
+        isDamaged = false;
+        isToggled = false;
+        isBuffed = false;
+        isRoared = false;
+        charge_attack_time = 0;
+        time = 0;
+
+
+        //By default looking right
+        islookingright = true;
+        isstanding = true;
+        range_coefficient = 1.0f;
+        charge_range_coefficient = 1.0f;
+        knockback_coefficient = 1.0f;
+
+        wave_level = 1;
+        before_weaponid = NONE_WEAPON;
+
+        talent_score += 10;
+        if (talent_score >= 35) {
+            talent_score = 35;
+        }
+
+        gamestate = GAMESTATE_CLEAR;
     }
 
 }
@@ -807,7 +873,6 @@ void Player::SetWeaponStat(WeaponId _weaponid) {
         //special
         damage = 150;
         attack_cooltime = 0.75f;
-        drain_life_coefficient = 10;
         break;
     case RARE_GREATSWORD_BERSERKER:
         //special
@@ -941,7 +1006,6 @@ void Player::SetOrbStat(OrbId _orbid) {
         speed_coefficient += 1.65;
         break;
     case UNCOMMON_CHARGEORB:
-        //special
         damage_coefficient += 0.3;
         range_coefficient += 0.3;
         break;

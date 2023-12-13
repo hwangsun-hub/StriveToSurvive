@@ -344,6 +344,208 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
+		switch (selected_weapon)
+		{
+		case COMMON_KATANA_KATANA:
+			DrawText(TextFormat("Katana"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("20"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_KATANA_TAILWIND:
+			DrawText(TextFormat("Tailwind"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("30"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("true damage + 10"), 675, 494, 20, BLACK);
+			break;
+		case UNCOMMON_KATANA_ZERO:
+			DrawText(TextFormat("Zero"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("60"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			break;
+		case RARE_KATANA_STORMWIND:
+			DrawText(TextFormat("Stormwind"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("30"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Add true damage"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("proportional to speed"), 675, 514, 20, BLACK);
+			break;
+		case RARE_KATANA_THUNDER:
+			DrawText(TextFormat("Thunder"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("60"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("dodge is replaced by"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("Special Attack"), 675, 514, 20, BLACK);
+			break;
+		case RARE_KATANA_MASAMUNE:
+			DrawText(TextFormat("Masamune"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("85"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("If you do not attack for"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("3 seconds, you can use"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("a charged attack"), 675, 534, 20, BLACK);
+			break;
+		case RARE_KATANA_MURAMASA:
+			DrawText(TextFormat("Masamune"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("100"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Toggle: Attack speed is"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("greatly reduced, but"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("blood absorption is"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("greatly increased."), 675, 554, 20, BLACK);
+			break;
+			break;
+		case COMMON_GREATSWORD_GREATSWORD:
+			DrawText(TextFormat("Greatsword"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("50"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_GREATSWORD_KNIGHTLYSWORD:
+			DrawText(TextFormat("Knightlysword"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("150"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_GREATSWORD_BLOODSWORD:
+			DrawText(TextFormat("Bloodsword"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("120"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Recovers health every"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("time you kill an enemy"), 675, 514, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_BLACKKNIGHT:
+			DrawText(TextFormat("BlackKnight"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("175"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Gain attack power and"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("blood absorption in"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("proportion to"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("reduced health"), 675, 554, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_WHITEKNIGHT:
+			DrawText(TextFormat("WhiteKnight"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("175"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Gain damage equal to"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("defense power"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("However, it cannot"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("absorb blood"), 675, 554, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_VAMPIRE:
+			DrawText(TextFormat("Vampire"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("150"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Every time you kill"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("an enemy, your"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("blood absorption"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("increases"), 675, 554, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_BERSERKER:
+			DrawText(TextFormat("Berserker"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("150"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("When health falls below 50,"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("it fills up and roars."), 675, 514, 18, BLACK);
+			DrawText(TextFormat("Damage is"), 675, 534, 18, BLACK);
+			DrawText(TextFormat("permanently doubled."), 675, 554, 18, BLACK);
+			break;
+		case COMMON_MACHINEGUN_MACHINGUN:
+			DrawText(TextFormat("Machinegun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("20"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN:
+			DrawText(TextFormat("Lightmachinegun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("35"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.2"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN:
+			DrawText(TextFormat("Heavymachinegun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("50"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			break;
+		case RARE_MACHINEGUN_KRAKEN:
+			DrawText(TextFormat("Kraken"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("40"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.2"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Every 50 enemies you kill"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("permanently increases"), 675, 514, 18, BLACK);
+			DrawText(TextFormat(" your speed."), 675, 534, 18, BLACK);
+			DrawText(TextFormat("Gain true damage proportional"), 675, 554, 18, BLACK);
+			DrawText(TextFormat("to increased movement speed."), 675, 574, 18, BLACK);
+			break;
+		case RARE_MACHINEGUN_VOID:
+			DrawText(TextFormat("Void"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("35"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.2"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Each time you take"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("damage, your"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("damage increases."), 675, 534, 20, BLACK);
+			break;
+		case RARE_MACHINEGUN_REPENTENCE:
+			DrawText(TextFormat("Repentence"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("50"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.25"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Toggle: All of your"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("blood absorption is converted"), 675, 514, 18, BLACK);
+			DrawText(TextFormat("to defense, damage"), 675, 534, 18, BLACK);
+			break;
+		case RARE_MACHINEGUN_WILD:
+			DrawText(TextFormat("Kraken"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("80"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("roars every time"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("takes damage."), 675, 514, 20, BLACK);
+			break;
+		case COMMON_SNIPERRIFLE_SNIPERRIFLE:
+			DrawText(TextFormat("Sniper rifle"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("40"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.6"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_SNIPERRIFLE_BOLTACTION:
+			DrawText(TextFormat("Boltaction"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("100"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.6"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_SNIPERRIFLE_SEMIAUTO:
+			DrawText(TextFormat("Semiauto"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("75"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.45"), 840, 456, 29, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_RAILGUN:
+			DrawText(TextFormat("Railgun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("500"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("2"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("The bullet penetrates"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("the enemy"), 675, 514, 20, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_PIRACY:
+			DrawText(TextFormat("Piracy"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("200"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Instead of gaining damage"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("proportional to attack speed,"), 675, 514, 18, BLACK);
+			DrawText(TextFormat("attack speed is fixed."), 675, 534, 18, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_CATERPILLAR:
+			DrawText(TextFormat("Caterpillar"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("80"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.4"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("After dodging, the next attack"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("gains additional damage."), 675, 514, 18, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_MAGICENGINEERING:
+			DrawText(TextFormat("Magicengineering"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("80"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.4"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("If you do not attack"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("for 3 seconds,"), 675, 514, 18, BLACK);
+			DrawText(TextFormat("damage increases on"), 675, 534, 18, BLACK);
+			DrawText(TextFormat("the next attack."), 675, 554, 18, BLACK);
+			break;
+		case NONE_WEAPON:
+			break;
+		default:
+			break;
+		}
 	}
 		
 		break;
@@ -426,6 +628,208 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
+		switch (selected_weapon)
+		{
+		case COMMON_KATANA_KATANA:
+			DrawText(TextFormat("Katana"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("20"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_KATANA_TAILWIND:
+			DrawText(TextFormat("Tailwind"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("30"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("true damage + 10"), 675, 494, 20, BLACK);
+			break;
+		case UNCOMMON_KATANA_ZERO:
+			DrawText(TextFormat("Zero"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("60"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			break;
+		case RARE_KATANA_STORMWIND:
+			DrawText(TextFormat("Stormwind"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("30"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Add true damage"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("proportional to speed"), 675, 514, 20, BLACK);
+			break;
+		case RARE_KATANA_THUNDER:
+			DrawText(TextFormat("Thunder"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("60"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("dodge is replaced by"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("Special Attack"), 675, 514, 20, BLACK);
+			break;
+		case RARE_KATANA_MASAMUNE:
+			DrawText(TextFormat("Masamune"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("85"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("If you do not attack for"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("3 seconds, you can use"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("a charged attack"), 675, 534, 20, BLACK);
+			break;
+		case RARE_KATANA_MURAMASA:
+			DrawText(TextFormat("Masamune"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("100"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.5"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Toggle: Attack speed is"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("greatly reduced, but"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("blood absorption is"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("greatly increased."), 675, 554, 20, BLACK);
+			break;
+			break;
+		case COMMON_GREATSWORD_GREATSWORD:
+			DrawText(TextFormat("Greatsword"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("50"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_GREATSWORD_KNIGHTLYSWORD:
+			DrawText(TextFormat("Knightlysword"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("150"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_GREATSWORD_BLOODSWORD:
+			DrawText(TextFormat("Bloodsword"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("120"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Recovers health every"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("time you kill an enemy"), 675, 514, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_BLACKKNIGHT:
+			DrawText(TextFormat("BlackKnight"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("175"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Gain attack power and"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("blood absorption in"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("proportion to"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("reduced health"), 675, 554, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_WHITEKNIGHT:
+			DrawText(TextFormat("WhiteKnight"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("175"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Gain damage equal to"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("defense power"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("However, it cannot"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("absorb blood"), 675, 554, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_VAMPIRE:
+			DrawText(TextFormat("Vampire"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("150"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Every time you kill"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("an enemy, your"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("blood absorption"), 675, 534, 20, BLACK);
+			DrawText(TextFormat("increases"), 675, 554, 20, BLACK);
+			break;
+		case RARE_GREATSWORD_BERSERKER:
+			DrawText(TextFormat("Berserker"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("150"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.75"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("When health falls below 50,"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("it fills up and roars."), 675, 514, 18, BLACK);
+			DrawText(TextFormat("Damage is"), 675, 534, 18, BLACK);
+			DrawText(TextFormat("permanently doubled."), 675, 554, 18, BLACK);
+			break;
+		case COMMON_MACHINEGUN_MACHINGUN:
+			DrawText(TextFormat("Machinegun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("20"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_MACHINEGUN_LIGHTMACHINEGUN:
+			DrawText(TextFormat("Lightmachinegun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("35"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.2"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_MACHINEGUN_HEAVYMACHINEGUN:
+			DrawText(TextFormat("Heavymachinegun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("50"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			break;
+		case RARE_MACHINEGUN_KRAKEN:
+			DrawText(TextFormat("Kraken"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("40"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.2"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Every 50 enemies you kill"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("permanently increases"), 675, 514, 18, BLACK);
+			DrawText(TextFormat(" your speed."), 675, 534, 18, BLACK);
+			DrawText(TextFormat("Gain true damage proportional"), 675, 554, 18, BLACK);
+			DrawText(TextFormat("to increased movement speed."), 675, 574, 18, BLACK);
+			break;
+		case RARE_MACHINEGUN_VOID:
+			DrawText(TextFormat("Void"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("35"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.2"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Each time you take"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("damage, your"), 675, 514, 20, BLACK);
+			DrawText(TextFormat("damage increases."), 675, 534, 20, BLACK);
+			break;
+		case RARE_MACHINEGUN_REPENTENCE:
+			DrawText(TextFormat("Repentence"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("50"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.25"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Toggle: All of your"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("blood absorption is converted"), 675, 514, 18, BLACK);
+			DrawText(TextFormat("to defense, damage"), 675, 534, 18, BLACK);
+			break;
+		case RARE_MACHINEGUN_WILD:
+			DrawText(TextFormat("Kraken"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("80"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.3"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("roars every time"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("takes damage."), 675, 514, 20, BLACK);
+			break;
+		case COMMON_SNIPERRIFLE_SNIPERRIFLE:
+			DrawText(TextFormat("Sniper rifle"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("40"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.6"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_SNIPERRIFLE_BOLTACTION:
+			DrawText(TextFormat("Boltaction"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("100"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.6"), 840, 456, 29, BLACK);
+			break;
+		case UNCOMMON_SNIPERRIFLE_SEMIAUTO:
+			DrawText(TextFormat("Semiauto"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("75"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.45"), 840, 456, 29, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_RAILGUN:
+			DrawText(TextFormat("Railgun"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("500"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("2"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("The bullet penetrates"), 675, 494, 20, BLACK);
+			DrawText(TextFormat("the enemy"), 675, 514, 20, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_PIRACY:
+			DrawText(TextFormat("Piracy"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("200"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("1"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("Instead of gaining damage"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("proportional to attack speed,"), 675, 514, 18, BLACK);
+			DrawText(TextFormat("attack speed is fixed."), 675, 534, 18, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_CATERPILLAR:
+			DrawText(TextFormat("Caterpillar"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("80"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.4"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("After dodging, the next attack"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("gains additional damage."), 675, 514, 18, BLACK);
+			break;
+		case RARE_SNIPERRIFLE_MAGICENGINEERING:
+			DrawText(TextFormat("Magicengineering"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("80"), 715, 456, 29, BLACK);
+			DrawText(TextFormat("0.4"), 840, 456, 29, BLACK);
+			DrawText(TextFormat("If you do not attack"), 675, 494, 18, BLACK);
+			DrawText(TextFormat("for 3 seconds,"), 675, 514, 18, BLACK);
+			DrawText(TextFormat("damage increases on"), 675, 534, 18, BLACK);
+			DrawText(TextFormat("the next attack."), 675, 554, 18, BLACK);
+			break;
+		case NONE_WEAPON:
+			break;
+		default:
+			break;
+		}
 	}
 		break;
 	case Shop::ORB: {
@@ -515,6 +919,84 @@ void Shop::Draw() {
 			0,
 			WHITE
 		);
+		switch (selected_orb)
+		{
+		case COMMON_LIFEORB:
+			DrawText(TextFormat("LIFE ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("recovery + 1"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_IRONORB:
+			DrawText(TextFormat("IRON ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("defense + 10"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_SPRINGORB:
+			DrawText(TextFormat("SPRING ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("Knockback + 50%"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_ANGERORB:
+			DrawText(TextFormat("ANGER ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("damage + 25%"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_WATERORB:
+			DrawText(TextFormat("WATER ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("attack speed + 25%"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_BLOODORB:
+			DrawText(TextFormat("BLOOD ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("drain + 2%"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_WINDORB:
+			DrawText(TextFormat("WIND ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("speed + 25%"), 678, 456, 29, BLACK);
+			break;
+		case COMMON_RANGEORB:
+			DrawText(TextFormat("RANGE ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("range + 25%"), 678, 456, 29, BLACK);
+			break;
+		case UNCOMMON_ARMORORB:
+			DrawText(TextFormat("ARMOR ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("true defense + 2"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("recovery + 2"), 678, 485, 29, BLACK);
+			DrawText(TextFormat("defense + 20"), 678, 514, 29, BLACK);
+			break;
+		case UNCOMMON_TRANSFUSIONORB:
+			DrawText(TextFormat("BLOOOOD ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("recovery + 3"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("drain + 3%"), 678, 485, 29, BLACK);
+			break;
+		case UNCOMMON_ROARORB:
+			DrawText(TextFormat("ROAR ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("knockback + 50%"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("range + 25%"), 678, 485, 29, BLACK);
+			break;
+		case UNCOMMON_RAGEORB:
+			DrawText(TextFormat("RAGE ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("damage + 30%"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("defense + 10"), 678, 485, 29, BLACK);
+			break;
+		case UNCOMMON_SEAORB:
+			DrawText(TextFormat("SEA ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("speed + 30%"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("attack speed + 30%"), 678, 485, 29, BLACK);
+			break;
+		case UNCOMMON_HUNGERORB:
+			DrawText(TextFormat("HUNGER ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("drain + 3%"), 678, 456, 29, BLACK);
+			break;
+		case UNCOMMON_SWIFTNESSORB:
+			DrawText(TextFormat("SWIFTNESS ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("dodge cooltime - 50%"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("speed + 65%"), 678, 485, 29, BLACK);
+			break;
+		case UNCOMMON_CHARGEORB:
+			DrawText(TextFormat("CHARGE ORB"), 678, 420, 31, BLACK);
+			DrawText(TextFormat("Can use charged attacks"), 678, 456, 20, BLACK);
+			break;
+		case NONE_ORB:
+			break;
+		default:
+			break;
+		}
 	}
 		
 		break;

@@ -78,7 +78,9 @@ enum GameState {
 	GAMESTATE_INGAME,
 	GAMESTATE_GAMEOVER,
 	GAMESTATE_SETTING,
-	GAMESTATE_SHOPPING
+	GAMESTATE_SHOPPING,
+	GAMESTATE_CREDIT,
+	GAMESTATE_CLEAR
 };
 
 
@@ -677,6 +679,9 @@ private:
 	Texture select_weapon_ui = LoadTexture("resources/ui/select_weapon.png");
 	Texture gameover_ui = LoadTexture("resources/ui/gmaeover_final.png");
 	Texture gameclear_ui = LoadTexture("resources/ui/game_clear.png");
+	Texture option_ui = LoadTexture("resources/ui/option.png");
+	Texture option_check_ui = LoadTexture("resources/ui/option_check.png");
+	Texture credit_ui = LoadTexture("resources/ui/credit.png");
 
 	Texture ingame_ui_orb_icon1;
 	Texture ingame_ui_orb_icon2;
@@ -688,6 +693,9 @@ private:
 	int fortification__talent_score = 0;
 	int celerity__talent_score = 0;
 
+	int credit_index = 0;
+	bool isOptionClicked = false;
+
 public:
 	Ui(Player*);
 
@@ -695,11 +703,17 @@ public:
 	void UpdateShopUi();
 	void UpdateBeforeGameUi();
 	void UpdateGameoverUi();
+	void UpdateOptionUi();
+	void UpdateCreditUi();
+	void UpdateClearUi();
 
 	void DrawIngameUi();
 	void DrawShopUi();
 	void DrawBeforeGameUi();
 	void DrawGameoverUi();
+	void DrawOptionUi();
+	void DrawCreditUi();
+	void DrawClearUi();
 
 };
 

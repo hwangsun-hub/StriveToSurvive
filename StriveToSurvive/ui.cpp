@@ -158,6 +158,32 @@ void Ui::UpdateGameoverUi() {
 	}
 }
 
+void Ui::UpdateOptionUi() {
+	if (CheckCollisionPointRec(GetMousePosition(), { 598, 348, 89, 89 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		ToggleFullscreen();
+		isOptionClicked = !isOptionClicked;
+	}
+	if (CheckCollisionPointRec(GetMousePosition(), { 1150, 639, 130, 81 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT)) {
+		gamestate = GAMESTATE_TITLE;
+	}
+}
+
+void Ui::UpdateCreditUi() {
+	if (IsKeyPressed(KEY_SPACE)) {
+		credit_index++;
+		if (credit_index == 4) {
+			gamestate = GAMESTATE_TITLE;
+			credit_index = 0;
+		}
+	}
+}
+
+void Ui::UpdateClearUi() {
+	if (IsKeyPressed(KEY_SPACE)) {
+		gamestate = GAMESTATE_CREDIT;
+	}
+}
+
 void Ui::DrawIngameUi() {
 	DrawTexturePro(
 		ingame_ui,
@@ -231,6 +257,7 @@ void Ui::DrawIngameUi() {
 
 
 }
+
 void Ui::DrawShopUi() {
 	DrawTexturePro(
 		shop_ui,
@@ -367,4 +394,47 @@ void Ui::DrawGameoverUi() {
 	//674 343 73
 	DrawText(TextFormat("%d", player->killcount), 674, 343, 73, RED);
 	DrawText(TextFormat("Press the space bar to restart"), 290, 652, 57, RED);
+}
+
+void Ui::DrawOptionUi() {
+	DrawTexturePro(
+		option_ui,
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0 },
+		0,
+		WHITE
+	);
+	if (isOptionClicked) {
+		DrawTexturePro(
+			option_check_ui,
+			{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+			{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+			{ 0,0 },
+			0,
+			WHITE
+		);
+	}
+}
+
+void Ui::DrawCreditUi() {
+	DrawTexturePro(
+		credit_ui,
+		{ float(WINDOW_START_WIDTH * credit_index),0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0 },
+		0,
+		WHITE
+	);
+}
+
+void Ui::DrawClearUi() {
+	DrawTexturePro(
+		gameclear_ui,
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0,WINDOW_START_WIDTH,WINDOW_START_HEIGHT },
+		{ 0,0 },
+		0,
+		WHITE
+	);
 }
