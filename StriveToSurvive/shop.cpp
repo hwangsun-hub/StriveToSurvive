@@ -939,7 +939,8 @@ void Shop::Draw() {
 			break;
 		case COMMON_WATERORB:
 			DrawText(TextFormat("WATER ORB"), 678, 420, 31, BLACK);
-			DrawText(TextFormat("attack speed + 25%%"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("attack speed"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("+ 25%%"), 678, 485, 29, BLACK);
 			break;
 		case COMMON_BLOODORB:
 			DrawText(TextFormat("BLOOD ORB"), 678, 420, 31, BLACK);
@@ -977,7 +978,8 @@ void Shop::Draw() {
 		case UNCOMMON_SEAORB:
 			DrawText(TextFormat("SEA ORB"), 678, 420, 31, BLACK);
 			DrawText(TextFormat("speed + 30%"), 678, 456, 29, BLACK);
-			DrawText(TextFormat("attack speed + 30%%"), 678, 485, 29, BLACK);
+			DrawText(TextFormat("attack speed"), 678, 485, 29, BLACK);
+			DrawText(TextFormat("+ 30%%"), 678, 514, 29, BLACK);
 			break;
 		case UNCOMMON_HUNGERORB:
 			DrawText(TextFormat("HUNGER ORB"), 678, 420, 31, BLACK);
@@ -985,7 +987,7 @@ void Shop::Draw() {
 			break;
 		case UNCOMMON_SWIFTNESSORB:
 			DrawText(TextFormat("SWIFTNESS ORB"), 678, 420, 31, BLACK);
-			DrawText(TextFormat("dodge cooltime - 50%%"), 678, 456, 29, BLACK);
+			DrawText(TextFormat("dodge - 50%%"), 678, 456, 29, BLACK);
 			DrawText(TextFormat("speed + 65%%"), 678, 485, 29, BLACK);
 			break;
 		case UNCOMMON_CHARGEORB:

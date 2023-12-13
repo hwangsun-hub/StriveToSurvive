@@ -10,7 +10,7 @@ GameState before_gamestate = GAMESTATE_TITLE;
 
 
 //defalt : GAMESTATE_TITLE
-GameState gamestate = GAMESTATE_SHOPPING;
+GameState gamestate = GAMESTATE_TITLE;
 
 
 int main()
