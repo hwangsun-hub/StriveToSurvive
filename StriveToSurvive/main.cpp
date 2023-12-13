@@ -124,6 +124,9 @@ int main()
                 if (IsKeyReleased(KEY_F3)) {
                     wavemanager.spider_enemymanager->SpawnEnemies(1);
                 }
+                if (IsKeyReleased(KEY_F4)) {
+                    player.Cheat();
+                }
             }
 
             //draw

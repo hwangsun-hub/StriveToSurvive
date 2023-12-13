@@ -77,7 +77,7 @@ void Player::Attack() {
     case WeaponType::KATANA:
         if (IsMouseButtonDown(MOUSE_BUTTON_LEFT) && isAttackReady) {
             SetSoundVolume(machinegun_sound, 1);
-            PlaySound(katana_sound);
+            PlaySound(machinegun_sound);
             charge_attack_time = 0;
             melee_weapon_attack_sprite_index = 0;
             isAttackReady = false;
@@ -217,12 +217,12 @@ void Player::Buff() {
         case RARE_KATANA_MURAMASA:
             if (IsKeyPressed(KEY_TAB)) {
                 if (!isToggled) {
-                    attack_cooltime_coefficient *= 0.25;
+                    attack_cooltime_coefficient *= 1.25;
                     drain_life_coefficient += 25;
                     isToggled = !isToggled;
                 }
                 else {
-                    attack_cooltime_coefficient /= 0.25;
+                    attack_cooltime_coefficient /= 1.25;
                     drain_life_coefficient -= 25;
                     isToggled = !isToggled;
                 }
@@ -270,7 +270,7 @@ void Player::Buff() {
             }
             break;
         case RARE_SNIPERRIFLE_PIRACY:
-            buff_damage = (attack_cooltime_coefficient - 1) * 200;
+            buff_damage = (1 - attack_cooltime_coefficient) * 200;
             break;
         case RARE_SNIPERRIFLE_CATERPILLAR:
             //special
@@ -977,7 +977,7 @@ void Player::SetOrbStat(OrbId _orbid) {
         damage_coefficient += 0.25f;
         break;
     case COMMON_WATERORB:
-        attack_cooltime_coefficient += 0.25f;
+        attack_cooltime_coefficient -= 0.25f;
         break;
     case COMMON_BLOODORB:
         drain_life_coefficient += 0.02f;
@@ -1007,7 +1007,7 @@ void Player::SetOrbStat(OrbId _orbid) {
         break;
     case UNCOMMON_SEAORB:
         speed_coefficient += 0.5;
-        attack_cooltime_coefficient += 0.5;
+        attack_cooltime_coefficient -= 0.5;
         break;
     case UNCOMMON_HUNGERORB:
         drain_life_coefficient += 5;
@@ -1031,7 +1031,7 @@ void Player::DesetOrbStat(OrbId _orbid) {
     switch (_orbid)
     {
     case COMMON_LIFEORB:
-        life_per_second--;
+        life_per_second++;
         break;
     case COMMON_IRONORB:
         defense -= 10;
@@ -1043,7 +1043,7 @@ void Player::DesetOrbStat(OrbId _orbid) {
         damage_coefficient -= 0.25f;
         break;
     case COMMON_WATERORB:
-        attack_cooltime_coefficient -= 0.25f;
+        attack_cooltime_coefficient += 0.25f;
         break;
     case COMMON_BLOODORB:
         drain_life_coefficient -= 0.02f;
@@ -1064,30 +1064,25 @@ void Player::DesetOrbStat(OrbId _orbid) {
         drain_life_coefficient -= 3;
         break;
     case UNCOMMON_ROARORB:
-        //special
         knockback_coefficient -= 0.5;
-        range_coefficient -= 0.25;
+        range_coefficient -= 0.5;
         break;
     case UNCOMMON_RAGEORB:
-        //special
-        damage_coefficient -= 0.3;
-        attack_cooltime_coefficient -= 0.3;
+        damage_coefficient -= 0.5;
+        defense -= 10;
         break;
     case UNCOMMON_SEAORB:
-        //special
-        speed_coefficient -= 0.3;
-        attack_cooltime_coefficient -= 0.3;
+        speed_coefficient -= 0.5;
+        attack_cooltime_coefficient += 0.5;
         break;
     case UNCOMMON_HUNGERORB:
-        //special
-        drain_life_coefficient -= 4;
+        drain_life_coefficient -= 5;
         break;
     case UNCOMMON_SWIFTNESSORB:
         dodge_cooltime_coefficient += 0.5;
         speed_coefficient -= 1.65;
         break;
     case UNCOMMON_CHARGEORB:
-        //special
         damage_coefficient -= 0.3;
         range_coefficient -= 0.3;
         break;
@@ -1168,6 +1163,11 @@ float Player::GetStat(PlayerStat _stat) {
     default:
         break;
     }
+}
+
+void Player::Cheat() {
+    money += 10000;
+    killcount += 50000;
 }
 
 

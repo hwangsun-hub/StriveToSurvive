@@ -110,9 +110,11 @@ void Ui::UpdateBeforeGameUi() {
 			talent = NORMAL;
 		}
 		if ((CheckCollisionPointRec(GetMousePosition(), { 619, 633, 38, 38 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
-			if (celerity__talent_score <= 20) {
-				celerity__talent_score++;
-				talent_score--;
+			if (talent_score > 0) {
+				if (celerity__talent_score <= 20) {
+					celerity__talent_score++;
+					talent_score--;
+				}
 			}
 		}
 		if (IsKeyPressed(KEY_R)) {
@@ -150,9 +152,9 @@ void Ui::UpdateBeforeGameUi() {
 void Ui::UpdateGameoverUi() {
 	if (IsKeyPressed(KEY_SPACE)) {
 		gamestate = GAMESTATE_TITLE;
-		talent_score += int(player->killcount / 500);
-		if (talent_score >= 35) {
-			talent_score = 35;
+		talent_score += int(player->killcount / 100);
+		if (talent_score - rage_talent_score - fortification__talent_score - celerity__talent_score >= 35) {
+			talent_score = 35 - rage_talent_score - fortification__talent_score - celerity__talent_score;
 		}
 		player->killcount = 0;
 	}

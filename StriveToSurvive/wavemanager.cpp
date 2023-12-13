@@ -152,6 +152,11 @@ void WaveManager::Update() {
 		tanker_enemymanager->Reset();
 		spider_enemymanager->Reset();
 	}
+	if (gamestate == GAMESTATE_GAMEOVER) {
+		runner_enemymanager->Reset();
+		tanker_enemymanager->Reset();
+		spider_enemymanager->Reset();
+	}
 }
 
 void WaveManager::Draw() {

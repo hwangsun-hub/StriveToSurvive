@@ -392,6 +392,7 @@ public:
 	bool GetisRoared();
 	void SetisRoared();
 	float GetStat(PlayerStat);
+	void Cheat();
 
 };
 
