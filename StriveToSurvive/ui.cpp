@@ -157,6 +157,7 @@ void Ui::UpdateGameoverUi() {
 			talent_score = 35 - rage_talent_score - fortification__talent_score - celerity__talent_score;
 		}
 		player->killcount = 0;
+		wave_level = 1;
 	}
 }
 
