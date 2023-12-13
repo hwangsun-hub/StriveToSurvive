@@ -184,6 +184,7 @@ void Ui::UpdateCreditUi() {
 void Ui::UpdateClearUi() {
 	if (IsKeyPressed(KEY_SPACE)) {
 		gamestate = GAMESTATE_CREDIT;
+		wave_level = 1;
 	}
 }
 

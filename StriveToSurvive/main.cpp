@@ -127,6 +127,12 @@ int main()
                 if (IsKeyReleased(KEY_F4)) {
                     player.Cheat();
                 }
+                if (IsKeyReleased(KEY_F6)) {
+                    wave_level++;
+                    if (wave_level == 11) {
+                        wave_level = 10;
+                    }
+                }
             }
 
             //draw
