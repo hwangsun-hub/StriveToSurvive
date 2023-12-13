@@ -3,7 +3,7 @@
 bool DEBUGING_MODE = false;
 bool exitWindow = false;
 
-int wave_level = 7;
+int wave_level = 1;
 int talent_score = 5;
 bool isMenuReady = false;
 GameState before_gamestate = GAMESTATE_TITLE;
