@@ -77,7 +77,7 @@ void Ui::UpdateBeforeGameUi() {
 		}
 		if ((CheckCollisionPointRec(GetMousePosition(), { 619, 633, 38, 38 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
 			if (talent_score > 0) {
-				if (rage_talent_score <= 20) {
+				if (rage_talent_score < 20) {
 					rage_talent_score++;
 					talent_score--;
 				}
@@ -94,7 +94,7 @@ void Ui::UpdateBeforeGameUi() {
 		}
 		if ((CheckCollisionPointRec(GetMousePosition(), { 619, 633, 38, 38 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
 			if (talent_score > 0) {
-				if (fortification__talent_score <= 20) {
+				if (fortification__talent_score < 20) {
 					fortification__talent_score++;
 					talent_score--;
 				}
@@ -111,7 +111,7 @@ void Ui::UpdateBeforeGameUi() {
 		}
 		if ((CheckCollisionPointRec(GetMousePosition(), { 619, 633, 38, 38 }) && IsMouseButtonPressed(MOUSE_BUTTON_LEFT))) {
 			if (talent_score > 0) {
-				if (celerity__talent_score <= 20) {
+				if (celerity__talent_score < 20) {
 					celerity__talent_score++;
 					talent_score--;
 				}

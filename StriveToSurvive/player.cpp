@@ -410,7 +410,9 @@ void Player::Update() {
     Buff();
 
     speed = (PLAYER_SPEED + buffed_speed) * speed_coefficient;
-
+    if (attack_cooltime_coefficient < 0) {
+        attack_cooltime_coefficient = 0.05;
+    }
     if (isstanding) {
         //sprite timer
         standing_sprite_timer.SetTimer(0.1f);
@@ -595,6 +597,7 @@ void Player::Update() {
 
         gamestate = GAMESTATE_CLEAR;
     }
+
 
 }
 
