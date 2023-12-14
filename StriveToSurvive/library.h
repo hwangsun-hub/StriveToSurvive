@@ -46,7 +46,7 @@ constexpr int PLAYER_MAX_HP = 500;
 constexpr float PLAYER_DODGE_SPEED{ 30 };
 constexpr float PLAYER_SPEED{ 300 };
 
-constexpr int RUNNER_HP_COEFFICIENT = 40;
+constexpr int RUNNER_HP_COEFFICIENT = 10;
 constexpr int RUNNER_DEFENSE_COEFFICIENT = 5;
 constexpr int RUNNER_DAMAGE_COEFFICIENT = 25;
 constexpr int RUNNER_SPEED_COEFFICIENT = 10;
