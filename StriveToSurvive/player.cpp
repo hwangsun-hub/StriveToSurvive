@@ -411,7 +411,7 @@ void Player::Update() {
 
     speed = (PLAYER_SPEED + buffed_speed) * speed_coefficient;
     if (attack_cooltime_coefficient < 0) {
-        attack_cooltime_coefficient = 0.05;
+        attack_cooltime_coefficient = 0.2;
     }
     if (isstanding) {
         //sprite timer
@@ -471,7 +471,9 @@ void Player::Update() {
 
     if (hp < 0) {
 
-        OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
+        inventory_orb[0] = { NONE_ORB };
+        inventory_orb[1] = { NONE_ORB };
+        inventory_orb[2] = { NONE_ORB };
 
 
         hp = 500;
@@ -533,7 +535,9 @@ void Player::Update() {
     }
     if (wave_level == 11) {
 
-        OrbId inventory_orb[3] = { NONE_ORB, NONE_ORB , NONE_ORB };
+        inventory_orb[0] = { NONE_ORB };
+        inventory_orb[1] = { NONE_ORB };
+        inventory_orb[2] = { NONE_ORB };
 
         hp = 500;
         life_per_second = 0;
