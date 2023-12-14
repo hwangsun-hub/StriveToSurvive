@@ -43,6 +43,7 @@ int main()
     GameTitle gametitle;
     Ui ui(&player);
     int id = 0;
+    float zoom = 0.75;
 
     while (!WindowShouldClose() && !exitWindow) {
 
@@ -81,7 +82,7 @@ int main()
             EndDrawing();
             break;
         case GAMESTATE_INGAME:
-            camera.zoom = 0.75f;
+            camera.zoom = zoom;
             //update
             if (wave_level < 7) {
                 PlayMusicStream(ingame_music1);
@@ -107,6 +108,7 @@ int main()
             //debug mode toggle (KEY_F5)
             if (IsKeyReleased(KEY_F5)) {
                 DEBUGING_MODE = !DEBUGING_MODE;
+                zoom = 0.75f;
             }
             //debug mode
             if (DEBUGING_MODE) {
@@ -132,6 +134,9 @@ int main()
                     if (wave_level == 11) {
                         wave_level = 10;
                     }
+                }
+                if (IsKeyReleased(KEY_F7)) {
+                    zoom = 0.25;
                 }
             }
 

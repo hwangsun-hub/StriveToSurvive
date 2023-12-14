@@ -454,6 +454,10 @@ void Player::Update() {
     if (life_heal_cooltimer.TimerDone()) {
         hp += life_per_second;
     }
+    if (hp > PLAYER_MAX_HP) {
+        hp = PLAYER_MAX_HP;
+    }
+    
 
     Attack();
     RangedAttack();
@@ -596,7 +600,7 @@ void Player::Update() {
 
 void Player::DrawSpawnPoint() {
     for (Vector2 position : spawnpoint) {
-        DrawCircleV(position, 10, BLUE);
+        DrawCircleV(position, 10, RED);
     }
 }
 

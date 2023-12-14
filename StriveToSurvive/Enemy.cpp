@@ -23,7 +23,7 @@ void Enemy::UpdateHitbox() {
 }
 
 void Enemy::Damaged() {
-	hp -= player->GetDamage() * 100 / (100 + defence) + player->GetTrueDamage();
+	std::cout << player->GetDamage() * 100 / (100 + defence) + player->GetTrueDamage() << std::endl;
 	player->Drain();
 	Knockbacked();
 }
